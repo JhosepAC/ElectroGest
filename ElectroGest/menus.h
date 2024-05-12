@@ -47,7 +47,7 @@ void filtrarProductosPorCategoria(GESTION_PRODUCTOS& productManager); // Filtrar
 void inventoryManagementMenu(GESTION_PRODUCTOS& gestorProductos, GESTION_INVENTARIO& gestionInventarios); // Menú de gestión de inventario
 
 // Proveedores
-void supplierManagementMenu(GestionarProveedores& supplierManager); // Menú de gestión de proveedores
+void supplierManagementMenu(); // Menú de gestión de proveedores
 
 // Pedido
 void orderingMenu(); // Menú de pedidos
@@ -249,7 +249,7 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
             inventoryManagementMenu(productManager, inventoryManager); // Menú de gestión de inventario
             break;
         case 3:
-            supplierManagementMenu(supplierManager); // Menú de gestión de proveedores
+            supplierManagementMenu(); // Menú de gestión de proveedores
             break;
         case 4:
             orderManagementMenu(); // Menú de gestión de pedidos
@@ -951,22 +951,25 @@ void inventoryManagementMenu(GESTION_PRODUCTOS& gestorProductos, GESTION_INVENTA
 }
 
 // Función para mostrar el menú y obtener la opción del usuario
-void supplierManagementMenu(GestionarProveedores& supplierManager) {
+void supplierManagementMenu() {
     int opcion;
     string nombreBuscar;
     const string archivoProveedores = "supplier_data.txt";
+
+    GestionarProveedores supplierManager; // Crear un objeto de la clase GestionarProveedores
 
     supplierManager.cargarListaDesdeArchivo();
     
     do {
         system("cls");
-        cout << CYAN_COLOR << "=== Gestión de Proveedores ===" << RESET_COLOR << DOUBLE_SPACE;
+        cout << CYAN_COLOR << "=== GESTIÓN DE PROVEEDORES ===" << RESET_COLOR << DOUBLE_SPACE;
         cout << "<1> Ver lista de proveedores" << endl;
         cout << "<2> Agregar nuevo proveedor" << endl;
         cout << "<3> Actualizar información de proveedor" << endl;
         cout << "<4> Eliminar proveedor" << endl;
         cout << "<5> Buscar proveedor" << endl;
-        cout << "<6> Salir" << DOUBLE_SPACE;
+        cout << "<6> Volver" << DOUBLE_SPACE;
+        ShowConsoleCursor(true); // Muestra el cursor
         cout << YELLOW_COLOR << "Seleccione una opcion: " << RESET_COLOR;
         cin >> opcion;
 
@@ -982,8 +985,16 @@ void supplierManagementMenu(GestionarProveedores& supplierManager) {
 
         switch (opcion) {
         case 1:
+            // Verificar si la lista de proveedores está vacía
+            if (supplierManager.listaProveedoresVacia()) {
+                ShowConsoleCursor(false); // Oculta el cursor
+				cout << DOUBLE_SPACE << MAGENTA_COLOR << "No se cuenta con proveedores por el momento." << RESET_COLOR;
+				Sleep(1500);
+				break;
+			}
             system("cls");
             supplierManager.verListaProveedores();
+            ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para salir";
             _getch();
             system("cls");
@@ -995,18 +1006,39 @@ void supplierManagementMenu(GestionarProveedores& supplierManager) {
             system("cls");
             break;
         case 3:
+            // Verificar si la lista de proveedores está vacía
+            if (supplierManager.listaProveedoresVacia()) {
+                ShowConsoleCursor(false); // Oculta el cursor
+                cout << DOUBLE_SPACE << MAGENTA_COLOR << "No se cuenta con proveedores por el momento." << RESET_COLOR;
+                Sleep(1500);
+                break;
+            }
             system("cls");
             supplierManager.actualizarProveedor(archivoProveedores);
             Sleep(1000);
             system("cls");
             break;
         case 4:
+            // Verificar si la lista de proveedores está vacía
+            if (supplierManager.listaProveedoresVacia()) {
+                ShowConsoleCursor(false); // Oculta el cursor
+                cout << DOUBLE_SPACE << MAGENTA_COLOR << "No se cuenta con proveedores por el momento." << RESET_COLOR;
+                Sleep(1500);
+                break;
+            }
             system("cls");
             supplierManager.eliminarProveedor(archivoProveedores);
             Sleep(1000);
             system("cls");
             break;
         case 5:
+            // Verificar si la lista de proveedores está vacía
+            if (supplierManager.listaProveedoresVacia()) {
+                ShowConsoleCursor(false); // Oculta el cursor
+                cout << DOUBLE_SPACE << MAGENTA_COLOR << "No se cuenta con proveedores por el momento." << RESET_COLOR;
+                Sleep(1500);
+                break;
+            }
             system("cls");
             cout << YELLOW_COLOR << "Ingrese el nombre del proveedor que desea buscar: " << RESET_COLOR;
             cin.ignore();
@@ -1017,11 +1049,6 @@ void supplierManagementMenu(GestionarProveedores& supplierManager) {
             system("cls");
             break;
         case 6:
-            break;
-        default:
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Opcion no valida. Por favor, intente de nuevo.";
-            Sleep(1000);
-            system("cls");
             break;
         }
     } while (opcion != 6);
@@ -1211,7 +1238,7 @@ void customerManagementMenu() {
     do {
         system("cls");
 
-        cout << CYAN_COLOR << "=== MENÚ DE GESTIÓN DE CLIENTES ===" << DOUBLE_SPACE << RESET_COLOR;
+        cout << CYAN_COLOR << "=== GESTIÓN DE CLIENTES ===" << DOUBLE_SPACE << RESET_COLOR;
         cout << "<1> Ver Lista de Clientes" << endl;
         cout << "<2> Eliminar Cliente" << endl;
         cout << "<3> Buscar Clientes" << endl;

@@ -52,9 +52,9 @@ void ListaProveedores::cargarDesdeArchivo(const std::string& archivo) {
 
     std::string linea;
     while (getline(archivoProveedores, linea)) {
-        std::stringstream ss(linea);
-        std::string nombre, direccion;
-        int telefono;
+        stringstream ss(linea);
+        string nombre, direccion;
+        string telefono;
         getline(ss, nombre, ',');
         getline(ss, direccion, ',');
         ss >> telefono;

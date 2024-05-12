@@ -24,8 +24,8 @@ public:
     }
 
     void agregarProveedor(const string& archivo) {
-        string nombre, direccion;
-        int telefono;
+        string nombre, direccion, telefono;
+
         cout << CYAN_COLOR << "=== Agregar Nuevo Proveedor ===" << RESET_COLOR << DOUBLE_SPACE;
         cout << YELLOW_COLOR << "Ingrese el nombre del proveedor: " << RESET_COLOR;
         cin.ignore();
@@ -56,10 +56,24 @@ public:
 
         cout << YELLOW_COLOR << "Ingrese la dirección del proveedor: " << RESET_COLOR;
         getline(cin, direccion);
-        cout << YELLOW_COLOR << "Ingrese el teléfono del proveedor: " << RESET_COLOR;
-        cin >> telefono;
 
-        Proveedor* proveedor = new Proveedor(nombre, direccion, telefono);
+        bool telefonoValido = false;
+        string nuevoTelefono;
+
+        while (!telefonoValido) {
+            cout << YELLOW_COLOR << "Ingrese el nuevo teléfono del proveedor (deje 0 para mantener el mismo): " << RESET_COLOR;
+            cin >> nuevoTelefono;
+
+            // Verificar si el teléfono tiene exactamente 9 dígitos
+            if (nuevoTelefono.length() == 9 && nuevoTelefono.find_first_not_of("0123456789") == string::npos) {
+                telefonoValido = true;
+            }
+            else {
+                cout << endl << MAGENTA_COLOR << "El número de teléfono debe tener exactamente 9 dígitos. Inténtelo de nuevo." << RESET_COLOR << DOUBLE_SPACE;
+            }
+        }
+
+        Proveedor* proveedor = new Proveedor(nombre, direccion, nuevoTelefono);
         listaProveedores.agregarProveedor(proveedor);
 
         // Guardar en el archivo
@@ -73,11 +87,14 @@ public:
 
         guardarListaEnArchivo();
 
+        ShowConsoleCursor(false);
         cout << DOUBLE_SPACE << GREEN_COLOR << "Proveedor agregado correctamente." << endl;
     }
 
     void actualizarProveedor(const string& archivo) {
         string nombreBuscar;
+        bool telefonoValido = false;
+
         cout << CYAN_COLOR << "=== Actualizar Informacion de Proveedor ===" << DOUBLE_SPACE;
         cout << YELLOW_COLOR << "Ingrese el nombre del proveedor que desea actualizar: " << RESET_COLOR;
         cin.ignore();
@@ -94,20 +111,32 @@ public:
         }
 
         if (opcion == -1) {
+            ShowConsoleCursor(false);
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "Proveedor no encontrado. Actualización cancelada." << endl;
+            _sleep(1500);
             return;
         }
 
         Proveedor* proveedor = listaProveedores.obtenerProveedor(opcion);
 
-        string nuevoNombre, nuevaDireccion;
-        int nuevoTelefono;
+        string nuevoNombre, nuevaDireccion, nuevoTelefono;
+
         cout << YELLOW_COLOR << "Ingrese el nuevo nombre del proveedor (deje vacío para mantener el mismo): " << RESET_COLOR;
         getline(cin, nuevoNombre);
         cout << YELLOW_COLOR << "Ingrese la nueva dirección del proveedor (deje vacío para mantener la misma): " << RESET_COLOR;
         getline(cin, nuevaDireccion);
-        cout << YELLOW_COLOR << "Ingrese el nuevo teléfono del proveedor (deje 0 para mantener el mismo): " << RESET_COLOR;
-        cin >> nuevoTelefono;
+        while (!telefonoValido) {
+            cout << YELLOW_COLOR << "Ingrese el nuevo teléfono del proveedor (deje 0 para mantener el mismo): " << RESET_COLOR;
+            cin >> nuevoTelefono;
+
+            // Verificar si el teléfono tiene exactamente 9 dígitos
+            if (nuevoTelefono.length() == 9 && nuevoTelefono.find_first_not_of("0123456789") == string::npos) {
+                telefonoValido = true;
+            }
+            else {
+                cout << endl << MAGENTA_COLOR << "El número de teléfono debe tener exactamente 9 dígitos. Inténtelo de nuevo." << RESET_COLOR << DOUBLE_SPACE;
+            }
+        }
 
         if (!nuevoNombre.empty()) {
             proveedor->setNombre(nuevoNombre);
@@ -115,7 +144,7 @@ public:
         if (!nuevaDireccion.empty()) {
             proveedor->setDireccion(nuevaDireccion);
         }
-        if (nuevoTelefono != 0) {
+        if (nuevoTelefono.empty()) {
             proveedor->setTelefono(nuevoTelefono);
         }
 
@@ -136,6 +165,7 @@ public:
         // Guardar en el archivo
         guardarListaEnArchivo();
 
+        ShowConsoleCursor(false);
         cout << DOUBLE_SPACE << GREEN_COLOR << "Proveedor actualizado correctamente." << endl;
     }
 
@@ -145,7 +175,7 @@ public:
         listaProveedores.mostrarProveedores();
 
         int opcion;
-        cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione el proveedor a eliminar (ingrese el número): " << RESET_COLOR;
+        cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione el proveedor a eliminar (ingrese el número de orden): " << RESET_COLOR;
         cin >> opcion;
         cin.ignore();
 
@@ -178,6 +208,7 @@ public:
         // Guardar en el archivo
         guardarListaEnArchivo();
 
+        ShowConsoleCursor(false);
         cout << DOUBLE_SPACE << GREEN_COLOR << "Proveedor eliminado correctamente." << endl;
     }
 
@@ -189,11 +220,16 @@ public:
             cout << GRAY_COLOR << "Nombre: " << RESET_COLOR << proveedor->getNombre() << endl;
             cout << GRAY_COLOR << "Dirección: " << RESET_COLOR << proveedor->getDireccion() << endl;
             cout << GRAY_COLOR << "Teléfono: " << RESET_COLOR << proveedor->getTelefono() << endl;
+            ShowConsoleCursor(false);
         }
         else {
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "Proveedor no encontrado." << endl;
         }
     }
+
+    bool listaProveedoresVacia() {
+		return listaProveedores.size() == 0;
+	}
 
 private:
     ListaProveedores listaProveedores;
