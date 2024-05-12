@@ -41,7 +41,7 @@ void saveClientInfo(const CLIENTE& client); // Guardar la información del compra
 // Productos
 void productCatalogMenu(); // Menú de catálogo de productos
 void productManagementMenu(); // Menú de gestión de productos 
-void filtrarProductosPorCategoria(GESTION_PRODUCTOS& productManager); // Filtrar productos por categoría
+void filtrarProductosPorCategoria(); // Filtrar productos por categoría
 
 // Inventario
 void inventoryManagementMenu(GESTION_PRODUCTOS& gestorProductos, GESTION_INVENTARIO& gestionInventarios); // Menú de gestión de inventario
@@ -663,7 +663,7 @@ void productCatalogMenu() {
             system("cls");
             break;
         case 2:
-            filtrarProductosPorCategoria(productManager);
+            filtrarProductosPorCategoria();
             break;
         case 3:
             system("cls");
@@ -687,10 +687,10 @@ void productCatalogMenu() {
 }
 
 // Función para filtrar productos por categoría
-void filtrarProductosPorCategoria(GESTION_PRODUCTOS& productManager) {
+void filtrarProductosPorCategoria() {
     int opcion;
 
-    GESTION_PRODUCTOS* productManagerPtr = &productManager;
+    GESTION_PRODUCTOS productManager;
 
     string currentLanguage = "espanol"; // Idioma predeterminado
 
@@ -703,6 +703,7 @@ void filtrarProductosPorCategoria(GESTION_PRODUCTOS& productManager) {
         cout << "<2> Filtrar por color" << endl;
         cout << "<3> Filtrar por marca" << endl;
         cout << "<4> Volver";
+        ShowConsoleCursor(true); // Mostrar el cursor
         cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opción: " << RESET_COLOR;
         cin >> opcion;
 
@@ -715,32 +716,28 @@ void filtrarProductosPorCategoria(GESTION_PRODUCTOS& productManager) {
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
-        else if (opcion > 4)
-        {
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Opción no válida
-            Sleep(1500); // Espera 1.5 segundos
-            continue; // Continúa al siguiente ciclo del bucle do-while
-        }
 
         switch (opcion) {
         case 1:
             system("cls");
-            productManagerPtr->filtrarPorPrecio(productManager);
+            productManager.filtrarPorPrecio(productManager);
+            ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
             _getch();
             system("cls");  
             break;
         case 2:
             system("cls");
-            productManagerPtr->filtrarPorColor(productManager);
+            productManager.filtrarPorColor(productManager);
+            ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
             _getch();
             system("cls");
             break;
         case 3:
             system("cls");
-            productManagerPtr->filtrarPorMarca(productManager);
+            productManager.filtrarPorMarca(productManager);
+            ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
             _getch();
             system("cls");
