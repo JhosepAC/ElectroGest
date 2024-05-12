@@ -1204,7 +1204,8 @@ void orderManagementMenu() {
 // Función para mostrar el menú de gestión de clientes
 void customerManagementMenu() {
     GESTION_CLIENTE gestionCliente;
-
+    
+    string currentLanguage = "espanol"; // Idioma predeterminado
     int opcion;
 
     do {
@@ -1214,26 +1215,44 @@ void customerManagementMenu() {
         cout << "<1> Ver Lista de Clientes" << endl;
         cout << "<2> Eliminar Cliente" << endl;
         cout << "<3> Buscar Clientes" << endl;
-        cout << "<4> Salir" << endl;
+        cout << "<4> Volver";
+        ShowConsoleCursor(true); // Muestra el cursor
         cout << YELLOW_COLOR << DOUBLE_SPACE << "Seleccione una opcion: " << RESET_COLOR;
         cin >> opcion;
 
+        // Verifica si la entrada falló
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
-            ShowConsoleCursor(false);
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número." << endl;
-            Sleep(1000);
-            continue;
+            ShowConsoleCursor(false); // Oculta el cursor
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
+            Sleep(1500); // Espera 1.5 segundos
+            continue; // Continúa al siguiente ciclo del bucle do-while
         }
+
+        ifstream file("client_registration.txt");
 
         switch (opcion) {
         case 1:
+            if (file.peek() == ifstream::traits_type::eof()) { // Verificar si el archivo está vacío
+                ShowConsoleCursor(false); // Oculta el cursor
+                cout << MAGENTA_COLOR << DOUBLE_SPACE << "No hay ningún cliente registrado." << endl;
+                _sleep(1500); // Espera 1.5 segundos
+                file.close();
+                break;
+            }
             system("cls");
             cout << CYAN_COLOR << "Lista de clientes:" << DOUBLE_SPACE;   
             gestionCliente.displayCustomerList();
             break;
         case 2:
+            if (file.peek() == ifstream::traits_type::eof()) { // Verificar si el archivo está vacío
+                ShowConsoleCursor(false); // Oculta el cursor
+                cout << MAGENTA_COLOR << DOUBLE_SPACE << "No hay ningún cliente registrado." << endl;
+                _sleep(1500); // Espera 1.5 segundos
+                file.close();
+                break;
+            }
             system("cls");
             cout << CYAN_COLOR << "Eliminar cliente:" << DOUBLE_SPACE << RESET_COLOR;
             {
@@ -1241,9 +1260,18 @@ void customerManagementMenu() {
                 cout << YELLOW_COLOR << "Ingrese el correo electrónico del cliente a eliminar: " << RESET_COLOR;
                 cin >> email;
                 gestionCliente.deleteCustomer(email);
+                ShowConsoleCursor(false); // Oculta el cursor
+                _sleep(1500); // Espera 1.5 segundos
             }
             break;
         case 3:
+            if (file.peek() == ifstream::traits_type::eof()) { // Verificar si el archivo está vacío
+                ShowConsoleCursor(false); // Oculta el cursor
+                cout << MAGENTA_COLOR << DOUBLE_SPACE << "No hay ningún cliente registrado." << endl;
+                _sleep(1500); // Espera 1.5 segundos
+                file.close();
+                break;
+            }
             system("cls");
             cout << CYAN_COLOR << "Buscar clientes: " << DOUBLE_SPACE << RESET_COLOR;
             {
@@ -1251,14 +1279,10 @@ void customerManagementMenu() {
                 cout << YELLOW_COLOR << "Ingrese el término de búsqueda (nombre o apellido): " << RESET_COLOR;
                 cin >> searchTerm;
                 gestionCliente.searchCustomers(searchTerm);
-                cout << GRAY_COLOR << DOUBLE_SPACE << "Presiona cualquier tecla para continuar";
-                _getch();
             }
             break;
         case 4:
             break;
-        default:
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Opción no válida. Por favor, seleccione una opción válida." << endl;
         }
     } while (opcion != 4);
 }
