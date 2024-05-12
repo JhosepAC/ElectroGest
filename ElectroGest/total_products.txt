@@ -1,0 +1,1064 @@
+Nombre:                  Cafetera
+Codigo:                  CAF_01
+Marca:                   LG
+Precio:                  S/100.00              
+Modelo:                  CAF24V2
+Ancho (cm):              30.00          
+Alto (cm):               40.00           
+Largo (cm):              25.00          
+Peso (Kg):               2.00            
+Material:                Plastico
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Cafetera
+Codigo:                  CAF_02
+Marca:                   LG
+Precio:                  S/120.00              
+Modelo:                  CAF24V2
+Ancho (cm):              35.00          
+Alto (cm):               45.00           
+Largo (cm):              30.00          
+Peso (Kg):               2.50            
+Material:                Acero inoxidable
+Color:                   Plateado
+Garantia (meses):        18        
+
+----------------------------------------
+
+Nombre:                  Cafetera
+Codigo:                  CAF_03
+Marca:                   Philips
+Precio:                  S/80.00               
+Modelo:                  CAF24V3
+Ancho (cm):              25.00          
+Alto (cm):               35.00           
+Largo (cm):              20.00          
+Peso (Kg):               1.80            
+Material:                Plastico
+Color:                   Blanco
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Cafetera
+Codigo:                  CAF_04
+Marca:                   De'Longhi
+Precio:                  S/150.00              
+Modelo:                  CAF24V4
+Ancho (cm):              30.00          
+Alto (cm):               40.00           
+Largo (cm):              25.00          
+Peso (Kg):               2.20            
+Material:                Plastico
+Color:                   Gris
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Cafetera
+Codigo:                  CAF_05
+Marca:                   Hamilton Beach
+Precio:                  S/90.00               
+Modelo:                  CAF24V5
+Ancho (cm):              20.00          
+Alto (cm):               30.00           
+Largo (cm):              15.00          
+Peso (Kg):               1.50            
+Material:                Plastico
+Color:                   Rojo
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Lavadora
+Codigo:                  LAV_01
+Marca:                   LG
+Precio:                  S/1200.00             
+Modelo:                  LAV24V1
+Ancho (cm):              30.00          
+Alto (cm):               40.00           
+Largo (cm):              25.00          
+Peso (Kg):               2.00            
+Material:                Plastico
+Color:                   Blanca
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Lavadora
+Codigo:                  LAV_02
+Marca:                   Samsung
+Precio:                  S/1300.00             
+Modelo:                  LAV28S2
+Ancho (cm):              35.00          
+Alto (cm):               45.00           
+Largo (cm):              30.00          
+Peso (Kg):               2.50            
+Material:                Acero Inoxidable
+Color:                   Gris
+Garantia (meses):        18        
+
+----------------------------------------
+
+Nombre:                  Lavadora
+Codigo:                  LAV_03
+Marca:                   Whirlpool
+Precio:                  S/1100.00             
+Modelo:                  LAV26W1
+Ancho (cm):              28.00          
+Alto (cm):               42.00           
+Largo (cm):              23.00          
+Peso (Kg):               2.20            
+Material:                Plastico
+Color:                   Blanco
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Lavadora
+Codigo:                  LAV_04
+Marca:                   Bosch
+Precio:                  S/1500.00             
+Modelo:                  LAV32B3
+Ancho (cm):              32.00          
+Alto (cm):               48.00           
+Largo (cm):              28.00          
+Peso (Kg):               2.70            
+Material:                Acero
+Color:                   Plateada
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Lavadora
+Codigo:                  LAV_05
+Marca:                   Electrolux
+Precio:                  S/1400.00             
+Modelo:                  LAV30E2
+Ancho (cm):              33.00          
+Alto (cm):               43.00           
+Largo (cm):              27.00          
+Peso (Kg):               2.30            
+Material:                Plastico
+Color:                   Gris
+Garantia (meses):        18        
+
+----------------------------------------
+
+Nombre:                  Televisor
+Codigo:                  TV_01
+Marca:                   Samsung
+Precio:                  S/1500.00             
+Modelo:                  TV40S1
+Ancho (cm):              90.00          
+Alto (cm):               50.00           
+Largo (cm):              5.00           
+Peso (Kg):               8.00            
+Material:                Plastico y Metal
+Color:                   Negro
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Televisor
+Codigo:                  TV_02
+Marca:                   Sony
+Precio:                  S/1800.00             
+Modelo:                  TV48X2
+Ancho (cm):              100.00         
+Alto (cm):               55.00           
+Largo (cm):              5.50           
+Peso (Kg):               9.00            
+Material:                Plastico y Metal
+Color:                   Plateado
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Televisor
+Codigo:                  TV_03
+Marca:                   LG
+Precio:                  S/1600.00             
+Modelo:                  TV42L3
+Ancho (cm):              95.00          
+Alto (cm):               52.00           
+Largo (cm):              5.20           
+Peso (Kg):               8.50            
+Material:                Plastico y Metal
+Color:                   Negro
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Televisor
+Codigo:                  TV_04
+Marca:                   Panasonic
+Precio:                  S/1700.00             
+Modelo:                  TV46P4
+Ancho (cm):              105.00         
+Alto (cm):               58.00           
+Largo (cm):              5.50           
+Peso (Kg):               9.50            
+Material:                Plastico y Metal
+Color:                   Negro
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Televisor
+Codigo:                  TV_05
+Marca:                   TCL
+Precio:                  S/1400.00             
+Modelo:                  TV36T2
+Ancho (cm):              85.00          
+Alto (cm):               48.00           
+Largo (cm):              5.00           
+Peso (Kg):               7.50            
+Material:                Plastico y Metal
+Color:                   Negro
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Microondas
+Codigo:                  MIC_01
+Marca:                   Panasonic
+Precio:                  S/400.00              
+Modelo:                  MIC30V1
+Ancho (cm):              50.00          
+Alto (cm):               30.00           
+Largo (cm):              40.00          
+Peso (Kg):               15.00           
+Material:                Acero Inoxidable
+Color:                   Plateado
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Microondas
+Codigo:                  MIC_02
+Marca:                   Samsung
+Precio:                  S/350.00              
+Modelo:                  MIC28S2
+Ancho (cm):              45.00          
+Alto (cm):               25.00           
+Largo (cm):              35.00          
+Peso (Kg):               12.00           
+Material:                Plastico y Metal
+Color:                   Blanco
+Garantia (meses):        18        
+
+----------------------------------------
+
+Nombre:                  Microondas
+Codigo:                  MIC_03
+Marca:                   LG
+Precio:                  S/380.00              
+Modelo:                  MIC32L1
+Ancho (cm):              55.00          
+Alto (cm):               35.00           
+Largo (cm):              45.00          
+Peso (Kg):               14.00           
+Material:                Acero Inoxidable
+Color:                   Gris
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Microondas
+Codigo:                  MIC_04
+Marca:                   Whirlpool
+Precio:                  S/300.00              
+Modelo:                  MIC25W3
+Ancho (cm):              40.00          
+Alto (cm):               20.00           
+Largo (cm):              30.00          
+Peso (Kg):               10.00           
+Material:                Plastico
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Microondas
+Codigo:                  MIC_05
+Marca:                   Bosch
+Precio:                  S/420.00              
+Modelo:                  MIC34B2
+Ancho (cm):              60.00          
+Alto (cm):               40.00           
+Largo (cm):              50.00          
+Peso (Kg):               16.00           
+Material:                Acero Inoxidable
+Color:                   Plateado
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Aspiradora
+Codigo:                  ASP_01
+Marca:                   Dyson
+Precio:                  S/800.00              
+Modelo:                  ASP30V1
+Ancho (cm):              25.00          
+Alto (cm):               110.00          
+Largo (cm):              20.00          
+Peso (Kg):               4.50            
+Material:                Plastico y Metal
+Color:                   Gris
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Aspiradora
+Codigo:                  ASP_02
+Marca:                   Shark
+Precio:                  S/700.00              
+Modelo:                  ASP28S2
+Ancho (cm):              30.00          
+Alto (cm):               100.00          
+Largo (cm):              25.00          
+Peso (Kg):               5.00            
+Material:                Plastico y Metal
+Color:                   Azul
+Garantia (meses):        18        
+
+----------------------------------------
+
+Nombre:                  Aspiradora
+Codigo:                  ASP_03
+Marca:                   Hoover
+Precio:                  S/600.00              
+Modelo:                  ASP25H1
+Ancho (cm):              28.00          
+Alto (cm):               95.00           
+Largo (cm):              22.00          
+Peso (Kg):               4.00            
+Material:                Plastico y Metal
+Color:                   Rojo
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Aspiradora
+Codigo:                  ASP_04
+Marca:                   Bissell
+Precio:                  S/750.00              
+Modelo:                  ASP32B3
+Ancho (cm):              35.00          
+Alto (cm):               105.00          
+Largo (cm):              30.00          
+Peso (Kg):               5.50            
+Material:                Plastico y Metal
+Color:                   Negro
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Aspiradora
+Codigo:                  ASP_05
+Marca:                   Miele
+Precio:                  S/900.00              
+Modelo:                  ASP36M4
+Ancho (cm):              40.00          
+Alto (cm):               115.00          
+Largo (cm):              35.00          
+Peso (Kg):               6.00            
+Material:                Plastico y Metal
+Color:                   Blanco
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Refrigerador
+Codigo:                  REF_01
+Marca:                   Samsung
+Precio:                  S/2500.00             
+Modelo:                  REF30S1
+Ancho (cm):              60.00          
+Alto (cm):               170.00          
+Largo (cm):              70.00          
+Peso (Kg):               80.00           
+Material:                Acero Inoxidable
+Color:                   Plateado
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Refrigerador
+Codigo:                  REF_02
+Marca:                   LG
+Precio:                  S/2800.00             
+Modelo:                  REF32L2
+Ancho (cm):              65.00          
+Alto (cm):               175.00          
+Largo (cm):              75.00          
+Peso (Kg):               85.00           
+Material:                Plastico y Metal
+Color:                   Blanco
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Refrigerador
+Codigo:                  REF_03
+Marca:                   Electrolux
+Precio:                  S/2700.00             
+Modelo:                  REF28E1
+Ancho (cm):              63.00          
+Alto (cm):               168.00          
+Largo (cm):              73.00          
+Peso (Kg):               82.00           
+Material:                Acero Inoxidable
+Color:                   Gris
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Refrigerador
+Codigo:                  REF_04
+Marca:                   Whirlpool
+Precio:                  S/2600.00             
+Modelo:                  REF30W3
+Ancho (cm):              62.00          
+Alto (cm):               172.00          
+Largo (cm):              72.00          
+Peso (Kg):               81.00           
+Material:                Plastico y Metal
+Color:                   Negro
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Refrigerador
+Codigo:                  REF_05
+Marca:                   Bosch
+Precio:                  S/2900.00             
+Modelo:                  REF34B2
+Ancho (cm):              67.00          
+Alto (cm):               178.00          
+Largo (cm):              77.00          
+Peso (Kg):               88.00           
+Material:                Acero Inoxidable
+Color:                   Plateado
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Horno Eléctrico
+Codigo:                  HOR_01
+Marca:                   Black+Decker
+Precio:                  S/300.00              
+Modelo:                  HOR20B1
+Ancho (cm):              40.00          
+Alto (cm):               35.00           
+Largo (cm):              45.00          
+Peso (Kg):               15.00           
+Material:                Metal
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Horno Eléctrico
+Codigo:                  HOR_02
+Marca:                   Hamilton Beach
+Precio:                  S/250.00              
+Modelo:                  HOR18H1
+Ancho (cm):              35.00          
+Alto (cm):               30.00           
+Largo (cm):              40.00          
+Peso (Kg):               12.00           
+Material:                Metal
+Color:                   Plateado
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Horno Eléctrico
+Codigo:                  HOR_03
+Marca:                   Oster
+Precio:                  S/280.00              
+Modelo:                  HOR22O2
+Ancho (cm):              45.00          
+Alto (cm):               40.00           
+Largo (cm):              50.00          
+Peso (Kg):               18.00           
+Material:                Metal
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Horno Eléctrico
+Codigo:                  HOR_04
+Marca:                   KitchenAid
+Precio:                  S/350.00              
+Modelo:                  HOR25K1
+Ancho (cm):              50.00          
+Alto (cm):               45.00           
+Largo (cm):              55.00          
+Peso (Kg):               20.00           
+Material:                Metal
+Color:                   Gris
+Garantia (meses):        18        
+
+----------------------------------------
+
+Nombre:                  Horno Eléctrico
+Codigo:                  HOR_05
+Marca:                   Cuisinart
+Precio:                  S/320.00              
+Modelo:                  HOR24C3
+Ancho (cm):              48.00          
+Alto (cm):               42.00           
+Largo (cm):              52.00          
+Peso (Kg):               17.00           
+Material:                Metal
+Color:                   Plateado
+Garantia (meses):        18        
+
+----------------------------------------
+
+Nombre:                  Licuadora
+Codigo:                  LIC_01
+Marca:                   Oster
+Precio:                  S/100.00              
+Modelo:                  LIC18O1
+Ancho (cm):              20.00          
+Alto (cm):               40.00           
+Largo (cm):              15.00          
+Peso (Kg):               3.00            
+Material:                Plastico y Metal
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Licuadora
+Codigo:                  LIC_02
+Marca:                   Ninja
+Precio:                  S/120.00              
+Modelo:                  LIC20N1
+Ancho (cm):              22.00          
+Alto (cm):               45.00           
+Largo (cm):              18.00          
+Peso (Kg):               3.50            
+Material:                Plastico y Metal
+Color:                   Gris
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Licuadora
+Codigo:                  LIC_03
+Marca:                   Philips
+Precio:                  S/90.00               
+Modelo:                  LIC16P2
+Ancho (cm):              18.00          
+Alto (cm):               35.00           
+Largo (cm):              14.00          
+Peso (Kg):               2.50            
+Material:                Plastico y Metal
+Color:                   Blanco
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Licuadora
+Codigo:                  LIC_04
+Marca:                   Hamilton Beach
+Precio:                  S/80.00               
+Modelo:                  LIC14H3
+Ancho (cm):              16.00          
+Alto (cm):               30.00           
+Largo (cm):              12.00          
+Peso (Kg):               2.00            
+Material:                Plastico y Metal
+Color:                   Plateado
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Licuadora
+Codigo:                  LIC_05
+Marca:                   Braun
+Precio:                  S/110.00              
+Modelo:                  LIC22B4
+Ancho (cm):              24.00          
+Alto (cm):               38.00           
+Largo (cm):              20.00          
+Peso (Kg):               3.00            
+Material:                Plastico y Metal
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Lavavajillas
+Codigo:                  LAVJ_01
+Marca:                   Bosch
+Precio:                  S/2000.00             
+Modelo:                  LAVJ24B1
+Ancho (cm):              60.00          
+Alto (cm):               85.00           
+Largo (cm):              60.00          
+Peso (Kg):               45.00           
+Material:                Acero Inoxidable
+Color:                   Plateado
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Lavavajillas
+Codigo:                  LAVJ_02
+Marca:                   Whirlpool
+Precio:                  S/1800.00             
+Modelo:                  LAVJ22W2
+Ancho (cm):              55.00          
+Alto (cm):               80.00           
+Largo (cm):              55.00          
+Peso (Kg):               40.00           
+Material:                Plastico y Metal
+Color:                   Blanco
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Lavavajillas
+Codigo:                  LAVJ_03
+Marca:                   Electrolux
+Precio:                  S/2200.00             
+Modelo:                  LAVJ26E3
+Ancho (cm):              65.00          
+Alto (cm):               90.00           
+Largo (cm):              65.00          
+Peso (Kg):               50.00           
+Material:                Acero Inoxidable
+Color:                   Gris
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Lavavajillas
+Codigo:                  LAVJ_04
+Marca:                   LG
+Precio:                  S/2100.00             
+Modelo:                  LAVJ25L4
+Ancho (cm):              62.00          
+Alto (cm):               88.00           
+Largo (cm):              62.00          
+Peso (Kg):               48.00           
+Material:                Plastico y Metal
+Color:                   Negro
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Lavavajillas
+Codigo:                  LAVJ_05
+Marca:                   Samsung
+Precio:                  S/2300.00             
+Modelo:                  LAVJ28S5
+Ancho (cm):              70.00          
+Alto (cm):               95.00           
+Largo (cm):              70.00          
+Peso (Kg):               55.00           
+Material:                Acero Inoxidable
+Color:                   Plateado
+Garantia (meses):        24        
+
+----------------------------------------
+
+Nombre:                  Tostadora
+Codigo:                  TOS_01
+Marca:                   Hamilton Beach
+Precio:                  S/50.00               
+Modelo:                  TOS10H1
+Ancho (cm):              20.00          
+Alto (cm):               25.00           
+Largo (cm):              15.00          
+Peso (Kg):               2.00            
+Material:                Metal
+Color:                   Plateado
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Tostadora
+Codigo:                  TOS_02
+Marca:                   Oster
+Precio:                  S/40.00               
+Modelo:                  TOS08O2
+Ancho (cm):              18.00          
+Alto (cm):               22.00           
+Largo (cm):              13.00          
+Peso (Kg):               1.50            
+Material:                Plastico y Metal
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Tostadora
+Codigo:                  TOS_03
+Marca:                   Cuisinart
+Precio:                  S/60.00               
+Modelo:                  TOS12C3
+Ancho (cm):              22.00          
+Alto (cm):               28.00           
+Largo (cm):              17.00          
+Peso (Kg):               2.50            
+Material:                Metal
+Color:                   Plateado
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Tostadora
+Codigo:                  TOS_04
+Marca:                   Breville
+Precio:                  S/70.00               
+Modelo:                  TOS14B4
+Ancho (cm):              24.00          
+Alto (cm):               30.00           
+Largo (cm):              19.00          
+Peso (Kg):               3.00            
+Material:                Metal
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Tostadora
+Codigo:                  TOS_05
+Marca:                   KitchenAid
+Precio:                  S/55.00               
+Modelo:                  TOS11K5
+Ancho (cm):              21.00          
+Alto (cm):               26.00           
+Largo (cm):              16.00          
+Peso (Kg):               2.20            
+Material:                Plastico y Metal
+Color:                   Blanco
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Batidora
+Codigo:                  BAT_01
+Marca:                   KitchenAid
+Precio:                  S/150.00              
+Modelo:                  BAT10K1
+Ancho (cm):              20.00          
+Alto (cm):               30.00           
+Largo (cm):              15.00          
+Peso (Kg):               3.00            
+Material:                Metal y Plastico
+Color:                   Plateado
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Batidora
+Codigo:                  BAT_02
+Marca:                   Oster
+Precio:                  S/120.00              
+Modelo:                  BAT08O2
+Ancho (cm):              18.00          
+Alto (cm):               25.00           
+Largo (cm):              13.00          
+Peso (Kg):               2.50            
+Material:                Plastico y Metal
+Color:                   Blanco
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Batidora
+Codigo:                  BAT_03
+Marca:                   Hamilton Beach
+Precio:                  S/100.00              
+Modelo:                  BAT06H3
+Ancho (cm):              16.00          
+Alto (cm):               20.00           
+Largo (cm):              12.00          
+Peso (Kg):               2.00            
+Material:                Metal y Plastico
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Batidora
+Codigo:                  BAT_04
+Marca:                   Braun
+Precio:                  S/130.00              
+Modelo:                  BAT09B4
+Ancho (cm):              19.00          
+Alto (cm):               28.00           
+Largo (cm):              14.00          
+Peso (Kg):               2.80            
+Material:                Metal y Plastico
+Color:                   Gris
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Batidora
+Codigo:                  BAT_05
+Marca:                   Cuisinart
+Precio:                  S/110.00              
+Modelo:                  BAT07C5
+Ancho (cm):              17.00          
+Alto (cm):               22.00           
+Largo (cm):              13.00          
+Peso (Kg):               2.20            
+Material:                Metal y Plastico
+Color:                   Plateado
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Exprimidor de Jugo
+Codigo:                  EXP_01
+Marca:                   Philips
+Precio:                  S/80.00               
+Modelo:                  EXP10P1
+Ancho (cm):              18.00          
+Alto (cm):               25.00           
+Largo (cm):              15.00          
+Peso (Kg):               2.50            
+Material:                Plastico y Metal
+Color:                   Blanco
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Exprimidor de Jugo
+Codigo:                  EXP_02
+Marca:                   Braun
+Precio:                  S/100.00              
+Modelo:                  EXP12B2
+Ancho (cm):              20.00          
+Alto (cm):               30.00           
+Largo (cm):              18.00          
+Peso (Kg):               3.00            
+Material:                Metal y Plastico
+Color:                   Plateado
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Exprimidor de Jugo
+Codigo:                  EXP_03
+Marca:                   Black+Decker
+Precio:                  S/60.00               
+Modelo:                  EXP08D3
+Ancho (cm):              16.00          
+Alto (cm):               22.00           
+Largo (cm):              14.00          
+Peso (Kg):               2.00            
+Material:                Plastico
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Freidora de Aire
+Codigo:                  FRE_01
+Marca:                   Ninja
+Precio:                  S/200.00              
+Modelo:                  FRE10N1
+Ancho (cm):              25.00          
+Alto (cm):               35.00           
+Largo (cm):              20.00          
+Peso (Kg):               5.00            
+Material:                Plastico y Metal
+Color:                   Gris
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Freidora de Aire
+Codigo:                  FRE_02
+Marca:                   Philips
+Precio:                  S/180.00              
+Modelo:                  FRE08P2
+Ancho (cm):              22.00          
+Alto (cm):               30.00           
+Largo (cm):              18.00          
+Peso (Kg):               4.00            
+Material:                Metal y Plastico
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Freidora de Aire
+Codigo:                  FRE_03
+Marca:                   Cosori
+Precio:                  S/220.00              
+Modelo:                  FRE12C3
+Ancho (cm):              27.00          
+Alto (cm):               37.00           
+Largo (cm):              22.00          
+Peso (Kg):               5.50            
+Material:                Metal y Plastico
+Color:                   Plateado
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Molinillo de Café
+Codigo:                  MOL_01
+Marca:                   Krups
+Precio:                  S/50.00               
+Modelo:                  MOL10K1
+Ancho (cm):              15.00          
+Alto (cm):               20.00           
+Largo (cm):              12.00          
+Peso (Kg):               1.50            
+Material:                Plastico
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Molinillo de Café
+Codigo:                  MOL_02
+Marca:                   Baratza
+Precio:                  S/80.00               
+Modelo:                  MOL12B2
+Ancho (cm):              18.00          
+Alto (cm):               25.00           
+Largo (cm):              15.00          
+Peso (Kg):               2.00            
+Material:                Metal y Plastico
+Color:                   Plateado
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Molinillo de Café
+Codigo:                  MOL_03
+Marca:                   Capresso
+Precio:                  S/70.00               
+Modelo:                  MOL11C3
+Ancho (cm):              17.00          
+Alto (cm):               22.00           
+Largo (cm):              14.00          
+Peso (Kg):               1.80            
+Material:                Metal y Plastico
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Molinillo de Café
+Codigo:                  MOL_04
+Marca:                   Cuisinart
+Precio:                  S/60.00               
+Modelo:                  MOL09C4
+Ancho (cm):              16.00          
+Alto (cm):               21.00           
+Largo (cm):              13.00          
+Peso (Kg):               1.70            
+Material:                Plastico y Metal
+Color:                   Blanco
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Molinillo de Café
+Codigo:                  MOL_05
+Marca:                   Bodum
+Precio:                  S/90.00               
+Modelo:                  MOL13B5
+Ancho (cm):              20.00          
+Alto (cm):               26.00           
+Largo (cm):              16.00          
+Peso (Kg):               2.20            
+Material:                Metal y Plastico
+Color:                   Rojo
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Plancha
+Codigo:                  PLA_01
+Marca:                   Rowenta
+Precio:                  S/60.00               
+Modelo:                  PLA10R1
+Ancho (cm):              10.00          
+Alto (cm):               15.00           
+Largo (cm):              5.00           
+Peso (Kg):               1.00            
+Material:                Metal
+Color:                   Azul
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Plancha
+Codigo:                  PLA_02
+Marca:                   Philips
+Precio:                  S/50.00               
+Modelo:                  PLA08P2
+Ancho (cm):              9.00           
+Alto (cm):               14.00           
+Largo (cm):              4.00           
+Peso (Kg):               0.80            
+Material:                Metal y Plastico
+Color:                   Blanco
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Plancha
+Codigo:                  PLA_03
+Marca:                   T-fal
+Precio:                  S/70.00               
+Modelo:                  PLA12T3
+Ancho (cm):              12.00          
+Alto (cm):               16.00           
+Largo (cm):              6.00           
+Peso (Kg):               1.20            
+Material:                Metal
+Color:                   Rojo
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Plancha
+Codigo:                  PLA_04
+Marca:                   Black+Decker
+Precio:                  S/55.00               
+Modelo:                  PLA09B4
+Ancho (cm):              11.00          
+Alto (cm):               15.00           
+Largo (cm):              5.00           
+Peso (Kg):               1.00            
+Material:                Metal y Plastico
+Color:                   Negro
+Garantia (meses):        12        
+
+----------------------------------------
+
+Nombre:                  Plancha
+Codigo:                  PLA_05
+Marca:                   Hamilton Beach
+Precio:                  S/65.00               
+Modelo:                  PLA11H5
+Ancho (cm):              11.00          
+Alto (cm):               16.00           
+Largo (cm):              6.00           
+Peso (Kg):               1.20            
+Material:                Metal y Plastico
+Color:                   Gris
+Garantia (meses):        12        
+
+----------------------------------------
