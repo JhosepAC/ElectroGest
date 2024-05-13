@@ -269,6 +269,7 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
 void clientRegisterMenu() {
     // Crear un objeto CLIENTE
     CLIENTE comprador;
+    GESTION_CLIENTE clienteManager;
 
     // Definir variables
     string input;
@@ -284,20 +285,56 @@ void clientRegisterMenu() {
     cout << YELLOW_COLOR << menuTexts[currentLanguage][23] << RESET_COLOR; // Nombre
     string input_nombre;
     getline(cin, input_nombre);
-    comprador.setNombre(input_nombre);
+
+    while (!contieneSoloLetras(input_nombre)) {
+        cout << MAGENTA_COLOR << endl << "Nombre no permitido.";
+
+        cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese un nombre válido: " << RESET_COLOR;
+        getline(cin, input_nombre);
+    }
+
+    // Obtener el primer nombre
+    string primer_nombre;
+    size_t pos = input_nombre.find(' ');
+    if (pos != string::npos) {
+        primer_nombre = input_nombre.substr(0, pos);
+    }
+    else {
+        primer_nombre = input_nombre;
+    }
+
+    comprador.setNombre(primer_nombre);
 
     // Solicitar al usuario que ingrese un apellido
     cout << YELLOW_COLOR << menuTexts[currentLanguage][24] << RESET_COLOR; // Apellido
     string input_apellido;
     getline(cin, input_apellido);
-    comprador.setApellido(input_apellido);
 
-    // Solicitar al usuario que ingrese un correo electrónico
-    cout << YELLOW_COLOR << menuTexts[currentLanguage][25] << RESET_COLOR; // Correo electrónico
+    while (!contieneSoloLetrasApellido(input_apellido)) {
+        cout << MAGENTA_COLOR << endl << "Apellido no permitido.";
+
+        cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese un apellido válido: " << RESET_COLOR;
+        getline(cin, input_apellido);
+    }
+
+    // Obtener el primer apellido
+    string primer_apellido;
+    size_t posA = input_apellido.find(' ');
+    if (posA != string::npos) {
+        primer_apellido = input_apellido.substr(0, posA);
+    }
+    else {
+        primer_apellido = input_apellido;
+    }
+
+    comprador.setApellido(primer_apellido);
+
     string input_correo;
-
     regex correoRegex(R"([a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook)\.(com|net|org|edu))");
+
     do {
+        // Solicitar al usuario que ingrese un correo electrónico
+        cout << YELLOW_COLOR << menuTexts[currentLanguage][25] << RESET_COLOR; // Correo electrónico
         getline(cin, input_correo);
 
         // Verificar si la dirección de correo electrónico cumple con la expresión regular
@@ -316,7 +353,7 @@ void clientRegisterMenu() {
 
     // Validar que se haya ingresado una contraseña
     while (input_contrasenia.empty()) {
-        cout << RED_COLOR << "Debe ingresar una contraseña. Por favor, inténtelo de nuevo." << RESET_COLOR << endl;
+        cout << endl << MAGENTA_COLOR << "Debe ingresar una contraseña. Por favor, inténtelo de nuevo." << RESET_COLOR << endl;
         cout << YELLOW_COLOR << menuTexts[currentLanguage][12] << RESET_COLOR; // Contraseña
         getline(cin, input_contrasenia);
         comprador.setContrasenia(input_contrasenia);
@@ -329,7 +366,7 @@ void clientRegisterMenu() {
 
     // Verificar si las contraseñas coinciden
     while (input_contrasenia != input_confirmar_contrasenia) {
-        cout << RED_COLOR << "Las contraseñas no coinciden. Por favor, inténtelo de nuevo." << RESET_COLOR << endl;
+        cout << MAGENTA_COLOR << endl << "Las contraseñas no coinciden. Por favor, inténtelo de nuevo." << RESET_COLOR << DOUBLE_SPACE;
 
         // Solicitar al usuario que ingrese la contraseña nuevamente
         cout << YELLOW_COLOR << menuTexts[currentLanguage][12] << RESET_COLOR; // Contraseña
@@ -341,29 +378,32 @@ void clientRegisterMenu() {
         getline(cin, input_confirmar_contrasenia);
     }
 
-
     // Solicitar al usuario que ingrese la dirección
     cout << YELLOW_COLOR << menuTexts[currentLanguage][28] << RESET_COLOR; // Dirección
     string input_direccion;
     getline(cin, input_direccion);
     comprador.setDireccion(input_direccion);
 
-    // Solicitar al usuario que ingrese el teléfono
-    cout << YELLOW_COLOR << menuTexts[currentLanguage][29] << RESET_COLOR; // Teléfono
     string input_telefono;
     do {
+        // Solicitar al usuario que ingrese el teléfono
+        cout << YELLOW_COLOR << menuTexts[currentLanguage][29] << RESET_COLOR; // Teléfono
         getline(cin, input_telefono);
-        // Verificar si la entrada es un número de 9 dígitos
+        // Verificar si la entrada es un número de 9 dígitos y no existe en el archivo
         if (input_telefono.length() != 9 || !all_of(input_telefono.begin(), input_telefono.end(), ::isdigit)) {
             cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][30] << DOUBLE_SPACE; // Número de teléfono no válido
         }
-    } while (input_telefono.length() != 9 || !all_of(input_telefono.begin(), input_telefono.end(), ::isdigit));
+        else if(clienteManager.numeroExistente(input_telefono))
+		{
+			cout << endl << MAGENTA_COLOR << "Número de teléfono ya registrado." << DOUBLE_SPACE; // Número de teléfono ya registrado
+		}
+    } while (input_telefono.length() != 9 || !all_of(input_telefono.begin(), input_telefono.end(), ::isdigit) || clienteManager.numeroExistente(input_telefono));
     comprador.setTelefono(input_telefono);
 
-    // Solicitar al usuario que ingrese la fecha de nacimiento
-    cout << YELLOW_COLOR << menuTexts[currentLanguage][31] << RESET_COLOR; // Fecha de nacimiento
     string input_nacimiento;
     do {
+        // Solicitar al usuario que ingrese la fecha de nacimiento
+        cout << YELLOW_COLOR << menuTexts[currentLanguage][31] << RESET_COLOR; // Fecha de nacimiento
         getline(cin, input_nacimiento);
 
         // Definir un stringstream para separar la entrada en día, mes y año
@@ -374,7 +414,7 @@ void clientRegisterMenu() {
 
         // Validar el formato de la fecha y los rangos de día, mes y año
         if (iss.fail() || slash1 != '/' || slash2 != '/' || dia < 1 || dia > 31 || mes < 1 || mes > 12 || anio < 1944 || anio > 2006) {
-            cout << menuTexts[currentLanguage][35] << endl;
+            cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][35] << DOUBLE_SPACE; // Fecha de nacimiento no válida
         }
         else {
             // La fecha de nacimiento es válida
@@ -385,10 +425,10 @@ void clientRegisterMenu() {
         }
     } while (true); // Repetir hasta que se ingrese una fecha de nacimiento válida
 
-    // Solicitar al usuario que ingrese el género
-    cout << YELLOW_COLOR << menuTexts[currentLanguage][32] << RESET_COLOR; // Sexo
     string input_genero;
     do {
+        // Solicitar al usuario que ingrese el género
+        cout << YELLOW_COLOR << menuTexts[currentLanguage][32] << RESET_COLOR; // Sexo
         getline(cin, input_genero);
         if (input_genero != "M" && input_genero != "F") {
             cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][33] << DOUBLE_SPACE; // Género no válido

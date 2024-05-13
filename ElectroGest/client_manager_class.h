@@ -138,4 +138,19 @@ public:
         }
     }
 
+    bool numeroExistente(const string& telefono) {
+        ifstream file("client_registration.txt");
+        if (file.is_open()) {
+            string line;
+            while (getline(file, line)) {
+                size_t pos = line.find(telefono);
+                if (pos != string::npos) {
+                    return true; // Si el número ya existe en el archivo
+                }
+            }
+            file.close();
+        }
+        return false; // Si el número no existe en el archivo
+    }
+
 };

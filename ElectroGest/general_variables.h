@@ -5,6 +5,7 @@
 #include <Windows.h>
 #include <map>
 #include <limits>
+#include <cctype>
 
 using namespace std;
 
@@ -126,4 +127,24 @@ void changeLanguage(string& currentLanguage) {
         // Cambiar el idioma
         currentLanguage = language;
     }
+}
+
+// Función para verificar si una cadena contiene solo letras
+bool contieneSoloLetras(const string& str) {
+    for (char c : str) {
+        if (!(isalpha(c) || c == '6' || c == ' ')) { // Permitir letras, espacio y el número 6
+            return false;
+        }
+    }
+    return true;
+}
+
+// Función para verificar si una cadena contiene solo letras
+bool contieneSoloLetrasApellido(const string& str) {
+    for (char c : str) {
+        if (!(isalpha(c) || c == ' ')) { // Permitir letras y espacio
+            return false;
+        }
+    }
+    return true;
 }
