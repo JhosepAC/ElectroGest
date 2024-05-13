@@ -233,10 +233,19 @@ public:
                 if (nombreProducto.compare(nombreMinusculas) == 0) {
                     // Si se encuentra el producto, mostrar su información
                     encontrado = true;
-                    std::cout << "Producto encontrado:" << std::endl;
+                    cout << endl;
                     for (int i = 0; i < 12; ++i) {
                         getline(file, line);
-                        std::cout << line << std::endl;
+                        std::string::size_type pos = line.find(":");
+                        if (pos != std::string::npos) {
+                            std::string label = line.substr(0, pos);
+                            std::string value = line.substr(pos + 1);
+                            std::cout << BLUE_COLOR << label << RESET_COLOR;
+                            std::cout << value << std::endl;
+                        }
+                        else {
+                            std::cout << line << std::endl;
+                        }
                     }
                     std::cout << YELLOW_COLOR << "----------------------------------------" << RESET_COLOR << std::endl;
                 }

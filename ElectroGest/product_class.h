@@ -55,7 +55,7 @@ public:
             cout << BLUE_COLOR << left << setw(columnWidth) << atributo.first + ":" << RESET_COLOR << setw(columnWidth) << atributo.second << endl;
         }
 
-        cout << endl << YELLOW_COLOR << "----------------------------------------------------------------------------------------------------------------" << RESET_COLOR;
+        cout << endl << YELLOW_COLOR << "--------------------------------------------------------------------------------------------" << RESET_COLOR;
     }
 
     void agregarAtributo(const string& nombre, const string& valor) {

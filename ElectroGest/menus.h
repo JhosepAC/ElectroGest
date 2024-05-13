@@ -665,6 +665,7 @@ void productCatalogMenu() {
         cout << "<2> Filtrar productos" << endl;
         cout << "<3> Buscar productos por nombre" << endl;
         cout << "<4> Volver";
+        ShowConsoleCursor(true); // Mostrar el cursor
         cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opción: " << RESET_COLOR;
         cin >> opcion;
 
@@ -677,19 +678,13 @@ void productCatalogMenu() {
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
-        else if (opcion > 4)
-        {
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Opción no válida
-            Sleep(1500); // Espera 1.5 segundos
-            continue; // Continúa al siguiente ciclo del bucle do-while
-        }
 
         switch (opcion)
         {
         case 1: 
             system("cls");
             productManager.mostrarTodosLosProductos();
+            ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
             _getch();
             system("cls");
@@ -702,15 +697,14 @@ void productCatalogMenu() {
             cout << YELLOW_COLOR << "Ingresa el nombre del producto a buscar: " << RESET_COLOR;
             cin.ignore();
             getline(cin, nombre);
-            cout << DOUBLE_SPACE;
+            cout << endl;
             productManager.buscarProductoPorNombre(nombre);
+            ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
             _getch();
             system("cls");  
 			break;
         case 4:
-            system("cls");
-            homeClientMenu();   
             break;
         }
 
