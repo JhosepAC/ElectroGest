@@ -484,8 +484,6 @@ void clientLoginMenu() {
 // Función para mostrar el menú de comprador
 void clientMenu() {
 
-    ShowConsoleCursor(true);   
-
     int opcion = 0;
 
     string currentLanguage = "espanol"; // Idioma predeterminado
@@ -499,6 +497,7 @@ void clientMenu() {
         cout << "<2> Iniciar sesión" << endl;
         cout << "<3> Salir";
         cout << DOUBLE_SPACE << YELLOW_COLOR;
+        ShowConsoleCursor(true); // Mostrar el cursor
         cout << "Ingrese una opción: " << RESET_COLOR;
         cin >> opcion;
 
@@ -508,13 +507,6 @@ void clientMenu() {
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
-            Sleep(1500); // Espera 1.5 segundos
-            continue; // Continúa al siguiente ciclo del bucle do-while
-        }
-        else if (opcion > 4)
-        {
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Opción no válida
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
