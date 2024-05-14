@@ -130,6 +130,7 @@ void sellerLoginMenu() {
     // Definir variables
     string usuario, contrasena;
     string usuarioArchivo, contrasenaArchivo;
+
     string currentLanguage = "espanol"; // Idioma predeterminado
 
     // Crear el objeto ProductManager
@@ -287,9 +288,9 @@ void clientRegisterMenu() {
     getline(cin, input_nombre);
 
     while (!contieneSoloLetras(input_nombre)) {
-        cout << MAGENTA_COLOR << endl << "Nombre no permitido.";
+        cout << MAGENTA_COLOR << endl << menuTexts[currentLanguage][36]; // Nombre no válido
 
-        cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese un nombre válido: " << RESET_COLOR;
+        cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][37] << RESET_COLOR; // Ingrese un nombre válido
         getline(cin, input_nombre);
     }
 
@@ -311,9 +312,9 @@ void clientRegisterMenu() {
     getline(cin, input_apellido);
 
     while (!contieneSoloLetrasApellido(input_apellido)) {
-        cout << MAGENTA_COLOR << endl << "Apellido no permitido.";
+        cout << MAGENTA_COLOR << endl << menuTexts[currentLanguage][38];
 
-        cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese un apellido válido: " << RESET_COLOR;
+        cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][39] << RESET_COLOR;
         getline(cin, input_apellido);
     }
 
@@ -353,7 +354,7 @@ void clientRegisterMenu() {
 
     // Validar que se haya ingresado una contraseña
     while (input_contrasenia.empty()) {
-        cout << endl << MAGENTA_COLOR << "Debe ingresar una contraseña. Por favor, inténtelo de nuevo." << RESET_COLOR << endl;
+        cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][40] << RESET_COLOR << endl;
         cout << YELLOW_COLOR << menuTexts[currentLanguage][12] << RESET_COLOR; // Contraseña
         getline(cin, input_contrasenia);
         comprador.setContrasenia(input_contrasenia);
@@ -366,7 +367,7 @@ void clientRegisterMenu() {
 
     // Verificar si las contraseñas coinciden
     while (input_contrasenia != input_confirmar_contrasenia) {
-        cout << MAGENTA_COLOR << endl << "Las contraseñas no coinciden. Por favor, inténtelo de nuevo." << RESET_COLOR << DOUBLE_SPACE;
+        cout << MAGENTA_COLOR << endl << menuTexts[currentLanguage][41] << RESET_COLOR << DOUBLE_SPACE;
 
         // Solicitar al usuario que ingrese la contraseña nuevamente
         cout << YELLOW_COLOR << menuTexts[currentLanguage][12] << RESET_COLOR; // Contraseña
@@ -395,7 +396,7 @@ void clientRegisterMenu() {
         }
         else if(clienteManager.numeroExistente(input_telefono))
 		{
-			cout << endl << MAGENTA_COLOR << "Número de teléfono ya registrado." << DOUBLE_SPACE; // Número de teléfono ya registrado
+			cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][42] << DOUBLE_SPACE; // Número de teléfono ya registrado
 		}
     } while (input_telefono.length() != 9 || !all_of(input_telefono.begin(), input_telefono.end(), ::isdigit) || clienteManager.numeroExistente(input_telefono));
     comprador.setTelefono(input_telefono);
