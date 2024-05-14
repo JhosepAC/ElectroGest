@@ -23,6 +23,7 @@ using namespace std;
 //################## MENÚS DE LA APLICACIÓN ###########################//
 //#####################################################################//
 
+
 // Menú general
 void generalMenu(); // Menú general
 
