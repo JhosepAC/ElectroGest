@@ -81,7 +81,6 @@ map<string, map<int, string>> menuTexts = {
         {37, "Ingrese un nombre válido: "},
         {38, "Apellido no válido."},
         {39, "Ingrese un apellido válido: "},
->>>>>>> ad28a2a3f66afbc68c01c9099beaba4259d80164
         {40, "Debe ingresar una contraseña. Por favor, inténtelo de nuevo."},
         {41, "Las contraseñas no coinciden. Por favor, inténtelo de nuevo."},
         {42, "Número de teléfono ya registrado."},
