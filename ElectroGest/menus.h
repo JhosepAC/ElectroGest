@@ -633,6 +633,9 @@ void homeClientMenu(string _currentLanguage) {
 
 // Función para guardar la información del comprador en el archivo
 void saveClientInfo(const CLIENTE& client, string _currentLanguage) {
+
+    string currentLanguage = _currentLanguage; // Idioma predeterminado
+
     ofstream file("client_registration.txt", ios::app); // Abre el archivo en modo append
     if (file.is_open()) {
         file << client.getNombre() << ","
@@ -645,22 +648,23 @@ void saveClientInfo(const CLIENTE& client, string _currentLanguage) {
             << client.getGenero() << "\n";
         file.close();
 
-        cout << DOUBLE_SPACE << GREEN_COLOR << "¡Registro completado exitosamente!" << endl; // Mostrar un mensaje de confirmación
+        cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][67] << endl; // Mostrar un mensaje de confirmación
     }
     else {
-        cout << "No se pudo abrir el archivo para guardar la información." << endl;
+        cout << menuTexts[currentLanguage][404] << endl; // Error al abrir el archivo
     }
 }
 
 // Función para guardar la contraseña cifrada
 void savePassword(const string& email, const string& password, string _currentLanguage) {
+    string currentLanguage = _currentLanguage; // Idioma predeterminado
     ofstream passwordFile("passwords.txt", ios::app); // Abre el archivo en modo append
     if (passwordFile.is_open()) {
         passwordFile << email << " " << password << "\n"; // Escribir el correo electrónico y la contraseña en el archivo
         passwordFile.close();
     }
     else {
-        cout << "No se pudo abrir el archivo para guardar la contraseña." << endl;
+        cout << menuTexts[currentLanguage][404] << endl; // Error al abrir el archivo
     }
 }
 
@@ -681,10 +685,10 @@ void productCatalogMenu(string _currentLanguage) {
 
         system("cls");
 
-        cout << CYAN_COLOR << "=== Cátalogo de productos ===" << RESET_COLOR << DOUBLE_SPACE;
-        cout << "<1> Ver productos" << endl;
-        cout << "<2> Filtrar productos" << endl;
-        cout << "<3> Buscar productos por nombre" << endl;
+        cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][68] << " ===" << RESET_COLOR << DOUBLE_SPACE;
+        cout << "<1> " << menuTexts[currentLanguage][69] << endl;
+        cout << "<2> " << menuTexts[currentLanguage][70] << endl;
+        cout << "<3> " << menuTexts[currentLanguage][71] << endl;
         cout << "<4> " << menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Mostrar el cursor
         cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR;
@@ -715,7 +719,7 @@ void productCatalogMenu(string _currentLanguage) {
             break;
         case 3:
             system("cls");
-            cout << YELLOW_COLOR << "Ingresa el nombre del producto a buscar: " << RESET_COLOR;
+            cout << YELLOW_COLOR << menuTexts[currentLanguage][72] << RESET_COLOR;
             cin.ignore();
             getline(cin, nombre);
             cout << endl;
@@ -745,10 +749,10 @@ void filtrarProductosPorCategoria(string _currentLanguage) {
 
         system("cls");
 
-        cout << CYAN_COLOR << "=== Filtrar productos por categoría ===" << RESET_COLOR << DOUBLE_SPACE;
-        cout << "<1> Filtrar por precio" << endl;
-        cout << "<2> Filtrar por color" << endl;
-        cout << "<3> Filtrar por marca" << endl;
+        cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][83] << " ===" << RESET_COLOR << DOUBLE_SPACE;
+        cout << "<1> " << menuTexts[currentLanguage][84] << endl;
+        cout << "<2> " << menuTexts[currentLanguage][85] << endl;
+        cout << "<3> " << menuTexts[currentLanguage][86] << endl;
         cout << "<4> " <<  menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Mostrar el cursor
         cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR;
@@ -806,13 +810,13 @@ void productManagementMenu(string _currentLanguage) {
 
         system("cls"); // Limpiar la pantalla en sistemas Windows
 
-        cout << CYAN_COLOR << "=== Gestión de productos ===" << DOUBLE_SPACE << RESET_COLOR;
-        cout << "<1> Catálogo de productos" << endl;
-        cout << "<2> Agregar nuevo producto" << endl;
-        cout << "<3> Actualizar producto" << endl;
-        cout << "<4> Eliminar producto" << endl;
-        cout << "<5> Buscar producto" << endl;
-        cout << "<6> " << menuTexts[currentLanguage][4];
+        cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][87] <<" ===" << DOUBLE_SPACE << RESET_COLOR;
+        cout << "<1> " << menuTexts[currentLanguage][88] << endl;
+        cout << "<2> " << menuTexts[currentLanguage][89] << endl;
+        cout << "<3> " << menuTexts[currentLanguage][90] << endl;
+        cout << "<4> " << menuTexts[currentLanguage][91] << endl;
+        cout << "<5> " << menuTexts[currentLanguage][92] << endl;
+        cout << "<6> " << menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Mostrar el cursor
         cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR;
         cin >> opcion;
@@ -835,9 +839,9 @@ void productManagementMenu(string _currentLanguage) {
             do
             {
 
-                cout << endl << YELLOW_COLOR << "¿Desea ordenar los productos por precio?" << DOUBLE_SPACE << RESET_COLOR;
-                cout << "<1> Sí" << endl;
-                cout << "<2> No";
+                cout << endl << YELLOW_COLOR << menuTexts[currentLanguage][93] << DOUBLE_SPACE << RESET_COLOR;
+                cout << "<1> " << menuTexts[currentLanguage][94] << endl;
+                cout << "<2> " << menuTexts[currentLanguage][95];
                 ShowConsoleCursor(true); // Muestra el cursor
                 cout << YELLOW_COLOR << DOUBLE_SPACE << menuTexts[currentLanguage][5] << RESET_COLOR;
                 cin >> opcion_ordenar;
@@ -850,7 +854,7 @@ void productManagementMenu(string _currentLanguage) {
 				}
                 else {
                     ShowConsoleCursor(false); // Oculta el cursor
-                    cout << endl << MAGENTA_COLOR << "Opción no válida. Por favor, intente de nuevo." << endl;
+                    cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][7] << endl;
                     _sleep(1500);
                 }
 
@@ -1232,15 +1236,15 @@ void orderManagementMenu(string _currentLanguage) {
 
     while (true) {
         system("cls");  
-        std::cout << CYAN_COLOR << "=== GESTIÓN DE PEDIDOS ==" << RESET_COLOR << DOUBLE_SPACE;
-        std::cout << "<1> Ver Pedidos Pendientes" << endl;
-        std::cout << "<2> Ver Pedidos Procesados" << endl;
-        std::cout << "<3> Procesar Pedido" << endl;
-        std::cout << "<4> Eliminar Pedidos" << endl;
-        std::cout << "<5> Historial de Pedidos" << endl;
+        std::cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][77] << " ==" << RESET_COLOR << DOUBLE_SPACE;
+        std::cout << "<1> " << menuTexts[currentLanguage][78] << endl;
+        std::cout << "<2> " << menuTexts[currentLanguage][79] << endl;
+        std::cout << "<3> " << menuTexts[currentLanguage][80] << endl;
+        std::cout << "<4> " << menuTexts[currentLanguage][81] << endl;
+        std::cout << "<5> " << menuTexts[currentLanguage][82] << endl;
         std::cout << "<6> " << menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Muestra el cursor
-        std::cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione una opción: " << RESET_COLOR;
+        std::cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR;
         std::cin >> opcion;
 
         // Verifica si la entrada falló
@@ -1264,7 +1268,7 @@ void orderManagementMenu(string _currentLanguage) {
             system("cls");
             sistemaPedidos.verPedidosPendientes();
             ShowConsoleCursor(true); // Muestra el cursor
-            cout << YELLOW_COLOR << "Ingrese el índice del pedido a procesar: " << RESET_COLOR;
+            cout << YELLOW_COLOR << menuTexts[currentLanguage][76] << RESET_COLOR;
             int indicePedido;
             std::cin >> indicePedido;
             if (indicePedido >= 0 && indicePedido < sistemaPedidos.getNumPedidosPendientes()) {
@@ -1274,18 +1278,18 @@ void orderManagementMenu(string _currentLanguage) {
                     inventario.retirarStock(pedido.getCodigoProducto(), pedido.getCantidad());
                     sistemaPedidos.procesarPedido(indicePedido);
                     ShowConsoleCursor(false); // Oculta el cursor
-                    std::cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido procesado correctamente.";
+                    std::cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][75];
                     Sleep(1500);
                 }
                 else {
                     ShowConsoleCursor(false); // Oculta el cursor
-                    std::cout << DOUBLE_SPACE << RED_COLOR << "No hay suficiente stock para procesar este pedido.";
+                    std::cout << DOUBLE_SPACE << RED_COLOR << menuTexts[currentLanguage][74];
                     Sleep(1500);
                 }
             }
             else {
                 ShowConsoleCursor(false); // Oculta el cursor
-                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "Índice de pedido inválido.\n";
+                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][73]; // Índice no válido
                 Sleep(1500);
             }
             break;
