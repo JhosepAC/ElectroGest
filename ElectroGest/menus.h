@@ -589,13 +589,13 @@ void homeClientMenu(string _currentLanguage) {
 
     do {
         cout << CYAN_COLOR << menuTexts[currentLanguage][43] << DOUBLE_SPACE << RESET_COLOR;
-        cout << "<1> Ver cátalogo de productos" << endl;
-        cout << "<2> Realizar pedido" << endl;
-        cout << "<3> Ver estado de pedidos" << endl;
+        cout << "<1> " << menuTexts[currentLanguage][52] << endl;
+        cout << "<2> " << menuTexts[currentLanguage][53] << endl;
+        cout << "<3> " << menuTexts[currentLanguage][54] << endl;
         cout << "<4> " << menuTexts[currentLanguage][4];
         cout << DOUBLE_SPACE << YELLOW_COLOR;
         ShowConsoleCursor(true); // Mostrar el cursor
-        cout << "Ingrese una opción: " << RESET_COLOR;
+        cout << menuTexts[currentLanguage][5] << RESET_COLOR;
         cin >> opcion;
 
         // Verifica si la entrada falló
@@ -621,7 +621,7 @@ void homeClientMenu(string _currentLanguage) {
             system("cls");
             sistemaPedidos.mostrarHistorialPedidos();
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
+            cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
             system("cls");
             break;
@@ -687,7 +687,7 @@ void productCatalogMenu(string _currentLanguage) {
         cout << "<3> Buscar productos por nombre" << endl;
         cout << "<4> " << menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Mostrar el cursor
-        cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opción: " << RESET_COLOR;
+        cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR;
         cin >> opcion;
 
         // Verifica si la entrada falló
@@ -751,7 +751,7 @@ void filtrarProductosPorCategoria(string _currentLanguage) {
         cout << "<3> Filtrar por marca" << endl;
         cout << "<4> " <<  menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Mostrar el cursor
-        cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opción: " << RESET_COLOR;
+        cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR;
         cin >> opcion;
 
         // Verifica si la entrada falló
@@ -814,7 +814,7 @@ void productManagementMenu(string _currentLanguage) {
         cout << "<5> Buscar producto" << endl;
         cout << "<6> " << menuTexts[currentLanguage][4];
         ShowConsoleCursor(true); // Mostrar el cursor
-        cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opción: " << RESET_COLOR;
+        cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR;
         cin >> opcion;
 
         // Verifica si la entrada falló
@@ -839,7 +839,7 @@ void productManagementMenu(string _currentLanguage) {
                 cout << "<1> Sí" << endl;
                 cout << "<2> No";
                 ShowConsoleCursor(true); // Muestra el cursor
-                cout << YELLOW_COLOR << DOUBLE_SPACE << "Ingrese una opción: " << RESET_COLOR;
+                cout << YELLOW_COLOR << DOUBLE_SPACE << menuTexts[currentLanguage][5] << RESET_COLOR;
                 cin >> opcion_ordenar;
 
                 if (opcion_ordenar == 1) {
@@ -899,7 +899,7 @@ void inventoryManagementMenu(string _currentLanguage) {
         std::cout << "<4> Historial de Movimientos" << std::endl;
         std::cout << "<5> " << menuTexts[currentLanguage][4] << std::endl;
         ShowConsoleCursor(true); // Muestra el cursor
-        std::cout << endl << YELLOW_COLOR << "Ingrese la opción deseada: " << RESET_COLOR;
+        std::cout << endl << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR;
         std::cin >> opcion;
 
         // Verifica si la entrada falló
@@ -1296,7 +1296,7 @@ void orderManagementMenu(string _currentLanguage) {
             system("cls");
             sistemaPedidos.mostrarHistorialPedidos();
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
+            cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
             break;
         case 6:
@@ -1315,13 +1315,13 @@ void customerManagementMenu(string _currentLanguage) {
     do {
         system("cls");
 
-        cout << CYAN_COLOR << "=== GESTIÓN DE CLIENTES ===" << DOUBLE_SPACE << RESET_COLOR;
-        cout << "<1> Ver Lista de Clientes" << endl;
-        cout << "<2> Eliminar Cliente" << endl;
-        cout << "<3> Buscar Clientes" << endl;
+        cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][62] << " ===" << DOUBLE_SPACE << RESET_COLOR;
+        cout << "<1> " << menuTexts[currentLanguage][63] << endl;
+        cout << "<2> " << menuTexts[currentLanguage][64] << endl;
+        cout << "<3> " << menuTexts[currentLanguage][65] << endl;
         cout << "<4> " << menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Muestra el cursor
-        cout << YELLOW_COLOR << DOUBLE_SPACE << "Seleccione una opcion: " << RESET_COLOR;
+        cout << YELLOW_COLOR << DOUBLE_SPACE << menuTexts[currentLanguage][5] << RESET_COLOR;
         cin >> opcion;
 
         // Verifica si la entrada falló
@@ -1340,28 +1340,28 @@ void customerManagementMenu(string _currentLanguage) {
         case 1:
             if (file.peek() == ifstream::traits_type::eof()) { // Verificar si el archivo está vacío
                 ShowConsoleCursor(false); // Oculta el cursor
-                cout << MAGENTA_COLOR << DOUBLE_SPACE << "No hay ningún cliente registrado." << endl;
+                cout << MAGENTA_COLOR << DOUBLE_SPACE << menuTexts[currentLanguage][59] << endl;
                 _sleep(1500); // Espera 1.5 segundos
                 file.close();
                 break;
             }
             system("cls");
-            cout << CYAN_COLOR << "Lista de clientes:" << DOUBLE_SPACE;   
+            cout << CYAN_COLOR << menuTexts[currentLanguage][66] << DOUBLE_SPACE;
             gestionCliente.displayCustomerList();
             break;
         case 2:
             if (file.peek() == ifstream::traits_type::eof()) { // Verificar si el archivo está vacío
                 ShowConsoleCursor(false); // Oculta el cursor
-                cout << MAGENTA_COLOR << DOUBLE_SPACE << "No hay ningún cliente registrado." << endl;
+                cout << MAGENTA_COLOR << DOUBLE_SPACE << menuTexts[currentLanguage][59] << endl;
                 _sleep(1500); // Espera 1.5 segundos
                 file.close();
                 break;
             }
             system("cls");
-            cout << CYAN_COLOR << "Eliminar cliente:" << DOUBLE_SPACE << RESET_COLOR;
+            cout << CYAN_COLOR << menuTexts[currentLanguage][61] << DOUBLE_SPACE << RESET_COLOR;
             {
                 string email;
-                cout << YELLOW_COLOR << "Ingrese el correo electrónico del cliente a eliminar: " << RESET_COLOR;
+                cout << YELLOW_COLOR << menuTexts[currentLanguage][60] << RESET_COLOR;
                 cin >> email;
                 gestionCliente.deleteCustomer(email);
                 ShowConsoleCursor(false); // Oculta el cursor
@@ -1371,16 +1371,16 @@ void customerManagementMenu(string _currentLanguage) {
         case 3:
             if (file.peek() == ifstream::traits_type::eof()) { // Verificar si el archivo está vacío
                 ShowConsoleCursor(false); // Oculta el cursor
-                cout << MAGENTA_COLOR << DOUBLE_SPACE << "No hay ningún cliente registrado." << endl;
+                cout << MAGENTA_COLOR << DOUBLE_SPACE << menuTexts[currentLanguage][59] << endl;
                 _sleep(1500); // Espera 1.5 segundos
                 file.close();
                 break;
             }
             system("cls");
-            cout << CYAN_COLOR << "Buscar clientes: " << DOUBLE_SPACE << RESET_COLOR;
+            cout << CYAN_COLOR << menuTexts[currentLanguage][58] << DOUBLE_SPACE << RESET_COLOR;
             {
                 string searchTerm;
-                cout << YELLOW_COLOR << "Ingrese el término de búsqueda (nombre o apellido): " << RESET_COLOR;
+                cout << YELLOW_COLOR << menuTexts[currentLanguage][57] << RESET_COLOR;
                 cin >> searchTerm;
                 gestionCliente.searchCustomers(searchTerm);
             }
@@ -1401,11 +1401,11 @@ void sortProductsPrice(string _currentLanguage) {
 	do {
 		system("cls");
 		cout << CYAN_COLOR << "=== Ordenar Productos por Precio ===" << RESET_COLOR << DOUBLE_SPACE;
-		cout << "<1> Ordenar de menor a mayor" << endl;
-		cout << "<2> Ordenar de mayor a menor" << endl;
+		cout << "<1> " << menuTexts[currentLanguage][55] << endl;
+		cout << "<2> " << menuTexts[currentLanguage][56] << endl;
 		cout << "<3> " << menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Muestra el cursor
-		cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opción: " << RESET_COLOR;
+		cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR;
 		cin >> opcion;
 
 		// Verifica si la entrada falló
