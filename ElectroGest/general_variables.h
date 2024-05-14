@@ -82,6 +82,13 @@ map<string, map<int, string>> menuTexts = {
         {40, "Debe ingresar una contraseña. Por favor, inténtelo de nuevo."},
         {41, "Las contraseñas no coinciden. Por favor, inténtelo de nuevo."},
         {42, "Número de teléfono ya registrado."},
+        {43, "¡Bienvenido, cliente!"},
+        {44, "Ingrese sus datos para iniciar sesión."},
+        {45, "Inicio de sesión exitoso."},
+        {46, "Error: No se pudo abrir el archivo de registro"},
+        {47, "Correo electrónico o contraseña incorrectos. Por favor, inténtelo de nuevo."},
+        {48, "Registrarse"},
+        {49, "Iniciar sesión"},
         {404, "Error al abrir el archivo" }
     }},
     {"english", {
@@ -127,6 +134,13 @@ map<string, map<int, string>> menuTexts = {
 		{40, "You must enter a password. Please try again."},
 		{41, "Passwords do not match. Please try again."},
 		{42, "Phone number already registered."},
+        {43, "Welcome, client!"},
+		{44, "Enter your data to log in."},
+		{45, "Login successful."},
+		{46, "Error: Could not open log file"},
+		{47, "Incorrect email or password. Please try again."},
+        {48, "Sign up"},
+		{49, "Log in"},
 		{404, "Error opening file" }
     }}
 };

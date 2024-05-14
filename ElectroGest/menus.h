@@ -131,12 +131,9 @@ void sellerLoginMenu(string _currentLanguage) {
     string usuario, contrasena;
     string usuarioArchivo, contrasenaArchivo;
 
-<<<<<<< HEAD
     // Idioma predeterminado
     string currentLanguage = _currentLanguage; 
-=======
     string currentLanguage = "espanol"; // Idioma predeterminado
->>>>>>> ad28a2a3f66afbc68c01c9099beaba4259d80164
 
     // Crear el objeto ProductManager
     GestionarProveedores supplierManager;
@@ -291,15 +288,12 @@ void clientRegisterMenu(string _currentLanguage) {
     getline(cin, input_nombre);
 
     while (!contieneSoloLetras(input_nombre)) {
-<<<<<<< HEAD
         cout << MAGENTA_COLOR << endl << menuTexts[currentLanguage][36];
 
         cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][37] << RESET_COLOR;
-=======
         cout << MAGENTA_COLOR << endl << menuTexts[currentLanguage][36]; // Nombre no válido
 
         cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][37] << RESET_COLOR; // Ingrese un nombre válido
->>>>>>> ad28a2a3f66afbc68c01c9099beaba4259d80164
         getline(cin, input_nombre);
     }
 
@@ -466,13 +460,13 @@ void clientLoginMenu(string _currentLanguage) {
 
     string currentLanguage = _currentLanguage; // Idioma predeterminado
 
-    cout << CYAN_COLOR << "¡Bienvenido, comprador!" << DOUBLE_SPACE;
-    cout << GRAY_COLOR << "Ingrese sus datos para iniciar sesión." << DOUBLE_SPACE;
+    cout << CYAN_COLOR << menuTexts[currentLanguage][43] << DOUBLE_SPACE;
+    cout << GRAY_COLOR << menuTexts[currentLanguage][44] << DOUBLE_SPACE;
 
-    cout << YELLOW_COLOR << "Correo electrónico: " << RESET_COLOR;
+    cout << YELLOW_COLOR << menuTexts[currentLanguage][25] << RESET_COLOR;
     cin.ignore();
     getline(cin, email);
-    cout << YELLOW_COLOR << "Contraseña: " << RESET_COLOR;
+    cout << YELLOW_COLOR << menuTexts[currentLanguage][12] << RESET_COLOR;
 
     // Oculta la contraseña mientras se escribe
     char caracter;
@@ -507,7 +501,7 @@ void clientLoginMenu(string _currentLanguage) {
             if (email == emailFromFile && password == passwordFromFile) {
                 loggedIn = true;
                 ShowConsoleCursor(false);
-                cout << DOUBLE_SPACE << GREEN_COLOR << "Inicio de sesión exitoso." << DOUBLE_SPACE;
+                cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][45] << DOUBLE_SPACE;
                 Sleep(2000);
                 system("cls");
                 homeClientMenu(_currentLanguage); // Mostrar el menú del comprador
@@ -517,7 +511,7 @@ void clientLoginMenu(string _currentLanguage) {
         file.close();
     }
     else {
-        cout << DOUBLE_SPACE << MAGENTA_COLOR << "Error: No se pudo abrir el archivo de registro." << DOUBLE_SPACE;
+        cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][46] << DOUBLE_SPACE;
         return;
     }
 
@@ -526,7 +520,7 @@ void clientLoginMenu(string _currentLanguage) {
     }
     else {
         ShowConsoleCursor(false);
-        cout << DOUBLE_SPACE << MAGENTA_COLOR << "Correo electrónico o contraseña incorrectos. Por favor, inténtelo de nuevo." << DOUBLE_SPACE;
+        cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][47] << DOUBLE_SPACE;
         Sleep(2000);
         system("cls");
         clientLoginMenu(_currentLanguage);
@@ -544,13 +538,13 @@ void clientMenu(string _currentLanguage) {
     {
         system("cls");
 
-        cout << CYAN_COLOR << "¡Bienvenido, comprador!" << DOUBLE_SPACE << RESET_COLOR;
-        cout << "<1> Registrarte" << endl;
-        cout << "<2> Iniciar sesión" << endl;
-        cout << "<3> Salir";
+        cout << CYAN_COLOR << menuTexts[currentLanguage][43] << DOUBLE_SPACE << RESET_COLOR;
+        cout << "<1> " << menuTexts[currentLanguage][48] << endl;
+        cout << "<2> " << menuTexts[currentLanguage][49] << endl;
+        cout << "<3> " << menuTexts[currentLanguage][4];
         cout << DOUBLE_SPACE << YELLOW_COLOR;
         ShowConsoleCursor(true); // Mostrar el cursor
-        cout << "Ingrese una opción: " << RESET_COLOR;
+        cout << menuTexts[currentLanguage][5] << RESET_COLOR;
         cin >> opcion;
 
         // Verifica si la entrada falló
@@ -594,7 +588,7 @@ void homeClientMenu(string _currentLanguage) {
     string currentLanguage = "espanol"; // Idioma predeterminado
 
     do {
-        cout << CYAN_COLOR << "¡Bienvenido, comprador!" << DOUBLE_SPACE << RESET_COLOR;
+        cout << CYAN_COLOR << menuTexts[currentLanguage][43] << DOUBLE_SPACE << RESET_COLOR;
         cout << "<1> Ver cátalogo de productos" << endl;
         cout << "<2> Realizar pedido" << endl;
         cout << "<3> Ver estado de pedidos" << endl;
