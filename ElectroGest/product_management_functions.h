@@ -13,10 +13,10 @@ void addNewProduct(GESTION_PRODUCTOS& manager) {
     cout << YELLOW_COLOR << "Ingrese el código del nuevo producto: " << RESET_COLOR;
     getline(cin, codigo);
     if (codigo.empty()) {
-        cout << RED_COLOR << "El código del producto no puede estar vacío." << RESET_COLOR << endl;
+        cout << endl << MAGENTA_COLOR << "El código del producto no puede estar vacío." << RESET_COLOR << DOUBLE_SPACE;
     }
     else if (manager.hasCodigo(codigo)) {
-        cout << RED_COLOR << "El código del producto ya existe." << RESET_COLOR << endl;
+        cout << endl << MAGENTA_COLOR << "El código del producto ya existe." << RESET_COLOR << DOUBLE_SPACE;
         cout << YELLOW_COLOR << "Ingrese nuevamente el código: " << RESET_COLOR;
         getline(cin, codigo);
     }
@@ -39,7 +39,7 @@ void addNewProduct(GESTION_PRODUCTOS& manager) {
 
     cout << YELLOW_COLOR << "Ingrese el precio del nuevo producto: " << RESET_COLOR;
     while (!(cin >> precio) || precio <= 0) {
-        cout << RED_COLOR << "El precio del producto debe ser un número positivo." << RESET_COLOR << endl;
+        cout << endl << MAGENTA_COLOR << "El precio del producto debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
         cin.clear(); // Limpia los bits de error
         cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
         cout << YELLOW_COLOR << "Ingrese nuevamente el precio: " << RESET_COLOR;
@@ -49,7 +49,7 @@ void addNewProduct(GESTION_PRODUCTOS& manager) {
     cin.ignore();
     getline(cin, modelo);
     if (modelo.empty() || any_of(modelo.begin(), modelo.end(), [](char c) { return !isalnum(c); })) {
-        cout << RED_COLOR << "El modelo del producto solo puede contener letras y números." << RESET_COLOR << endl;
+        cout << MAGENTA_COLOR << "El modelo del producto solo puede contener letras y números." << RESET_COLOR << endl;
         cout << YELLOW_COLOR << "Ingrese nuevamente el modelo: " << RESET_COLOR;
         getline(cin, modelo);   
     }
@@ -130,40 +130,87 @@ void addNewProduct(GESTION_PRODUCTOS& manager) {
     manager.agregarProducto(nuevoProducto);
 
     // Mostrar mensaje de éxito
+    ShowConsoleCursor(false);
     cout << DOUBLE_SPACE << GREEN_COLOR << "Nuevo producto agregado correctamente." << RESET_COLOR << endl;
+    _sleep(1500); // Esperar 1.5 segundos antes de limpiar la pantalla
 }
 
 void updateProductProcedure(GESTION_PRODUCTOS& manager) {
     string codigo;
-    double nuevoPrecio;
+    double nuevoPrecio = 0;
     string nuevoCodigo;
     int nuevaGarantia;
 
-    // Solicitar al usuario el código del producto a actualizar
     cout << YELLOW_COLOR << "Ingrese el código del producto que desea actualizar: " << RESET_COLOR;
-    cin.ignore(); // Limpiar el búfer de entrada antes de getline
+    cin.ignore();
     getline(cin, codigo);
 
-    // Verificar si el código del producto existe en el gestor
     if (!manager.existeProducto(codigo)) {
-        cout << DOUBLE_SPACE << MAGENTA_COLOR << "El producto con el código ingresado no existe." << RESET_COLOR << endl;
-        return; // Salir de la función si el producto no existe
+        ShowConsoleCursor(false);
+        cout << endl << MAGENTA_COLOR << "El producto con el código ingresado no existe." << RESET_COLOR << endl;
+        _sleep(1500);
+        return;
     }
 
-    // Solicitar al usuario los nuevos detalles del producto
-    cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese el nuevo precio del producto: " << RESET_COLOR;
-    cin >> nuevoPrecio;
+    cout << YELLOW_COLOR << "Ingrese el precio del nuevo producto: " << RESET_COLOR;
+    while (!(cin >> nuevoPrecio) || nuevoPrecio <= 0) {
+        if (cin.fail()) {
+            // Limpiar el estado de error y descartar la entrada inválida
+            cin.clear();
+            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n');
+            cout << endl << MAGENTA_COLOR << "Debe ingresar un número válido para el precio." << RESET_COLOR << DOUBLE_SPACE;
+        }
+        else {
+            // Verificar si la entrada contiene caracteres no numéricos
+            bool contieneNoNumeros = false;
+            string entradaInvalida;
+            getline(cin, entradaInvalida);
+
+            for (char c : entradaInvalida) {
+                if (!isdigit(c)) {
+                    contieneNoNumeros = true;
+                    break;
+                }
+            }
+
+            if (contieneNoNumeros) {
+                cout << endl << MAGENTA_COLOR << "El precio del producto debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
+            }
+            else {
+                cout << endl << MAGENTA_COLOR << "El precio del producto debe ser un número válido y positivo." << RESET_COLOR << DOUBLE_SPACE;
+            }
+        }
+        cout << YELLOW_COLOR << "Ingrese nuevamente el precio: " << RESET_COLOR;
+    }
+
+    cin.ignore();
+
     cout << YELLOW_COLOR << "Ingrese el nuevo código del producto: " << RESET_COLOR;
-    cin.ignore(); // Limpiar el búfer de entrada antes de getline
     getline(cin, nuevoCodigo);
+    while (nuevoCodigo.empty() || manager.hasCodigo(nuevoCodigo)) {
+        if (nuevoCodigo.empty()) {
+            cout << endl << MAGENTA_COLOR << "El código del producto no puede estar vacío." << RESET_COLOR << DOUBLE_SPACE;
+        }
+        else {
+            cout << endl << MAGENTA_COLOR << "El código del producto ya existe." << RESET_COLOR << DOUBLE_SPACE;
+        }
+        cout << YELLOW_COLOR << "Ingrese nuevamente el código: " << RESET_COLOR;
+        getline(cin, nuevoCodigo);
+    }
+
     cout << YELLOW_COLOR << "Ingrese la nueva garantía (meses) del producto: " << RESET_COLOR;
-    cin >> nuevaGarantia;
+    while (!(cin >> nuevaGarantia) || nuevaGarantia <= 0) {
+        cout << endl << MAGENTA_COLOR << "La garantía del producto debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
+        cin.clear();
+        cin.ignore((std::numeric_limits<streamsize>::max)(), '\n');
+        cout << YELLOW_COLOR << "Ingrese nuevamente la garantía: " << RESET_COLOR;
+    }
 
-    // Actualizar el producto en el gestor de productos
     manager.actualizarProducto(codigo, nuevoPrecio, nuevoCodigo, nuevaGarantia);
-
-    // Mostrar mensaje de éxito
-    cout << DOUBLE_SPACE << GREEN_COLOR << "Producto actualizado correctamente." << endl;
+    
+    ShowConsoleCursor(false);
+    cout << DOUBLE_SPACE << GREEN_COLOR << "Producto actualizado correctamente";
+    _sleep(1500);
 }
 
 void removeProductProcedure(GESTION_PRODUCTOS& manager) {
@@ -174,6 +221,8 @@ void removeProductProcedure(GESTION_PRODUCTOS& manager) {
     cin.ignore(); // Limpiar el búfer de entrada antes de getline
     getline(cin, codigo);
 
+    ShowConsoleCursor(false); // Ocultar el cursor para evitar errores de visualización
+
     // Verificar si el producto existe antes de eliminarlo
     if (manager.existeProducto(codigo)) {
         // Eliminar el producto del gestor de productos
@@ -181,10 +230,12 @@ void removeProductProcedure(GESTION_PRODUCTOS& manager) {
 
         // Mostrar mensaje de éxito
         cout << DOUBLE_SPACE << GREEN_COLOR << "Producto eliminado correctamente." << endl;
+        _sleep(1500); // Esperar 1.5 segundos antes de limpiar la pantalla
     }
     else {
         // Mostrar mensaje de error si el producto no existe
         cout << DOUBLE_SPACE << MAGENTA_COLOR << "Error: El producto con código " << codigo << " no existe." << endl;
+        _sleep(1500); // Esperar 1.5 segundos antes de limpiar la pantalla
     }
 }
 
@@ -192,6 +243,7 @@ void searchProduct(GESTION_PRODUCTOS& manager) {
     string codigo;
 
     // Solicitar al usuario el código del producto a buscar
+    ShowConsoleCursor(true);
     cout << YELLOW_COLOR << "Ingrese el código del producto que desea buscar: " << RESET_COLOR;
     cin.ignore(); // Limpiar el búfer de entrada antes de getline
     getline(cin, codigo);

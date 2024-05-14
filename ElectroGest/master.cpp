@@ -6,7 +6,7 @@ int main() {
     setlocale(LC_ALL, "");
 
     // Menú principal
-    productCatalogMenu();
+    generalMenu();
 
     return 0;
 }

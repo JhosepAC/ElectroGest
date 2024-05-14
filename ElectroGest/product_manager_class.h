@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <vector>
 #include <iomanip>
+#include <conio.h>
 
 class GESTION_PRODUCTOS {
     LISTA_PRODUCTO listaProductos;
@@ -200,11 +201,17 @@ public:
 
     void buscarYMostrarProducto(const std::string& codigo) {
         NODO_PRODUCTO* producto = listaProductos.buscarProducto(codigo);
+        ShowConsoleCursor(false); // Oculta el cursor
         if (producto != nullptr) {
             producto->producto.mostrarInformacion();
+
+            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
+            _getch();
         }
         else {
-            std::cout << endl << MAGENTA_COLOR << "Producto no encontrado." << std::endl;
+
+            std::cout << MAGENTA_COLOR << "Producto no encontrado." << std::endl;
+            _sleep(1500); // Esperar 1.5 segundos antes de limpiar la pantalla)
         }
     }
 

@@ -805,13 +805,6 @@ void productManagementMenu() {
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
-        else if (opcion > 6)
-        {
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Opción no válida
-            Sleep(1500); // Espera 1.5 segundos
-            continue; // Continúa al siguiente ciclo del bucle do-while
-        }
 
         switch (opcion) {
         case 1:
@@ -824,6 +817,7 @@ void productManagementMenu() {
                 cout << endl << YELLOW_COLOR << "¿Desea ordenar los productos por precio?" << DOUBLE_SPACE << RESET_COLOR;
                 cout << "<1> Sí" << endl;
                 cout << "<2> No";
+                ShowConsoleCursor(true); // Muestra el cursor
                 cout << YELLOW_COLOR << DOUBLE_SPACE << "Ingrese una opción: " << RESET_COLOR;
                 cin >> opcion_ordenar;
 
@@ -834,44 +828,28 @@ void productManagementMenu() {
 					break;
 				}
                 else {
-                    cout << DOUBLE_SPACE << MAGENTA_COLOR << "Opción no válida. Por favor, intente de nuevo." << endl;
+                    ShowConsoleCursor(false); // Oculta el cursor
+                    cout << endl << MAGENTA_COLOR << "Opción no válida. Por favor, intente de nuevo." << endl;
                     _sleep(1500);
                 }
 
             } while (opcion_ordenar != 2);
-
-
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
-            _getch();
-            system("cls");
             break;
         case 2:
             system("cls");
             addNewProduct(manager);
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
-            _getch();
-            system("cls");
             break;
         case 3:
             system("cls");
             updateProductProcedure(manager);
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
-            _getch();
-            system("cls");
             break;
         case 4:
             system("cls");
             removeProductProcedure(manager);
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
-            _getch();
-            system("cls");
             break;
         case 5:
             system("cls");
             searchProduct(manager);
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
-            _getch();
-            system("cls");
             break;
         case 6:
             break;
@@ -1350,6 +1328,7 @@ void sortProductsPrice() {
 		cout << "<1> Ordenar de menor a mayor" << endl;
 		cout << "<2> Ordenar de mayor a menor" << endl;
 		cout << "<3> Volver";
+        ShowConsoleCursor(true); // Muestra el cursor
 		cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opción: " << RESET_COLOR;
 		cin >> opcion;
 
@@ -1374,6 +1353,7 @@ void sortProductsPrice() {
 		case 1:
 			system("cls");
 			productManager.ordenarProductosPorPrecioAscendente();
+            ShowConsoleCursor(false); // Oculta el cursor
 			cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
 			_getch();
 			system("cls");
@@ -1381,11 +1361,13 @@ void sortProductsPrice() {
 		case 2:
 			system("cls");
 			productManager.ordenarProductosPorPrecioDescendente();
+            ShowConsoleCursor(false); // Oculta el cursor
 			cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
 			_getch();
 			system("cls");
 			break;
 		case 3:
+            productManagementMenu();
 			break;
 		}
 	} while (opcion != 3);
