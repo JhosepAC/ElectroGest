@@ -4,7 +4,7 @@ ElectroGest es un software de gestión diseñado para negocios de venta de elect
 
 
 
-![Logo](http://imgfz.com/i/qfI8wTc.png)
+![Logo](https://i.postimg.cc/LXJX9tDc/logo-electro-Gest-removebg-preview.png)
 
 
 ## Autores
