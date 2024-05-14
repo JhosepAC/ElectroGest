@@ -592,7 +592,7 @@ void homeClientMenu(string _currentLanguage) {
         cout << "<1> Ver cátalogo de productos" << endl;
         cout << "<2> Realizar pedido" << endl;
         cout << "<3> Ver estado de pedidos" << endl;
-        cout << "<4> Salir";
+        cout << "<4> " << menuTexts[currentLanguage][4];
         cout << DOUBLE_SPACE << YELLOW_COLOR;
         ShowConsoleCursor(true); // Mostrar el cursor
         cout << "Ingrese una opción: " << RESET_COLOR;
@@ -685,7 +685,7 @@ void productCatalogMenu(string _currentLanguage) {
         cout << "<1> Ver productos" << endl;
         cout << "<2> Filtrar productos" << endl;
         cout << "<3> Buscar productos por nombre" << endl;
-        cout << "<4> Volver";
+        cout << "<4> " << menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Mostrar el cursor
         cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opción: " << RESET_COLOR;
         cin >> opcion;
@@ -706,7 +706,7 @@ void productCatalogMenu(string _currentLanguage) {
             system("cls");
             productManager.mostrarTodosLosProductos();
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
+            cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
             system("cls");
             break;
@@ -721,7 +721,7 @@ void productCatalogMenu(string _currentLanguage) {
             cout << endl;
             productManager.buscarProductoPorNombre(nombre);
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
+            cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
             system("cls");  
 			break;
@@ -749,7 +749,7 @@ void filtrarProductosPorCategoria(string _currentLanguage) {
         cout << "<1> Filtrar por precio" << endl;
         cout << "<2> Filtrar por color" << endl;
         cout << "<3> Filtrar por marca" << endl;
-        cout << "<4> Volver";
+        cout << "<4> " <<  menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Mostrar el cursor
         cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opción: " << RESET_COLOR;
         cin >> opcion;
@@ -769,15 +769,15 @@ void filtrarProductosPorCategoria(string _currentLanguage) {
             system("cls");
             productManager.filtrarPorPrecio(productManager);
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
+            cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
-            system("cls");  
+            system("cls");
             break;
         case 2:
             system("cls");
             productManager.filtrarPorColor(productManager);
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
+            cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
             system("cls");
             break;
@@ -785,7 +785,7 @@ void filtrarProductosPorCategoria(string _currentLanguage) {
             system("cls");
             productManager.filtrarPorMarca(productManager);
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
+            cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
             system("cls");
             break;
@@ -812,7 +812,7 @@ void productManagementMenu(string _currentLanguage) {
         cout << "<3> Actualizar producto" << endl;
         cout << "<4> Eliminar producto" << endl;
         cout << "<5> Buscar producto" << endl;
-        cout << "<6> Salir";
+        cout << "<6> " << menuTexts[currentLanguage][4];
         ShowConsoleCursor(true); // Mostrar el cursor
         cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opción: " << RESET_COLOR;
         cin >> opcion;
@@ -897,7 +897,7 @@ void inventoryManagementMenu(string _currentLanguage) {
         std::cout << "<2> Añadir Stock" << std::endl;
         std::cout << "<3> Retirar Stock" << std::endl;
         std::cout << "<4> Historial de Movimientos" << std::endl;
-        std::cout << "<5> Salir" << std::endl;
+        std::cout << "<5> " << menuTexts[currentLanguage][4] << std::endl;
         ShowConsoleCursor(true); // Muestra el cursor
         std::cout << endl << YELLOW_COLOR << "Ingrese la opción deseada: " << RESET_COLOR;
         std::cin >> opcion;
@@ -1014,7 +1014,7 @@ void supplierManagementMenu(string _currentLanguage) {
         cout << "<3> Actualizar información de proveedor" << endl;
         cout << "<4> Eliminar proveedor" << endl;
         cout << "<5> Buscar proveedor" << endl;
-        cout << "<6> Volver" << DOUBLE_SPACE;
+        cout << "<6> " << menuTexts[currentLanguage][50] << DOUBLE_SPACE;
         ShowConsoleCursor(true); // Muestra el cursor
         cout << YELLOW_COLOR << "Seleccione una opcion: " << RESET_COLOR;
         cin >> opcion;
@@ -1041,7 +1041,7 @@ void supplierManagementMenu(string _currentLanguage) {
             system("cls");
             supplierManager.verListaProveedores();
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para salir";
+            cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
             system("cls");
             break;
@@ -1124,7 +1124,7 @@ void orderingMenu(string _currentLanguage) {
         std::cout << "<2> Ver Carrito\n";
         std::cout << "<3> Confirmar Pedido\n";
         std::cout << "<4> Cancelar Pedido\n";
-        std::cout << "<5> Salir";
+        std::cout << "<5> " << menuTexts[currentLanguage][4];
         ShowConsoleCursor(true); // Muestra el cursor
         std::cout << YELLOW_COLOR << DOUBLE_SPACE << "Seleccione una opción: " << RESET_COLOR;
         std::cin >> opcion;
@@ -1238,7 +1238,7 @@ void orderManagementMenu(string _currentLanguage) {
         std::cout << "<3> Procesar Pedido" << endl;
         std::cout << "<4> Eliminar Pedidos" << endl;
         std::cout << "<5> Historial de Pedidos" << endl;
-        std::cout << "<6> Volver";
+        std::cout << "<6> " << menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Muestra el cursor
         std::cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione una opción: " << RESET_COLOR;
         std::cin >> opcion;
@@ -1319,7 +1319,7 @@ void customerManagementMenu(string _currentLanguage) {
         cout << "<1> Ver Lista de Clientes" << endl;
         cout << "<2> Eliminar Cliente" << endl;
         cout << "<3> Buscar Clientes" << endl;
-        cout << "<4> Volver";
+        cout << "<4> " << menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Muestra el cursor
         cout << YELLOW_COLOR << DOUBLE_SPACE << "Seleccione una opcion: " << RESET_COLOR;
         cin >> opcion;
@@ -1403,7 +1403,7 @@ void sortProductsPrice(string _currentLanguage) {
 		cout << CYAN_COLOR << "=== Ordenar Productos por Precio ===" << RESET_COLOR << DOUBLE_SPACE;
 		cout << "<1> Ordenar de menor a mayor" << endl;
 		cout << "<2> Ordenar de mayor a menor" << endl;
-		cout << "<3> Volver";
+		cout << "<3> " << menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Muestra el cursor
 		cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opción: " << RESET_COLOR;
 		cin >> opcion;
@@ -1423,7 +1423,7 @@ void sortProductsPrice(string _currentLanguage) {
 			system("cls");
 			productManager.ordenarProductosPorPrecioAscendente();
             ShowConsoleCursor(false); // Oculta el cursor
-			cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
+			cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
 			_getch();
 			system("cls");
 			break;
@@ -1431,7 +1431,7 @@ void sortProductsPrice(string _currentLanguage) {
 			system("cls");
 			productManager.ordenarProductosPorPrecioDescendente();
             ShowConsoleCursor(false); // Oculta el cursor
-			cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
+			cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
 			_getch();
 			system("cls");
 			break;

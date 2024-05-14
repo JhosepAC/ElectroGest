@@ -73,8 +73,8 @@ map<string, map<int, string>> menuTexts = {
         {35, "Fecha de nacimiento no válida"},
         {36, "Nombre no permitido."},
         {37, "Ingrese un nombre válido: "},
-		{38, "Apellido no permitido."},
-		{39, "Ingrese un apellido válido: "},
+        {38, "Apellido no permitido."},
+        {39, "Ingrese un apellido válido: "},
         {36, "Nombre no válido."},
         {37, "Ingrese un nombre válido: "},
         {38, "Apellido no válido."},
@@ -89,6 +89,8 @@ map<string, map<int, string>> menuTexts = {
         {47, "Correo electrónico o contraseña incorrectos. Por favor, inténtelo de nuevo."},
         {48, "Registrarse"},
         {49, "Iniciar sesión"},
+        {50, "Volver"},
+        {51, "Presiona cualquier tecla para continuar..."},
         {404, "Error al abrir el archivo" }
     }},
     {"english", {
@@ -141,6 +143,8 @@ map<string, map<int, string>> menuTexts = {
 		{47, "Incorrect email or password. Please try again."},
         {48, "Sign up"},
 		{49, "Log in"},
+        {50, "Back"},
+        {51, "Press any key to continue..."},
 		{404, "Error opening file" }
     }}
 };
