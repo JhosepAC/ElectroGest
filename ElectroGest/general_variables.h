@@ -71,12 +71,10 @@ map<string, map<int, string>> menuTexts = {
         {33, "Ingrese un sexo válido (M, F). Intente de nuevo."},
         {34, "Dirección de correo electrónico no válida"},
         {35, "Fecha de nacimiento no válida"},
-<<<<<<< HEAD
         {36, "Nombre no permitido."},
         {37, "Ingrese un nombre válido: "},
 		{38, "Apellido no permitido."},
 		{39, "Ingrese un apellido válido: "},
-=======
         {36, "Nombre no válido."},
         {37, "Ingrese un nombre válido: "},
         {38, "Apellido no válido."},
