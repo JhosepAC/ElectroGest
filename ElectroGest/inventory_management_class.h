@@ -52,6 +52,7 @@ public:
 
     void verInventario() const {
         if (inventario.empty()) {
+            ShowConsoleCursor(false); // Ocultar el cursor de la consola
             std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El inventario está vacío." << RESET_COLOR << std::endl;
             Sleep(1000); // Esperar 1 segundo (1000 ms)
             return;
@@ -59,13 +60,15 @@ public:
 
         system("cls"); // Limpiar la pantalla antes de mostrar el inventario
 
-        std::cout << CYAN_COLOR << "=== INVENTARIO ===" << RESET_COLOR << std::endl;
+        cout << CYAN_COLOR << "=== INVENTARIO ===" << RESET_COLOR << DOUBLE_SPACE;
         for (const auto& pair : inventario) {
-            cout << YELLOW_COLOR << "Código: " << RESET_COLOR << pair.first << std::endl;
-            cout << YELLOW_COLOR << "Stock: " << RESET_COLOR << pair.second << std::endl;
-            cout << YELLOW_COLOR << "-------------------------" << std::endl;
+            cout << BLUE_COLOR << "Código: " << RESET_COLOR << pair.first << std::endl;
+            cout << BLUE_COLOR << "Stock: " << RESET_COLOR << pair.second << std::endl;
+            cout << YELLOW_COLOR << "-------------------------" << DOUBLE_SPACE;
         }
-        cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar..." << RESET_COLOR << endl;
+
+        ShowConsoleCursor(false); // Ocultar el cursor de la consola
+        cout << endl << GRAY_COLOR << "Presiona cualquier tecla para continuar..." << RESET_COLOR << endl;
         _getch(); // Esperar a que el usuario presione una tecla
     }
 
@@ -85,11 +88,15 @@ public:
                 guardarInventarioEnArchivo(); // Guardar el inventario en el archivo después de retirar stock
             }
             else {
+                ShowConsoleCursor(false); // Ocultar el cursor de la consola
                 std::cout << MAGENTA_COLOR << DOUBLE_SPACE << "No hay suficiente stock de este producto para retirar." << std::endl;
+                Sleep(1500); // Esperar 1 segundo (1000 ms)
             }
         }
         else {
+            ShowConsoleCursor(false); // Ocultar el cursor de la consola
             std::cout << MAGENTA_COLOR << DOUBLE_SPACE << "El producto no se encuentra en el inventario." << std::endl;
+            Sleep(1500); // Esperar 1 segundo (1000 ms)
         }
     }
 
@@ -159,7 +166,8 @@ public:
         }
 
         cout << CYAN_COLOR << "=== Historial de Movimientos ===" << RESET_COLOR << DOUBLE_SPACE;
-        cout << BLUE_COLOR << "Código Producto" << std::setw(15) << "Cantidad" << std::setw(20) << "Movimiento" << std::setw(30) << "Fecha y Hora" << std::endl;
+        cout << BLUE_COLOR << "Código Producto" << std::setw(15) << "Cantidad" << std::setw(20) << "Movimiento" << std::setw(20) << "Fecha y Hora" << std::endl;
+        cout << RESET_COLOR;
 
         // Copiar el historial de movimientos para mantener el original intacto
         std::stack<HISTORIAL_INVENTARIO> copiaHistorial = historialMovimientos;
@@ -174,9 +182,9 @@ public:
             std::string formatted_time = std::ctime(&now_time);
 
             cout << movimiento.codigoProducto
-                << setw(20) << movimiento.cantidad
-                << setw(30) << (movimiento.esEntrada ? "Entrada" : "Salida")
-                << setw(40) << formatted_time;
+                << setw(19) << movimiento.cantidad
+                << setw(22) << (movimiento.esEntrada ? "Entrada" : "Salida")
+                << setw(36) << formatted_time;
         }
     }
 

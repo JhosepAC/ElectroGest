@@ -44,7 +44,7 @@ void productManagementMenu(); // Menú de gestión de productos
 void filtrarProductosPorCategoria(); // Filtrar productos por categoría
 
 // Inventario
-void inventoryManagementMenu(GESTION_PRODUCTOS& gestorProductos, GESTION_INVENTARIO& gestionInventarios); // Menú de gestión de inventario
+void inventoryManagementMenu(); // Menú de gestión de inventario
 
 // Proveedores
 void supplierManagementMenu(); // Menú de gestión de proveedores
@@ -246,7 +246,7 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
             productManagementMenu(); // Menú de gestión de productos
             break;
         case 2:
-            inventoryManagementMenu(productManager, inventoryManager); // Menú de gestión de inventario
+            inventoryManagementMenu(); // Menú de gestión de inventario
             break;
         case 3:
             supplierManagementMenu(); // Menú de gestión de proveedores
@@ -858,12 +858,14 @@ void productManagementMenu() {
 }
 
 // Función para mostrar el menú de gestión de inventario
-void inventoryManagementMenu(GESTION_PRODUCTOS& gestorProductos, GESTION_INVENTARIO& gestionInventarios) {
+void inventoryManagementMenu() {
     int opcion;
     std::string codigoProducto;
     int cantidad;
 
     NODO_PRODUCTO* producto = nullptr; // Declara producto fuera del switch
+    GESTION_PRODUCTOS gestorProductos;
+    GESTION_INVENTARIO gestionInventarios;
 
     string currentLanguage = "espanol"; // Idioma predeterminado
 
@@ -888,13 +890,6 @@ void inventoryManagementMenu(GESTION_PRODUCTOS& gestorProductos, GESTION_INVENTA
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
-        else if (opcion > 4)
-        {
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Opción no válida
-            Sleep(1500); // Espera 1.5 segundos
-            continue; // Continúa al siguiente ciclo del bucle do-while
-        }
 
         switch (opcion) {
         case 1:
@@ -908,17 +903,27 @@ void inventoryManagementMenu(GESTION_PRODUCTOS& gestorProductos, GESTION_INVENTA
             if (producto != nullptr) {
                 int cantidad;
                 std::cout << YELLOW_COLOR << "Ingrese la cantidad de stock a añadir: " << RESET_COLOR;
-                std::cin >> cantidad;
-                if (cantidad > 0) {
-                    gestionInventarios.añadirStock(producto->producto.getCodigo(), cantidad); // Utiliza el código del producto
+                while (!(std::cin >> cantidad) || cantidad <= 0) {
+                    if (std::cin.fail()) {
+                        // Limpiar el estado de error y descartar la entrada inválida
+                        std::cin.clear();
+                        cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+                        std::cout << endl << MAGENTA_COLOR << "Debe ingresar un número válido para la cantidad de stock." << RESET_COLOR << DOUBLE_SPACE;
+                    }
+                    else {
+                        std::cout << MAGENTA_COLOR << "La cantidad de stock debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
+                    }
+                    std::cout << YELLOW_COLOR << "Ingrese nuevamente la cantidad de stock: " << RESET_COLOR;
                 }
-                else {
-                    std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "La cantidad de stock debe ser un número positivo." << std::endl;
-                    Sleep(1500);
-                }
+                gestionInventarios.añadirStock(producto->producto.getCodigo(), cantidad); // Utiliza el código del producto
+
+                ShowConsoleCursor(false); // Oculta el cursor
+                cout << DOUBLE_SPACE << GREEN_COLOR << "Stock añadido exitosamente." << RESET_COLOR;
+                Sleep(1500);
             }
             else {
-                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El producto no se encuentra en la lista de productos." << std::endl;
+                ShowConsoleCursor(false); // Oculta el cursor
+                std::cout << endl << MAGENTA_COLOR << "El producto no se encuentra en la lista de productos." << std::endl;
                 Sleep(1500);
             }
             break;
@@ -929,23 +934,40 @@ void inventoryManagementMenu(GESTION_PRODUCTOS& gestorProductos, GESTION_INVENTA
             producto = gestorProductos.buscarProducto(codigoProducto); // Asigna valor a producto
             if (producto != nullptr) {
                 std::cout << YELLOW_COLOR << "Ingrese la cantidad de stock a retirar: " << RESET_COLOR;
-                std::cin >> cantidad;
+                while (!(std::cin >> cantidad) || cantidad <= 0) {
+                    if (std::cin.fail()) {
+                        // Limpiar el estado de error y descartar la entrada inválida
+                        std::cin.clear();
+                        cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+                        std::cout << MAGENTA_COLOR << "Debe ingresar un número válido para la cantidad de stock." << RESET_COLOR << DOUBLE_SPACE;
+                    }
+                    else {
+                        std::cout << MAGENTA_COLOR << "La cantidad de stock debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
+                    }
+                    std::cout << YELLOW_COLOR << "Ingrese nuevamente la cantidad de stock: " << RESET_COLOR;
+                }
+
                 gestionInventarios.retirarStock(producto->producto.getCodigo(), cantidad);
+
+                ShowConsoleCursor(false); // Oculta el cursor
+                cout << DOUBLE_SPACE << GREEN_COLOR << "Stock retirado exitosamente." << RESET_COLOR;
+                Sleep(1500);
             }
             else {
+                ShowConsoleCursor(false); // Oculta el cursor
                 std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El producto no se encuentra en la lista de productos." << std::endl;
-                Sleep(1000);
+                Sleep(1500);
             }
             break;
         case 4:
             system("cls");
             // Mostrar historial de movimientos
             gestionInventarios.mostrarHistorialMovimientos();
+            ShowConsoleCursor(false); // Oculta el cursor
             std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
             _getch();
             break;
         case 5:
-            std::cout << "Saliendo del programa..." << std::endl;
             break;
         }
     } while (opcion != 5);
