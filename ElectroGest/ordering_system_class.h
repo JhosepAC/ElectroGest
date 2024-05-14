@@ -160,7 +160,7 @@ public:
         }
         else {
             for (const auto& pedido : pedidosPendientes) {
-                std::cout << GRAY_COLOR << "Código: " << RESET_COLOR << pedido.getCodigoProducto() << GRAY_COLOR << ", Cantidad: " << RESET_COLOR << pedido.getCantidad() << std::endl;
+                std::cout << BLUE_COLOR << "Código: " << RESET_COLOR << pedido.getCodigoProducto() << BLUE_COLOR << ", Cantidad: " << RESET_COLOR << pedido.getCantidad() << std::endl;
             }
         }
 
@@ -193,6 +193,5 @@ public:
             Sleep(1500);
         }
     }
-
 
 };

@@ -573,41 +573,56 @@ void homeClientMenu() {
     ShowConsoleCursor(true);   
 
 	system("cls");
+    SISTEMA_PEDIDOS sistemaPedidos;
+
+    sistemaPedidos.cargarPedidosPendientes();
+    sistemaPedidos.cargarPedidosProcesados();
 
 	int opcion = 0;
+    string currentLanguage = "espanol"; // Idioma predeterminado
 
-	cout << CYAN_COLOR << "¡Bienvenido, comprador!" << DOUBLE_SPACE << RESET_COLOR;
-	cout << "<1> Ver cátalogo de productos" << endl;
-	cout << "<2> Realizar pedido" << endl;
-	cout << "<3> Ver estado de pedidos" << endl;
-    cout << "<4> Salir";
-	cout << DOUBLE_SPACE << YELLOW_COLOR;
-	cout << "Ingrese una opción: " << RESET_COLOR;
-	cin >> opcion;
+    do {
+        cout << CYAN_COLOR << "¡Bienvenido, comprador!" << DOUBLE_SPACE << RESET_COLOR;
+        cout << "<1> Ver cátalogo de productos" << endl;
+        cout << "<2> Realizar pedido" << endl;
+        cout << "<3> Ver estado de pedidos" << endl;
+        cout << "<4> Salir";
+        cout << DOUBLE_SPACE << YELLOW_COLOR;
+        ShowConsoleCursor(true); // Mostrar el cursor
+        cout << "Ingrese una opción: " << RESET_COLOR;
+        cin >> opcion;
 
-    switch (opcion)
-    {
-		case 1:
+        // Verifica si la entrada falló
+        if (cin.fail()) { // Verifica si la entrada falló
+            cin.clear(); // Limpia el estado de cin
+            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+            ShowConsoleCursor(false); // Oculta el cursor
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
+            Sleep(1500); // Espera 1.5 segundos
+            continue; // Continúa al siguiente ciclo del bucle do-while
+        }
+
+        switch (opcion)
+        {
+        case 1:
             system("cls");
             productCatalogMenu();
-		    break;
-		case 2: 
+            break;
+        case 2:
             orderingMenu();
-			break;
+            break;
         case 3:
             system("cls");
-            // === ESTADO DE PENDIENTES ===
-            // 1. Mostrar pedidos pendientes
-            // 2. Ver historial de pedidos relacionado al cliente
-            // 3. Volver
-			break;
-		case 4:
-			cout << "Saliendo del sistema..." << endl;
-			break;
-	default:
-        cout << "Opción no válida. Por favor, intente de nuevo." << endl;
-		break;
-	}
+            sistemaPedidos.mostrarHistorialPedidos();
+            ShowConsoleCursor(false); // Oculta el cursor
+            cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
+            _getch();
+            system("cls");
+            break;
+        case 4:
+            break;
+        }
+    } while (opcion != 4);
 }
 
 // Función para guardar la información del comprador en el archivo
@@ -1083,6 +1098,9 @@ void orderingMenu() {
     CARRO_COMPRAS carrito; // Crear un objeto de la clase CarritoCompra
     SISTEMA_PEDIDOS sistemaPedidos;
 
+    sistemaPedidos.cargarPedidosPendientes();
+    sistemaPedidos.cargarPedidosProcesados();
+
     int opcion;
 
     bool running = true;
@@ -1201,6 +1219,7 @@ void orderManagementMenu() {
     sistemaPedidos.cargarPedidosProcesados();
 
     int opcion;
+    string currentLanguage = "espanol"; // Idioma predeterminado
 
     while (true) {
         system("cls");  
@@ -1211,18 +1230,29 @@ void orderManagementMenu() {
         std::cout << "<4> Eliminar Pedidos" << endl;
         std::cout << "<5> Historial de Pedidos" << endl;
         std::cout << "<6> Volver";
+        ShowConsoleCursor(true); // Muestra el cursor
         std::cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione una opción: " << RESET_COLOR;
         std::cin >> opcion;
+
+        // Verifica si la entrada falló
+        if (cin.fail()) { // Verifica si la entrada falló
+            cin.clear(); // Limpia el estado de cin
+            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+            ShowConsoleCursor(false); // Oculta el cursor
+            std::cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
+            Sleep(1500); // Espera 1.5 segundos
+            continue; // Continúa al siguiente ciclo del bucle do-while
+        }
 
         switch (opcion) {
         case 1:
             sistemaPedidos.verPedidosPendientes();
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
+            std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
             _getch();
             break;
         case 2:
             sistemaPedidos.verPedidosProcesados();
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
+            std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
             _getch();
             break;
         case 3:
@@ -1254,13 +1284,11 @@ void orderManagementMenu() {
         case 5:
             system("cls");
             sistemaPedidos.mostrarHistorialPedidos();
+            ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
             _getch();
             break;
         case 6:
-            return; // Salir del menú
-        default:
-            std::cout << MAGENTA_COLOR << DOUBLE_SPACE << "Opción inválida. Inténtalo de nuevo.\n";
             break;
         }
     }
@@ -1375,13 +1403,6 @@ void sortProductsPrice() {
 			cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
 			ShowConsoleCursor(false); // Oculta el cursor
 			cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
-			Sleep(1500); // Espera 1.5 segundos
-			continue; // Continúa al siguiente ciclo del bucle do-while
-		}
-		else if (opcion > 3)
-		{
-			ShowConsoleCursor(false); // Oculta el cursor
-			cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Opción no válida
 			Sleep(1500); // Espera 1.5 segundos
 			continue; // Continúa al siguiente ciclo del bucle do-while
 		}
