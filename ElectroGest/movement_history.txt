@@ -1,1 +1,15 @@
 CAF_01 100 Entrada
+CAF_01 100 Salida
+CAF_01 100 Entrada
+CAF_01 100 Salida
+CAF_01 100 Entrada
+CAF_01 100 Salida
+CAF_01 100 Entrada
+CAF_02 200 Salida
+CAF_01 100 Entrada
+CAF_01 100 Salida
+CAF_01 100 Entrada
+CAF_01 100 Salida
+CAF_01 100 Entrada
+CAF_01 100 Salida
+CAF_01 100 Entrada

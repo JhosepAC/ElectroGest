@@ -1247,18 +1247,15 @@ void orderManagementMenu() {
         switch (opcion) {
         case 1:
             sistemaPedidos.verPedidosPendientes();
-            std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
-            _getch();
             break;
         case 2:
             sistemaPedidos.verPedidosProcesados();
-            std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
-            _getch();
             break;
         case 3:
             system("cls");
             sistemaPedidos.verPedidosPendientes();
-            std::cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese el índice del pedido a procesar: " << RESET_COLOR;
+            ShowConsoleCursor(true); // Muestra el cursor
+            cout << YELLOW_COLOR << "Ingrese el índice del pedido a procesar: " << RESET_COLOR;
             int indicePedido;
             std::cin >> indicePedido;
             if (indicePedido >= 0 && indicePedido < sistemaPedidos.getNumPedidosPendientes()) {
@@ -1267,15 +1264,20 @@ void orderManagementMenu() {
                     // Procesar el pedido
                     inventario.retirarStock(pedido.getCodigoProducto(), pedido.getCantidad());
                     sistemaPedidos.procesarPedido(indicePedido);
+                    ShowConsoleCursor(false); // Oculta el cursor
                     std::cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido procesado correctamente.";
                     Sleep(1500);
                 }
                 else {
+                    ShowConsoleCursor(false); // Oculta el cursor
                     std::cout << DOUBLE_SPACE << RED_COLOR << "No hay suficiente stock para procesar este pedido.";
+                    Sleep(1500);
                 }
             }
             else {
+                ShowConsoleCursor(false); // Oculta el cursor
                 std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "Índice de pedido inválido.\n";
+                Sleep(1500);
             }
             break;
         case 4:
