@@ -24,39 +24,39 @@ using namespace std;
 //#####################################################################//
 
 // Menú general
-void generalMenu();
+void generalMenu(); // Menú general
 
 // Menús de vendedores
-void sellerLoginMenu(); // Menú de inicio de sesión para vendedor
-void sellerMenu(string usuario, GestionarProveedores& supplierManager); // Menú de vendedor
+void sellerLoginMenu(string _currentLanguage); // Menú de inicio de sesión para vendedor
+void sellerMenu(string usuario, string _currentLanguag); // Menú de vendedor
 
 // Cliente
-void clientRegisterMenu(); // Menú de registro para comprador
-void clientLoginMenu(); // Menú de inicio de sesión para comprador
-void clientMenu(); // Menú de comprador
-void homeClientMenu(); // Menú de inicio para comprador
-void savePassword(const string& email, const string& password); // Guardar la contraseña cifrada
-void saveClientInfo(const CLIENTE& client); // Guardar la información del comprador en un archivo   
+void clientRegisterMenu(string _currentLanguag); // Menú de registro para comprador
+void clientLoginMenu(string _currentLanguag); // Menú de inicio de sesión para comprador
+void clientMenu(string _currentLanguag); // Menú de comprador
+void homeClientMenu(string _currentLanguag); // Menú de inicio para comprador
+void savePassword(const string& email, const string& password, string _currentLanguag); // Guardar la contraseña cifrada
+void saveClientInfo(const CLIENTE& client, string _currentLanguag); // Guardar la información del comprador en un archivo   
 
 // Productos
-void productCatalogMenu(); // Menú de catálogo de productos
-void productManagementMenu(); // Menú de gestión de productos 
-void filtrarProductosPorCategoria(); // Filtrar productos por categoría
+void productCatalogMenu(string _currentLanguag); // Menú de catálogo de productos
+void productManagementMenu(string _currentLanguag); // Menú de gestión de productos 
+void filtrarProductosPorCategoria(string _currentLanguag); // Filtrar productos por categoría
 
 // Inventario
-void inventoryManagementMenu(); // Menú de gestión de inventario
+void inventoryManagementMenu(string _currentLanguag); // Menú de gestión de inventario
 
 // Proveedores
-void supplierManagementMenu(); // Menú de gestión de proveedores
+void supplierManagementMenu(string _currentLanguag); // Menú de gestión de proveedores
 
 // Pedido
-void orderingMenu(); // Menú de pedidos
-void orderManagementMenu(); // Menú de gestión de pedidos
+void orderingMenu(string _currentLanguag); // Menú de pedidos
+void orderManagementMenu(string _currentLanguag); // Menú de gestión de pedidos
 
 // Gestión de clientes
-void customerManagementMenu(); // Menú de gestión de clientes
+void customerManagementMenu(string _currentLanguag); // Menú de gestión de clientes
 
-void sortProductsPrice(); // Ordenar productos por precio
+void sortProductsPrice(string _currentLanguag); // Ordenar productos por precio
 
 //#####################################################################//
 //################## IMPLEMENTACIÓN DE LOS MENÚS #####################//
@@ -104,10 +104,10 @@ void generalMenu() {
         // Evaluador del menú de opciones
         switch (opcion) {
         case 1:
-            sellerLoginMenu(); // Menú de inicio de sesión para vendedor
+            sellerLoginMenu(currentLanguage); // Menú de inicio de sesión para vendedor
             break;
         case 2:
-            clientMenu(); // Menú de cliente
+            clientMenu(currentLanguage); // Menú de cliente
             break;
         case 3:
             changeLanguage(currentLanguage); // Cambiar el idioma
@@ -122,7 +122,7 @@ void generalMenu() {
 // Menús de vendedores
 
 // Función para mostrar el menú de vendedor
-void sellerLoginMenu() {
+void sellerLoginMenu(string _currentLanguage) {
     ShowConsoleCursor(true); // Muestra el cursor en la consola
 
     system("cls"); // Limpia la consola
@@ -130,13 +130,15 @@ void sellerLoginMenu() {
     // Definir variables
     string usuario, contrasena;
     string usuarioArchivo, contrasenaArchivo;
-    string currentLanguage = "espanol"; // Idioma predeterminado
+
+    // Idioma predeterminado
+    string currentLanguage = _currentLanguage; 
 
     // Crear el objeto ProductManager
     GestionarProveedores supplierManager;
 
     // Solicita al usuario que ingrese sus datos
-    cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][9] << " ===" << DOUBLE_SPACE;
+    cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][9] << " ===" << DOUBLE_SPACE; // Inicio de sesión
     cout << GRAY_COLOR << menuTexts[currentLanguage][10] << DOUBLE_SPACE; // Ingrese sus credenciales
     cout << YELLOW_COLOR << menuTexts[currentLanguage][11] << RESET_COLOR; // Usuario
     cin >> usuario; // Lee el nombre de usuario
@@ -186,7 +188,7 @@ void sellerLoginMenu() {
 
     // Si se encontró el usuario
     if (encontrado) {
-        sellerMenu(usuario, supplierManager); // Muestra el menú de vendedor
+        sellerMenu(usuario, currentLanguage); // Muestra el menú de vendedor
     }
     else {
         ShowConsoleCursor(false); // Oculta el cursor
@@ -194,19 +196,17 @@ void sellerLoginMenu() {
         Sleep(1500); // Espera 1.5 segundo
         system("cls"); // Limpia la consola
         ShowConsoleCursor(true); // Muestra el cursor
-        sellerLoginMenu(); // Intenta nuevamente
+        sellerLoginMenu(currentLanguage); // Intenta nuevamente
     }
 }
 
 // Función para mostrar el menú de vendedor
-void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
+void sellerMenu(string usuario, string _currentLanguage) {
 
     // Crear los objetos de las clases
-    GESTION_INVENTARIO inventoryManager; // Crear el objeto GestionInventarios
-    GESTION_PRODUCTOS productManager; // Crear el objeto GESTION_PRODUCTOS
 
     int opcion; // Opción elegida por el usuario
-    string currentLanguage = "espanol"; // Idioma predeterminado
+    string currentLanguage = _currentLanguage; // Idioma predeterminado
 
     // Bucle para mostrar el menú y obtener la opción del usuario
     do {
@@ -243,19 +243,19 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
         // Evaluador de opciones
         switch (opcion) {
         case 1:
-            productManagementMenu(); // Menú de gestión de productos
+            productManagementMenu(_currentLanguage); // Menú de gestión de productos
             break;
         case 2:
-            inventoryManagementMenu(); // Menú de gestión de inventario
+            inventoryManagementMenu(_currentLanguage); // Menú de gestión de inventario
             break;
         case 3:
-            supplierManagementMenu(); // Menú de gestión de proveedores
+            supplierManagementMenu(_currentLanguage); // Menú de gestión de proveedores
             break;
         case 4:
-            orderManagementMenu(); // Menú de gestión de pedidos
+            orderManagementMenu(_currentLanguage); // Menú de gestión de pedidos
             break;
         case 5:
-            customerManagementMenu(); // Menú de gestión de clientes
+            customerManagementMenu(_currentLanguage); // Menú de gestión de clientes
             break;
         case 6:
 			break;
@@ -266,14 +266,14 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
 // Menús de clientes 
 
 // Función para mostrar el menú de registro para comprador
-void clientRegisterMenu() {
+void clientRegisterMenu(string _currentLanguage) {
     // Crear un objeto CLIENTE
     CLIENTE comprador;
     GESTION_CLIENTE clienteManager;
 
     // Definir variables
     string input;
-    string currentLanguage = "espanol"; // Idioma predeterminado
+    string currentLanguage = _currentLanguage; // Idioma predeterminado
 
     system("cls"); // Limpia la consola
 
@@ -287,9 +287,9 @@ void clientRegisterMenu() {
     getline(cin, input_nombre);
 
     while (!contieneSoloLetras(input_nombre)) {
-        cout << MAGENTA_COLOR << endl << "Nombre no permitido.";
+        cout << MAGENTA_COLOR << endl << menuTexts[currentLanguage][36];
 
-        cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese un nombre válido: " << RESET_COLOR;
+        cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][37] << RESET_COLOR;
         getline(cin, input_nombre);
     }
 
@@ -311,9 +311,9 @@ void clientRegisterMenu() {
     getline(cin, input_apellido);
 
     while (!contieneSoloLetrasApellido(input_apellido)) {
-        cout << MAGENTA_COLOR << endl << "Apellido no permitido.";
+        cout << MAGENTA_COLOR << endl << menuTexts[currentLanguage][38];
 
-        cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese un apellido válido: " << RESET_COLOR;
+        cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][39] << RESET_COLOR;
         getline(cin, input_apellido);
     }
 
@@ -353,7 +353,7 @@ void clientRegisterMenu() {
 
     // Validar que se haya ingresado una contraseña
     while (input_contrasenia.empty()) {
-        cout << endl << MAGENTA_COLOR << "Debe ingresar una contraseña. Por favor, inténtelo de nuevo." << RESET_COLOR << endl;
+        cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][40] << RESET_COLOR << endl;
         cout << YELLOW_COLOR << menuTexts[currentLanguage][12] << RESET_COLOR; // Contraseña
         getline(cin, input_contrasenia);
         comprador.setContrasenia(input_contrasenia);
@@ -366,7 +366,7 @@ void clientRegisterMenu() {
 
     // Verificar si las contraseñas coinciden
     while (input_contrasenia != input_confirmar_contrasenia) {
-        cout << MAGENTA_COLOR << endl << "Las contraseñas no coinciden. Por favor, inténtelo de nuevo." << RESET_COLOR << DOUBLE_SPACE;
+        cout << MAGENTA_COLOR << endl << menuTexts[currentLanguage][41] << RESET_COLOR << DOUBLE_SPACE;
 
         // Solicitar al usuario que ingrese la contraseña nuevamente
         cout << YELLOW_COLOR << menuTexts[currentLanguage][12] << RESET_COLOR; // Contraseña
@@ -395,7 +395,7 @@ void clientRegisterMenu() {
         }
         else if(clienteManager.numeroExistente(input_telefono))
 		{
-			cout << endl << MAGENTA_COLOR << "Número de teléfono ya registrado." << DOUBLE_SPACE; // Número de teléfono ya registrado
+			cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][42] << DOUBLE_SPACE; // Número de teléfono ya registrado
 		}
     } while (input_telefono.length() != 9 || !all_of(input_telefono.begin(), input_telefono.end(), ::isdigit) || clienteManager.numeroExistente(input_telefono));
     comprador.setTelefono(input_telefono);
@@ -437,22 +437,24 @@ void clientRegisterMenu() {
     comprador.setGenero(input_genero);
 
     // Guardar la información del comprador en un archivo
-    saveClientInfo(comprador);
-    savePassword(input_correo, input_contrasenia); // Guardar la contraseña cifrada
+    saveClientInfo(comprador, _currentLanguage);
+    savePassword(input_correo, input_contrasenia, _currentLanguage); // Guardar la contraseña cifrada
 
     ShowConsoleCursor(false); // Oculta el cursor
 
     Sleep(1500); // Espera 1.5 segundos
-    homeClientMenu(); // Muestra el menú del vendedor
+    homeClientMenu(_currentLanguage); // Muestra el menú del vendedor
 }
 
 // Función para mostrar el menú de inicio de sesión para comprador
-void clientLoginMenu() {
+void clientLoginMenu(string _currentLanguage) {
 
     ShowConsoleCursor(true); // Muestra el cursor
 
     string email, password;
     bool loggedIn = false;
+
+    string currentLanguage = _currentLanguage; // Idioma predeterminado
 
     cout << CYAN_COLOR << "¡Bienvenido, comprador!" << DOUBLE_SPACE;
     cout << GRAY_COLOR << "Ingrese sus datos para iniciar sesión." << DOUBLE_SPACE;
@@ -498,7 +500,7 @@ void clientLoginMenu() {
                 cout << DOUBLE_SPACE << GREEN_COLOR << "Inicio de sesión exitoso." << DOUBLE_SPACE;
                 Sleep(2000);
                 system("cls");
-                homeClientMenu(); // Mostrar el menú del comprador
+                homeClientMenu(_currentLanguage); // Mostrar el menú del comprador
                 break;
             }
         }
@@ -510,23 +512,23 @@ void clientLoginMenu() {
     }
 
     if (loggedIn) {
-        clientMenu();
+        clientMenu(_currentLanguage);
     }
     else {
         ShowConsoleCursor(false);
         cout << DOUBLE_SPACE << MAGENTA_COLOR << "Correo electrónico o contraseña incorrectos. Por favor, inténtelo de nuevo." << DOUBLE_SPACE;
         Sleep(2000);
         system("cls");
-        clientLoginMenu();
+        clientLoginMenu(_currentLanguage);
     }
 }
 
 // Función para mostrar el menú de comprador
-void clientMenu() {
+void clientMenu(string _currentLanguage) {
 
     int opcion = 0;
 
-    string currentLanguage = "espanol"; // Idioma predeterminado
+    string currentLanguage = _currentLanguage; // Idioma predeterminado
 
     do
     {
@@ -555,11 +557,11 @@ void clientMenu() {
         {
         case 1:
             system("cls");
-            clientRegisterMenu();
+            clientRegisterMenu(_currentLanguage);
             break;
         case 2:
             system("cls");
-            clientLoginMenu();
+            clientLoginMenu(_currentLanguage);
             break;
         case 3:
 			break;
@@ -569,7 +571,7 @@ void clientMenu() {
 }
 
 // Función para mostrar el menú de inicio para comprador
-void homeClientMenu() {
+void homeClientMenu(string _currentLanguage) {
     ShowConsoleCursor(true);   
 
 	system("cls");
@@ -606,10 +608,10 @@ void homeClientMenu() {
         {
         case 1:
             system("cls");
-            productCatalogMenu();
+            productCatalogMenu(_currentLanguage);
             break;
         case 2:
-            orderingMenu();
+            orderingMenu(_currentLanguage);
             break;
         case 3:
             system("cls");
@@ -626,7 +628,7 @@ void homeClientMenu() {
 }
 
 // Función para guardar la información del comprador en el archivo
-void saveClientInfo(const CLIENTE& client) {
+void saveClientInfo(const CLIENTE& client, string _currentLanguage) {
     ofstream file("client_registration.txt", ios::app); // Abre el archivo en modo append
     if (file.is_open()) {
         file << client.getNombre() << ","
@@ -647,7 +649,7 @@ void saveClientInfo(const CLIENTE& client) {
 }
 
 // Función para guardar la contraseña cifrada
-void savePassword(const string& email, const string& password) {
+void savePassword(const string& email, const string& password, string _currentLanguage) {
     ofstream passwordFile("passwords.txt", ios::app); // Abre el archivo en modo append
     if (passwordFile.is_open()) {
         passwordFile << email << " " << password << "\n"; // Escribir el correo electrónico y la contraseña en el archivo
@@ -661,14 +663,14 @@ void savePassword(const string& email, const string& password) {
 // Funciones de gestión de productos    
 
 // Función para mostrar el menú de catálogo de productos
-void productCatalogMenu() {
+void productCatalogMenu(string _currentLanguage) {
 
     int opcion;
     string nombre;
 
     GESTION_PRODUCTOS productManager;
 
-    string currentLanguage = "espanol"; // Idioma predeterminado
+    string currentLanguage = _currentLanguage; // Idioma predeterminado
 
     do
     {
@@ -705,7 +707,7 @@ void productCatalogMenu() {
             system("cls");
             break;
         case 2:
-            filtrarProductosPorCategoria();
+            filtrarProductosPorCategoria(_currentLanguage);
             break;
         case 3:
             system("cls");
@@ -728,12 +730,12 @@ void productCatalogMenu() {
 }
 
 // Función para filtrar productos por categoría
-void filtrarProductosPorCategoria() {
+void filtrarProductosPorCategoria(string _currentLanguage) {
     int opcion;
 
     GESTION_PRODUCTOS productManager;
 
-    string currentLanguage = "espanol"; // Idioma predeterminado
+    string currentLanguage = _currentLanguage; // Idioma predeterminado
 
     do {
 
@@ -790,11 +792,11 @@ void filtrarProductosPorCategoria() {
 }
 
 // Función para mostrar el menú y manejar la interacción con el usuario
-void productManagementMenu() {
+void productManagementMenu(string _currentLanguage) {
     GESTION_PRODUCTOS manager; // Crear el gestor de productos con el archivo
     int opcion;
     int opcion_ordenar;
-    string currentLanguage = "espanol"; // Idioma predeterminado
+    string currentLanguage = _currentLanguage; // Idioma predeterminado
 
     do{
 
@@ -837,7 +839,7 @@ void productManagementMenu() {
                 cin >> opcion_ordenar;
 
                 if (opcion_ordenar == 1) {
-                    sortProductsPrice();
+                    sortProductsPrice(_currentLanguage);
                 }
 				else if (opcion_ordenar == 2) {
 					break;
@@ -873,7 +875,7 @@ void productManagementMenu() {
 }
 
 // Función para mostrar el menú de gestión de inventario
-void inventoryManagementMenu() {
+void inventoryManagementMenu(string _currentLanguage) {
     int opcion;
     std::string codigoProducto;
     int cantidad;
@@ -882,7 +884,7 @@ void inventoryManagementMenu() {
     GESTION_PRODUCTOS gestorProductos;
     GESTION_INVENTARIO gestionInventarios;
 
-    string currentLanguage = "espanol"; // Idioma predeterminado
+    string currentLanguage = _currentLanguage; // Idioma predeterminado
 
     do {
         system("cls");
@@ -989,10 +991,12 @@ void inventoryManagementMenu() {
 }
 
 // Función para mostrar el menú y obtener la opción del usuario
-void supplierManagementMenu() {
+void supplierManagementMenu(string _currentLanguage) {
     int opcion;
     string nombreBuscar;
     const string archivoProveedores = "supplier_data.txt";
+
+    string currentLanguage = _currentLanguage; // Idioma predeterminado
 
     GestionarProveedores supplierManager; // Crear un objeto de la clase GestionarProveedores
 
@@ -1093,7 +1097,7 @@ void supplierManagementMenu() {
 }
 
 // Función para realizar un pedido
-void orderingMenu() {
+void orderingMenu(string _currentLanguage) {
     GESTION_INVENTARIO inventario;
     CARRO_COMPRAS carrito; // Crear un objeto de la clase CarritoCompra
     SISTEMA_PEDIDOS sistemaPedidos;
@@ -1106,6 +1110,7 @@ void orderingMenu() {
     bool running = true;
 
     std::string codigoProducto;
+    string currentLanguage = _currentLanguage; // Idioma predeterminado
     int cantidad;
 
     while (running) {
@@ -1210,7 +1215,7 @@ void orderingMenu() {
 }
 
 // Función para gestionar pedidos
-void orderManagementMenu() {
+void orderManagementMenu(string _currentLanguage) {
     SISTEMA_PEDIDOS sistemaPedidos;
     // Antes del bucle o en algún lugar antes de utilizarlo en tu código
     GESTION_INVENTARIO inventario;
@@ -1219,7 +1224,7 @@ void orderManagementMenu() {
     sistemaPedidos.cargarPedidosProcesados();
 
     int opcion;
-    string currentLanguage = "espanol"; // Idioma predeterminado
+    string currentLanguage = _currentLanguage; // Idioma predeterminado
 
     while (true) {
         system("cls");  
@@ -1297,7 +1302,7 @@ void orderManagementMenu() {
 }
 
 // Función para mostrar el menú de gestión de clientes
-void customerManagementMenu() {
+void customerManagementMenu(string _currentLanguage) {
     GESTION_CLIENTE gestionCliente;
     
     string currentLanguage = "espanol"; // Idioma predeterminado
@@ -1382,12 +1387,12 @@ void customerManagementMenu() {
     } while (opcion != 4);
 }
 
-void sortProductsPrice() {
+void sortProductsPrice(string _currentLanguage) {
     
     GESTION_PRODUCTOS productManager;
 
     int opcion;
-	string currentLanguage = "espanol"; // Idioma predeterminado
+	string currentLanguage = _currentLanguage; // Idioma predeterminado
 
 	do {
 		system("cls");
@@ -1427,7 +1432,7 @@ void sortProductsPrice() {
 			system("cls");
 			break;
 		case 3:
-            productManagementMenu();
+            productManagementMenu(_currentLanguage);
 			break;
 		}
 	} while (opcion != 3);
