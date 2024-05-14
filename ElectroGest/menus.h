@@ -131,8 +131,12 @@ void sellerLoginMenu(string _currentLanguage) {
     string usuario, contrasena;
     string usuarioArchivo, contrasenaArchivo;
 
+<<<<<<< HEAD
     // Idioma predeterminado
     string currentLanguage = _currentLanguage; 
+=======
+    string currentLanguage = "espanol"; // Idioma predeterminado
+>>>>>>> ad28a2a3f66afbc68c01c9099beaba4259d80164
 
     // Crear el objeto ProductManager
     GestionarProveedores supplierManager;
@@ -287,9 +291,15 @@ void clientRegisterMenu(string _currentLanguage) {
     getline(cin, input_nombre);
 
     while (!contieneSoloLetras(input_nombre)) {
+<<<<<<< HEAD
         cout << MAGENTA_COLOR << endl << menuTexts[currentLanguage][36];
 
         cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][37] << RESET_COLOR;
+=======
+        cout << MAGENTA_COLOR << endl << menuTexts[currentLanguage][36]; // Nombre no válido
+
+        cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][37] << RESET_COLOR; // Ingrese un nombre válido
+>>>>>>> ad28a2a3f66afbc68c01c9099beaba4259d80164
         getline(cin, input_nombre);
     }
 

@@ -71,10 +71,17 @@ map<string, map<int, string>> menuTexts = {
         {33, "Ingrese un sexo válido (M, F). Intente de nuevo."},
         {34, "Dirección de correo electrónico no válida"},
         {35, "Fecha de nacimiento no válida"},
+<<<<<<< HEAD
         {36, "Nombre no permitido."},
         {37, "Ingrese un nombre válido: "},
 		{38, "Apellido no permitido."},
 		{39, "Ingrese un apellido válido: "},
+=======
+        {36, "Nombre no válido."},
+        {37, "Ingrese un nombre válido: "},
+        {38, "Apellido no válido."},
+        {39, "Ingrese un apellido válido: "},
+>>>>>>> ad28a2a3f66afbc68c01c9099beaba4259d80164
         {40, "Debe ingresar una contraseña. Por favor, inténtelo de nuevo."},
         {41, "Las contraseñas no coinciden. Por favor, inténtelo de nuevo."},
         {42, "Número de teléfono ya registrado."},
@@ -116,6 +123,13 @@ map<string, map<int, string>> menuTexts = {
         {33, "Please enter a valid gender (M, F). Try again."},
         {34, "Invalid email address"},
 		{35, "Invalid date of birth"},
+        {36, "Invalid name."},
+		{37, "Enter a valid name: "},
+		{38, "Invalid last name."},
+		{39, "Enter a valid last name: "},
+		{40, "You must enter a password. Please try again."},
+		{41, "Passwords do not match. Please try again."},
+		{42, "Phone number already registered."},
 		{404, "Error opening file" }
     }}
 };
