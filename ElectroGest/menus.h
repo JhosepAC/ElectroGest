@@ -1098,6 +1098,7 @@ void orderingMenu() {
         std::cout << "<3> Confirmar Pedido\n";
         std::cout << "<4> Cancelar Pedido\n";
         std::cout << "<5> Salir";
+        ShowConsoleCursor(true); // Muestra el cursor
         std::cout << YELLOW_COLOR << DOUBLE_SPACE << "Seleccione una opción: " << RESET_COLOR;
         std::cin >> opcion;
 
@@ -1113,28 +1114,43 @@ void orderingMenu() {
 
         switch (opcion) {
         case 1:
-            system("cls");  
+            system("cls");
             std::cout << YELLOW_COLOR << "Ingrese el código del producto a agregar: " << RESET_COLOR;
             std::cin >> codigoProducto;
 
             // Verificar que el producto exista
             if (!inventario.existeProducto(codigoProducto)) {
-				std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El producto no existe en el inventario." << RESET_COLOR;
-				Sleep(1500);
-				break;
-			}   
+                ShowConsoleCursor(false);
+                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El producto no existe en el inventario." << RESET_COLOR;
+                Sleep(1500);
+                break;
+            }
 
             std::cout << YELLOW_COLOR << "Ingrese la cantidad a agregar: " << RESET_COLOR;
-            std::cin >> cantidad;
+            int cantidad;
+            while (!(std::cin >> cantidad) || cantidad <= 0) {
+                if (std::cin.fail()) {
+                    // Limpiar el estado de error y descartar la entrada inválida
+                    std::cin.clear();
+                    cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+                    std::cout << MAGENTA_COLOR << "Debe ingresar un número válido para la cantidad." << RESET_COLOR << DOUBLE_SPACE;
+                }
+                else {
+                    std::cout << MAGENTA_COLOR << "La cantidad debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
+                }
+                std::cout << YELLOW_COLOR << "Ingrese nuevamente la cantidad a agregar: " << RESET_COLOR;
+            }
 
             // Verificar si hay suficiente stock antes de agregar al carrito
             if (inventario.verificarStock(codigoProducto, cantidad)) {
                 // Aquí puedes implementar la lógica para agregar al carrito
                 carrito.agregarPedido(PEDIDO(codigoProducto, cantidad));
+                ShowConsoleCursor(false);
                 std::cout << DOUBLE_SPACE << GREEN_COLOR << "Producto agregado al carrito correctamente." << RESET_COLOR;
-                Sleep(1500);    
+                Sleep(1500);
             }
             else {
+                ShowConsoleCursor(false);
                 std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "No hay suficiente stock de este producto." << RESET_COLOR;
                 Sleep(1500);
             }
@@ -1146,31 +1162,30 @@ void orderingMenu() {
             if (!carrito.isEmpty()) {
                 sistemaPedidos.guardarPedidos(carrito.getPedidos());
                 carrito.limpiarCarrito(); // Limpiar el carrito después de confirmar el pedido
+                ShowConsoleCursor(false);
                 std::cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido confirmado correctamente.";
                 Sleep(1500);
             }
             else {
-                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El carrito está vacío. No se puede confirmar el pedido.";
+                ShowConsoleCursor(false);
+                std::cout << endl << MAGENTA_COLOR << "El carrito está vacío. No se puede confirmar el pedido.";
                 Sleep(1500);
             }
             break;
         case 4:
             if (!carrito.isEmpty()) {
+                ShowConsoleCursor(false);
                 std::cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido cancelado. El carrito ha sido vaciado.";
                 carrito.limpiarCarrito(); // Limpiar el carrito
                 Sleep(1500);
             }
             else {
-                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El carrito está vacío. No se puede cancelar el pedido.";
+                ShowConsoleCursor(false);
+                std::cout << endl << MAGENTA_COLOR << "El carrito está vacío. No se puede cancelar el pedido.";
                 Sleep(1500);
             }
             break;
         case 5:
-            homeClientMenu();
-            break;
-        default:
-            std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "Opción no válida. Inténtalo de nuevo." << RESET_COLOR;
-            Sleep(1500);
             break;
         }
     }

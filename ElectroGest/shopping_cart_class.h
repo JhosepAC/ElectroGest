@@ -16,15 +16,17 @@ public:
     // Ver el contenido del carrito
     void verCarrito() const {
         if (pedidos.empty()) {
-            std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El carrito está vacío.";
+            ShowConsoleCursor(false);
+            std::cout << endl << MAGENTA_COLOR << "El carrito está vacío.";
             Sleep(1500);
         }
         else {
             system("cls");
             std::cout << CYAN_COLOR << "=== Carrito de Compras ===" << DOUBLE_SPACE;
             for (const auto& pedido : pedidos) {
-                std::cout << GRAY_COLOR << "Código: " << RESET_COLOR << pedido.getCodigoProducto() << GRAY_COLOR << ", Cantidad: " << RESET_COLOR <<pedido.getCantidad() << "\n";
+                std::cout << BLUE_COLOR << "Código: " << RESET_COLOR << pedido.getCodigoProducto() << BLUE_COLOR << ", Cantidad: " << RESET_COLOR <<pedido.getCantidad() << "\n";
             }
+            ShowConsoleCursor(false);
             cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";      
             _getch();
         }
