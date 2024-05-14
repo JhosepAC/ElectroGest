@@ -24,6 +24,7 @@ using namespace std;
 //#####################################################################//
 
 
+
 // Menú general
 void generalMenu(); // Menú general
 
@@ -134,7 +135,7 @@ void sellerLoginMenu(string _currentLanguage) {
 
     // Idioma predeterminado
     string currentLanguage = _currentLanguage; 
-    string currentLanguage = "espanol"; // Idioma predeterminado
+  
 
     // Crear el objeto ProductManager
     GestionarProveedores supplierManager;

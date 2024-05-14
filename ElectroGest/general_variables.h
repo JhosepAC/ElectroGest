@@ -106,6 +106,7 @@ map<string, map<int, string>> menuTexts = {
         {64, "Eliminar cliente"},
         {65, "Buscar cliente"},
         {66, "Lista de clientes:"},
+        
         {404, "Error al abrir el archivo" }
     }},
     {"english", {
@@ -193,7 +194,7 @@ void changeLanguage(string& currentLanguage) {
         // Cambiar el idioma
         currentLanguage = language;
     }
-}
+}//sex mod it's active now
 
 // Función para verificar si una cadena contiene solo letras
 bool contieneSoloLetras(const string& str) {
