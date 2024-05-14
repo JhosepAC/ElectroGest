@@ -106,40 +106,6 @@ map<string, map<int, string>> menuTexts = {
         {64, "Eliminar cliente"},
         {65, "Buscar cliente"},
         {66, "Lista de clientes:"},
-        {67, "¡Registro completado exitosamente!"},
-        {68, "CÁTALOGO DE PRODUCTOS"},
-        {69, "Ver productos"},
-        {70, "Filtrar productos"},
-        {71, "Buscar productos por nombres"},
-        {72, "Ingresa el nombre del producto a buscar: "},
-        {73, "Índice de pedido inválido."},
-        {74, "No hay suficiente stock para procesar este pedido."},
-        {75, "Pedido procesado correctamente."},
-        {76, "Ingrese el índice del pedido a procesar: "},
-        {77, "GESTIÓN DE PEDIDOS"},
-        {78, "Ver pedidos pendientes"},
-        {79, "Ver pedidos procesados"},
-        {80, "Procesar pedido"},
-        {81, "Eliminar pedidos"},
-        {82, "Historial de pedidos"},
-        {83, "FILTRAR PRODUCTOS POR CATEGORÍA"},
-        {84, "Filtrar por precio"},
-        {85, "Filtrar por color"},
-        {86, "Filtrar por marca"},
-        {87, "GESTIÓN DE PRODUCTOS"},
-        {88, "Catálogo de productos"},
-        {89, "Agregar nuevo producto"},
-        {90, "Actualizar producto"},
-        {91, "Eliminar producto"},
-        {92, "Buscar producto"},
-        {93, "¿Desea ordenar los productos por precio?"},
-        {94, "Sí"},
-		{95, "No"},
-		{96, ""},
-		{97, ""},
-		{98, ""},
-		{99, ""},
-		{100, ""},
         {404, "Error al abrir el archivo" }
     }},
     {"english", {
@@ -227,7 +193,7 @@ void changeLanguage(string& currentLanguage) {
         // Cambiar el idioma
         currentLanguage = language;
     }
-}
+}//sex mod it's active now
 
 // Función para verificar si una cadena contiene solo letras
 bool contieneSoloLetras(const string& str) {
