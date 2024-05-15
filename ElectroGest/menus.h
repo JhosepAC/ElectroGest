@@ -898,11 +898,11 @@ void inventoryManagementMenu(string _currentLanguage) {
 
     do {
         system("cls");
-        std::cout << CYAN_COLOR << "=== Menú de Gestión de Inventarios ===" << endl << RESET_COLOR << std::endl;
-        std::cout << "<1> Ver Inventario" << std::endl;
-        std::cout << "<2> Añadir Stock" << std::endl;
-        std::cout << "<3> Retirar Stock" << std::endl;
-        std::cout << "<4> Historial de Movimientos" << std::endl;
+        std::cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][12] << " ===" << endl << RESET_COLOR << std::endl;
+        std::cout << "<1> " << menuTexts[currentLanguage][113] << std::endl;
+        std::cout << "<2> " << menuTexts[currentLanguage][114] << std::endl;
+        std::cout << "<3> " << menuTexts[currentLanguage][115] << std::endl;
+        std::cout << "<4> " << menuTexts[currentLanguage][116] << std::endl;
         std::cout << "<5> " << menuTexts[currentLanguage][4] << std::endl;
         ShowConsoleCursor(true); // Muestra el cursor
         std::cout << endl << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR;
@@ -924,65 +924,65 @@ void inventoryManagementMenu(string _currentLanguage) {
             break;
         case 2:
             system("cls");
-            std::cout << YELLOW_COLOR << "Ingrese el código del producto que desea agregar al inventario: " << RESET_COLOR;
+            std::cout << YELLOW_COLOR << menuTexts[currentLanguage][125] << RESET_COLOR;
             std::cin >> codigoProducto;
             producto = gestorProductos.buscarProducto(codigoProducto); // Obtiene un puntero al producto
             if (producto != nullptr) {
                 int cantidad;
-                std::cout << YELLOW_COLOR << "Ingrese la cantidad de stock a añadir: " << RESET_COLOR;
+                std::cout << YELLOW_COLOR << menuTexts[currentLanguage][126] << RESET_COLOR;
                 while (!(std::cin >> cantidad) || cantidad <= 0) {
                     if (std::cin.fail()) {
                         // Limpiar el estado de error y descartar la entrada inválida
                         std::cin.clear();
                         cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
-                        std::cout << endl << MAGENTA_COLOR << "Debe ingresar un número válido para la cantidad de stock." << RESET_COLOR << DOUBLE_SPACE;
+                        std::cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][127] << RESET_COLOR << DOUBLE_SPACE;
                     }
                     else {
-                        std::cout << MAGENTA_COLOR << "La cantidad de stock debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
+                        std::cout << MAGENTA_COLOR << menuTexts[currentLanguage][128] << RESET_COLOR << DOUBLE_SPACE;
                     }
-                    std::cout << YELLOW_COLOR << "Ingrese nuevamente la cantidad de stock: " << RESET_COLOR;
+                    std::cout << YELLOW_COLOR << menuTexts[currentLanguage][129] << RESET_COLOR;
                 }
                 gestionInventarios.añadirStock(producto->producto.getCodigo(), cantidad); // Utiliza el código del producto
 
                 ShowConsoleCursor(false); // Oculta el cursor
-                cout << DOUBLE_SPACE << GREEN_COLOR << "Stock añadido exitosamente." << RESET_COLOR;
+                cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][130] << RESET_COLOR;
                 Sleep(1500);
             }
             else {
                 ShowConsoleCursor(false); // Oculta el cursor
-                std::cout << endl << MAGENTA_COLOR << "El producto no se encuentra en la lista de productos." << std::endl;
+                std::cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][131] << std::endl; // Producto no encontrado
                 Sleep(1500);
             }
             break;
         case 3:
             system("cls");
-            std::cout << YELLOW_COLOR << "Ingrese el código del producto del cual desea retirar stock: " << RESET_COLOR;
+            std::cout << YELLOW_COLOR << menuTexts[currentLanguage][132] << RESET_COLOR;
             std::cin >> codigoProducto;
             producto = gestorProductos.buscarProducto(codigoProducto); // Asigna valor a producto
             if (producto != nullptr) {
-                std::cout << YELLOW_COLOR << "Ingrese la cantidad de stock a retirar: " << RESET_COLOR;
+                std::cout << YELLOW_COLOR << menuTexts[currentLanguage][133] << RESET_COLOR;
                 while (!(std::cin >> cantidad) || cantidad <= 0) {
                     if (std::cin.fail()) {
                         // Limpiar el estado de error y descartar la entrada inválida
                         std::cin.clear();
                         cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
-                        std::cout << MAGENTA_COLOR << "Debe ingresar un número válido para la cantidad de stock." << RESET_COLOR << DOUBLE_SPACE;
+                        std::cout << MAGENTA_COLOR << menuTexts[currentLanguage][134] << RESET_COLOR << DOUBLE_SPACE;
                     }
                     else {
-                        std::cout << MAGENTA_COLOR << "La cantidad de stock debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
+                        std::cout << MAGENTA_COLOR << menuTexts[currentLanguage][128] << RESET_COLOR << DOUBLE_SPACE; // Cantidad no válida
                     }
-                    std::cout << YELLOW_COLOR << "Ingrese nuevamente la cantidad de stock: " << RESET_COLOR;
+                    std::cout << YELLOW_COLOR << menuTexts[currentLanguage][129] << RESET_COLOR; // Ingrese una cantidad válida
                 }
 
                 gestionInventarios.retirarStock(producto->producto.getCodigo(), cantidad);
 
                 ShowConsoleCursor(false); // Oculta el cursor
-                cout << DOUBLE_SPACE << GREEN_COLOR << "Stock retirado exitosamente." << RESET_COLOR;
+                cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][136] << RESET_COLOR; // Stock retirado con éxito
                 Sleep(1500);
             }
             else {
                 ShowConsoleCursor(false); // Oculta el cursor
-                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El producto no se encuentra en la lista de productos." << std::endl;
+                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][137] << std::endl; // Producto no encontrado
                 Sleep(1500);
             }
             break;
@@ -991,7 +991,7 @@ void inventoryManagementMenu(string _currentLanguage) {
             // Mostrar historial de movimientos
             gestionInventarios.mostrarHistorialMovimientos();
             ShowConsoleCursor(false); // Oculta el cursor
-            std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
+            std::cout << DOUBLE_SPACE << GRAY_COLOR <<  menuTexts[currentLanguage][50]; // Presione cualquier tecla para continuar
             _getch();
             break;
         case 5:
@@ -1014,22 +1014,22 @@ void supplierManagementMenu(string _currentLanguage) {
     
     do {
         system("cls");
-        cout << CYAN_COLOR << "=== GESTIÓN DE PROVEEDORES ===" << RESET_COLOR << DOUBLE_SPACE;
-        cout << "<1> Ver lista de proveedores" << endl;
-        cout << "<2> Agregar nuevo proveedor" << endl;
-        cout << "<3> Actualizar información de proveedor" << endl;
-        cout << "<4> Eliminar proveedor" << endl;
-        cout << "<5> Buscar proveedor" << endl;
+        cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][117] << " ===" << RESET_COLOR << DOUBLE_SPACE;
+        cout << "<1> " << menuTexts[currentLanguage][118] << endl;
+        cout << "<2> " << menuTexts[currentLanguage][119] << endl;
+        cout << "<3> " << menuTexts[currentLanguage][120] << endl;
+        cout << "<4> " << menuTexts[currentLanguage][121] << endl;
+        cout << "<5> " << menuTexts[currentLanguage][122] << endl;
         cout << "<6> " << menuTexts[currentLanguage][50] << DOUBLE_SPACE;
         ShowConsoleCursor(true); // Muestra el cursor
-        cout << YELLOW_COLOR << "Seleccione una opcion: " << RESET_COLOR;
+        cout << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR;
         cin >> opcion;
 
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false);
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número." << endl;
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6] << endl;
             Sleep(1000);
             ShowConsoleCursor(true);
             continue; // Continúa al siguiente ciclo del bucle do-while
@@ -1040,7 +1040,7 @@ void supplierManagementMenu(string _currentLanguage) {
             // Verificar si la lista de proveedores está vacía
             if (supplierManager.listaProveedoresVacia()) {
                 ShowConsoleCursor(false); // Oculta el cursor
-				cout << DOUBLE_SPACE << MAGENTA_COLOR << "No se cuenta con proveedores por el momento." << RESET_COLOR;
+				cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][123] << RESET_COLOR;
 				Sleep(1500);
 				break;
 			}
@@ -1061,7 +1061,7 @@ void supplierManagementMenu(string _currentLanguage) {
             // Verificar si la lista de proveedores está vacía
             if (supplierManager.listaProveedoresVacia()) {
                 ShowConsoleCursor(false); // Oculta el cursor
-                cout << DOUBLE_SPACE << MAGENTA_COLOR << "No se cuenta con proveedores por el momento." << RESET_COLOR;
+                cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][123] << RESET_COLOR;
                 Sleep(1500);
                 break;
             }
@@ -1074,7 +1074,7 @@ void supplierManagementMenu(string _currentLanguage) {
             // Verificar si la lista de proveedores está vacía
             if (supplierManager.listaProveedoresVacia()) {
                 ShowConsoleCursor(false); // Oculta el cursor
-                cout << DOUBLE_SPACE << MAGENTA_COLOR << "No se cuenta con proveedores por el momento." << RESET_COLOR;
+                cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][123] << RESET_COLOR;
                 Sleep(1500);
                 break;
             }
@@ -1087,16 +1087,16 @@ void supplierManagementMenu(string _currentLanguage) {
             // Verificar si la lista de proveedores está vacía
             if (supplierManager.listaProveedoresVacia()) {
                 ShowConsoleCursor(false); // Oculta el cursor
-                cout << DOUBLE_SPACE << MAGENTA_COLOR << "No se cuenta con proveedores por el momento." << RESET_COLOR;
+                cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][123] << RESET_COLOR;
                 Sleep(1500);
                 break;
             }
             system("cls");
-            cout << YELLOW_COLOR << "Ingrese el nombre del proveedor que desea buscar: " << RESET_COLOR;
+            cout << YELLOW_COLOR << menuTexts[currentLanguage][124] << RESET_COLOR; // Ingrese el nombre del proveedor a buscar
             cin.ignore();
             getline(cin, nombreBuscar);
             supplierManager.buscarProveedor(nombreBuscar);
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presionar cualquier tecla para continuar";
+            cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
             system("cls");
             break;
@@ -1125,21 +1125,21 @@ void orderingMenu(string _currentLanguage) {
 
     while (running) {
         system("cls");
-        std::cout << CYAN_COLOR << "=== REALIZAR PEDIDO ===" << RESET_COLOR << DOUBLE_SPACE;
-        std::cout << "<1> Agregar Producto al Carrito\n";
-        std::cout << "<2> Ver Carrito\n";
-        std::cout << "<3> Confirmar Pedido\n";
-        std::cout << "<4> Cancelar Pedido\n";
+        std::cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][107] << " ===" << RESET_COLOR << DOUBLE_SPACE;
+        std::cout << "<1> " << menuTexts[currentLanguage][108] << endl;
+        std::cout << "<2> " << menuTexts[currentLanguage][109] << endl;
+        std::cout << "<3> " << menuTexts[currentLanguage][110] << endl;
+        std::cout << "<4> " << menuTexts[currentLanguage][111] << endl;
         std::cout << "<5> " << menuTexts[currentLanguage][4];
         ShowConsoleCursor(true); // Muestra el cursor
-        std::cout << YELLOW_COLOR << DOUBLE_SPACE << "Seleccione una opción: " << RESET_COLOR;
+        std::cout << YELLOW_COLOR << DOUBLE_SPACE << menuTexts[currentLanguage][5] << RESET_COLOR;
         std::cin >> opcion;
 
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false);
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número." << endl;
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6] << endl;
             Sleep(1000);
             ShowConsoleCursor(true);
             continue; // Continúa al siguiente ciclo del bucle do-while
@@ -1148,30 +1148,30 @@ void orderingMenu(string _currentLanguage) {
         switch (opcion) {
         case 1:
             system("cls");
-            std::cout << YELLOW_COLOR << "Ingrese el código del producto a agregar: " << RESET_COLOR;
+            std::cout << YELLOW_COLOR << menuTexts[currentLanguage][106] << RESET_COLOR;
             std::cin >> codigoProducto;
 
             // Verificar que el producto exista
             if (!inventario.existeProducto(codigoProducto)) {
                 ShowConsoleCursor(false);
-                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El producto no existe en el inventario." << RESET_COLOR;
+                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][105] << RESET_COLOR; // Producto no encontrado
                 Sleep(1500);
                 break;
             }
 
-            std::cout << YELLOW_COLOR << "Ingrese la cantidad a agregar: " << RESET_COLOR;
+            std::cout << YELLOW_COLOR << menuTexts[currentLanguage][104] << RESET_COLOR;
             int cantidad;
             while (!(std::cin >> cantidad) || cantidad <= 0) {
                 if (std::cin.fail()) {
                     // Limpiar el estado de error y descartar la entrada inválida
                     std::cin.clear();
                     cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
-                    std::cout << MAGENTA_COLOR << "Debe ingresar un número válido para la cantidad." << RESET_COLOR << DOUBLE_SPACE;
+                    std::cout << MAGENTA_COLOR << menuTexts[currentLanguage][103] << RESET_COLOR << DOUBLE_SPACE;
                 }
                 else {
-                    std::cout << MAGENTA_COLOR << "La cantidad debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
+                    std::cout << MAGENTA_COLOR << menuTexts[currentLanguage][102] << RESET_COLOR << DOUBLE_SPACE;
                 }
-                std::cout << YELLOW_COLOR << "Ingrese nuevamente la cantidad a agregar: " << RESET_COLOR;
+                std::cout << YELLOW_COLOR << menuTexts[currentLanguage][101] << RESET_COLOR;
             }
 
             // Verificar si hay suficiente stock antes de agregar al carrito
@@ -1179,12 +1179,12 @@ void orderingMenu(string _currentLanguage) {
                 // Aquí puedes implementar la lógica para agregar al carrito
                 carrito.agregarPedido(PEDIDO(codigoProducto, cantidad));
                 ShowConsoleCursor(false);
-                std::cout << DOUBLE_SPACE << GREEN_COLOR << "Producto agregado al carrito correctamente." << RESET_COLOR;
+                std::cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][100] << RESET_COLOR; // Producto agregado al carrito
                 Sleep(1500);
             }
             else {
                 ShowConsoleCursor(false);
-                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "No hay suficiente stock de este producto." << RESET_COLOR;
+                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][99] << RESET_COLOR; // No hay suficiente stock
                 Sleep(1500);
             }
             break;
@@ -1196,25 +1196,25 @@ void orderingMenu(string _currentLanguage) {
                 sistemaPedidos.guardarPedidos(carrito.getPedidos());
                 carrito.limpiarCarrito(); // Limpiar el carrito después de confirmar el pedido
                 ShowConsoleCursor(false);
-                std::cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido confirmado correctamente.";
+                std::cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][98];
                 Sleep(1500);
             }
             else {
                 ShowConsoleCursor(false);
-                std::cout << endl << MAGENTA_COLOR << "El carrito está vacío. No se puede confirmar el pedido.";
+                std::cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][96];
                 Sleep(1500);
             }
             break;
         case 4:
             if (!carrito.isEmpty()) {
                 ShowConsoleCursor(false);
-                std::cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido cancelado. El carrito ha sido vaciado.";
+                std::cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][97];
                 carrito.limpiarCarrito(); // Limpiar el carrito
                 Sleep(1500);
             }
             else {
                 ShowConsoleCursor(false);
-                std::cout << endl << MAGENTA_COLOR << "El carrito está vacío. No se puede cancelar el pedido.";
+                std::cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][96];
                 Sleep(1500);
             }
             break;
