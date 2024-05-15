@@ -177,6 +177,14 @@ map<string, map<int, string>> menuTexts = {
         {135, "Ingrese nuevamente la cantidad de stock: " },
         {136, "Stock retirado exitosamente." },
         {137, "El producto no se encuentra en la lista de productos." },
+        {138, "Fecha de nacimiento: "},
+        {139, "Sexo: "},
+        {140, "Cliente eliminado correctamente."},
+        {141, "El cliente con el correo electrónico "},
+        {142, " no se encuentra registrado."},
+        {143, "Nombres: "},
+        {144, "Cliente encontrado: "},
+        {145, "No se encontraron clientes con el nombre proporcionado."},
         {404, "Error al abrir el archivo" }
     }},
     {"english", {
@@ -317,6 +325,14 @@ map<string, map<int, string>> menuTexts = {
 		{135, "Enter the stock amount again: " },
 		{136, "Stock removed successfully." },
 		{137, "The product is not in the list of products." },
+        {138, "Date of birth: " },
+        {139, "Sex: " },
+        {140, "Client deleted successfully." },
+		{141, "The client with the email " },
+		{142, " is not registered." },
+		{143, "Names: " },
+		{144, "Client found: " },
+		{145, "No clients found with the provided name." },
 		{404, "Error opening file" }
     }}
 };
