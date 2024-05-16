@@ -1051,7 +1051,7 @@ void supplierManagementMenu(string _currentLanguage) {
 				break;
 			}
             system("cls");
-            supplierManager.verListaProveedores();
+            supplierManager.verListaProveedores(_currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
@@ -1059,7 +1059,7 @@ void supplierManagementMenu(string _currentLanguage) {
             break;
         case 2:
             system("cls");
-            supplierManager.agregarProveedor(archivoProveedores);
+            supplierManager.agregarProveedor(archivoProveedores, _currentLanguage);
             Sleep(1000);
             system("cls");
             break;
@@ -1072,7 +1072,7 @@ void supplierManagementMenu(string _currentLanguage) {
                 break;
             }
             system("cls");
-            supplierManager.actualizarProveedor(archivoProveedores);
+            supplierManager.actualizarProveedor(archivoProveedores, _currentLanguage);
             Sleep(1000);
             system("cls");
             break;
@@ -1085,7 +1085,7 @@ void supplierManagementMenu(string _currentLanguage) {
                 break;
             }
             system("cls");
-            supplierManager.eliminarProveedor(archivoProveedores);
+            supplierManager.eliminarProveedor(archivoProveedores, _currentLanguage);
             Sleep(1000);
             system("cls");
             break;
@@ -1101,7 +1101,7 @@ void supplierManagementMenu(string _currentLanguage) {
             cout << YELLOW_COLOR << menuTexts[currentLanguage][124] << RESET_COLOR; // Ingrese el nombre del proveedor a buscar
             cin.ignore();
             getline(cin, nombreBuscar);
-            supplierManager.buscarProveedor(nombreBuscar);
+            supplierManager.buscarProveedor(nombreBuscar, _currentLanguage);
             cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
             system("cls");
@@ -1195,7 +1195,7 @@ void orderingMenu(string _currentLanguage) {
             }
             break;
         case 2:
-            carrito.verCarrito(); // Ver el contenido del carrito
+            carrito.verCarrito(_currentLanguage); // Ver el contenido del carrito
             break;
         case 3:
             if (!carrito.isEmpty()) {
