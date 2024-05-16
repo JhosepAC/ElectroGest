@@ -199,9 +199,17 @@ map<string, map<int, string>> menuTexts = {
         {157, "El historial de movimientos está vacío."},
         {158, "HISTORIAL DE MOVIMIENTOS"},
         {159, "Código Producto"},
-        {160, "Cantidad"},
+        {160, "Cantidad: "},
         {161, "Movimiento"},
         {162, "Fecha y Hora"},
+        {163, "No hay pedidos pendientes"},
+        {164, "PEDIDOS PENDIENTES"},
+        {165, "No hay pedidos procesados"},
+        {166, "PEDIDOS PROCESADOS"},
+        {167, "Todos los pedidos han sido eliminados."},
+        {168, "HISTORIAL DE PEDIDOS"},
+        {169, "Pedidos pendientes: "},
+        {170, "Pedidos procesados: "},
         {404, "Error al abrir el archivo" }
     }},
     {"english", {
