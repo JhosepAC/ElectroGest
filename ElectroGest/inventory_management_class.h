@@ -18,6 +18,7 @@ private:
     map<string, int> inventario;
 
 public:
+    // Constructor
     GESTION_INVENTARIO() {}
 
     // Función para verificar si un producto existe en el inventario

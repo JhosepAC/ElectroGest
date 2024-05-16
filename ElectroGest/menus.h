@@ -901,7 +901,7 @@ void inventoryManagementMenu(string _currentLanguage) {
 
     do {
         system("cls");
-        std::cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][12] << " ===" << endl << RESET_COLOR << std::endl;
+        std::cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][112] << " ===" << endl << RESET_COLOR << std::endl;
         std::cout << "<1> " << menuTexts[currentLanguage][113] << std::endl; // Ver inventario
         std::cout << "<2> " << menuTexts[currentLanguage][114] << std::endl; // Añadir stock
         std::cout << "<3> " << menuTexts[currentLanguage][115] << std::endl; // Retirar stock
