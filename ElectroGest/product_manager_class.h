@@ -162,9 +162,13 @@ public:
     }
 
     // Método para guardar el catálogo de productos en un archivo
-    void guardarEnArchivo() {
+    void guardarEnArchivo(string _currentLenguage) {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLenguage;
+
         ofstream file("total_products.txt");
-        listaProductos.mostrarCatalogoArchivo(); // Elimina el argumento file de aquí
+        listaProductos.mostrarCatalogoArchivo(_currentLenguage); // Elimina el argumento file de aquí
         file.close();
     }
 
@@ -210,26 +214,42 @@ public:
     }
 
     // Método para mostrar todos los productos en el catálogo
-    void mostrarTodosLosProductos() const {
-        listaProductos.mostrarCatalogo();
+    void mostrarTodosLosProductos(string _currentLenguage) const {
+        
+        // Idioma predeterminado
+        string currentLanguage = _currentLenguage;
+
+        listaProductos.mostrarCatalogo(_currentLenguage);
     }
 
     // Método para agregar un producto al catálogo
-    void agregarProducto(PRODUCTO producto) {
+    void agregarProducto(PRODUCTO producto, string _currentLenguage) {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLenguage;
+
         listaProductos.agregarProducto(producto);
-        guardarEnArchivo();
+        guardarEnArchivo(_currentLenguage);
     }
 
     // Método para eliminar un producto del catálogo
-    void eliminarProducto(const string& codigo) {
+    void eliminarProducto(const string& codigo, string _currentLenguage) {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLenguage;
+
         listaProductos.eliminarProducto(codigo);
-        guardarEnArchivo();
+        guardarEnArchivo(_currentLenguage);
     }
 
     // Método para actualizar un producto en el catálogo
-    void actualizarProducto(const string& codigo, double nuevoPrecio, const string& nuevoCodigo, int nuevaGarantia) {
+    void actualizarProducto(const string& codigo, double nuevoPrecio, const string& nuevoCodigo, int nuevaGarantia, string _currentLenguage) {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLenguage;
+
         listaProductos.actualizarProducto(codigo, nuevoPrecio, nuevoCodigo, nuevaGarantia);
-        guardarEnArchivo();
+        guardarEnArchivo(_currentLenguage);
     }
 
     // Método para buscar un producto por su nombre
@@ -355,15 +375,15 @@ public:
         }
         else {
             cout << DOUBLE_SPACE << CYAN_COLOR << menuTexts[currentLanguage][245] << endl; // Se encontraron los siguientes productos que coinciden con los criterios de búsqueda:
-            productosFiltrados.mostrarCatalogo();
+            productosFiltrados.mostrarCatalogo(_currentLanguage);
         }
     }
 
     // Método para filtrar productos por color
-    void filtrarPorColor(GESTION_PRODUCTOS& productManager, string currentLanguage) {
+    void filtrarPorColor(GESTION_PRODUCTOS& productManager, string _currentLanguage) {
 
         // Idioma predeterminado
-        string currentLanguage = currentLanguage;
+        string currentLanguage = _currentLanguage;
 
         string color;
         cout << YELLOW_COLOR << menuTexts[currentLanguage][246] << RESET_COLOR; // Introduzca el color
@@ -391,16 +411,16 @@ public:
         }
         else {
             cout << DOUBLE_SPACE << CYAN_COLOR << menuTexts[currentLanguage][248] << endl; // Se encontraron los siguientes productos que coinciden con los criterios de búsqueda:
-            productosFiltrados.mostrarCatalogo();
+            productosFiltrados.mostrarCatalogo(_currentLanguage);
         }
     }
 
 
     // Método para filtrar productos por marca
-    void filtrarPorMarca(GESTION_PRODUCTOS& productManager, string currentLanguage) {
+    void filtrarPorMarca(GESTION_PRODUCTOS& productManager, string _currentLanguage) {
 
         // Idioma predeterminado
-        string currentLanguage = currentLanguage;
+        string currentLanguage = _currentLanguage;
 
         string marca;
         cout << YELLOW_COLOR << menuTexts[currentLanguage][249] << RESET_COLOR; // Introduzca la marca
@@ -428,7 +448,7 @@ public:
         }
         else {
             cout << DOUBLE_SPACE << CYAN_COLOR << menuTexts[currentLanguage][251] << endl; // Se encontraron los siguientes productos que coinciden con los criterios de búsqueda:
-            productosFiltrados.mostrarCatalogo();
+            productosFiltrados.mostrarCatalogo(_currentLanguage);
         }
     }
 

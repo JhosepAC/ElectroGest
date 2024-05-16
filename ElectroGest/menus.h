@@ -710,7 +710,7 @@ void productCatalogMenu(string _currentLanguage) {
         {
         case 1: 
             system("cls");
-            productManager.mostrarTodosLosProductos();
+            productManager.mostrarTodosLosProductos(_currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
@@ -839,7 +839,7 @@ void productManagementMenu(string _currentLanguage) {
         switch (opcion) {
         case 1:
             system("cls");
-            manager.mostrarTodosLosProductos();
+            manager.mostrarTodosLosProductos(_currentLanguage);
 
             do
             {

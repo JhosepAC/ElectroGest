@@ -296,6 +296,7 @@ map<string, map<int, string>> menuTexts = {
         {254, "El catálogo esta vacío."},
         {255, "Cantidad de productos en el catálogo: "},
         {256, " productos."},
+        {257, "Ingrese el código del producto que desea eliminar: "},
         {404, "Error al abrir el archivo" }
     }},
     {"english", {

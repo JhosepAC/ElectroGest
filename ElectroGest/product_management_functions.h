@@ -155,7 +155,7 @@ void addNewProduct(GESTION_PRODUCTOS& manager, string _currentLanguage) {
     }
 
     PRODUCTO nuevoProducto(codigo, nombre, marca, precio, modelo, ancho, alto, largo, peso, material, color, garantia);
-    manager.agregarProducto(nuevoProducto);
+    manager.agregarProducto(nuevoProducto, _currentLanguage);
 
     // Mostrar mensaje de éxito
     ShowConsoleCursor(false);
@@ -249,7 +249,7 @@ void updateProductProcedure(GESTION_PRODUCTOS& manager, string _currentLanguage)
         cout << YELLOW_COLOR << menuTexts[currentLanguage][204] << RESET_COLOR; // Solicitar nuevamente la garantía
     }
 
-    manager.actualizarProducto(codigo, nuevoPrecio, nuevoCodigo, nuevaGarantia);
+    manager.actualizarProducto(codigo, nuevoPrecio, nuevoCodigo, nuevaGarantia, _currentLanguage);
     
     ShowConsoleCursor(false);
     cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][205]; // Mensaje de éxito
@@ -265,7 +265,7 @@ void removeProductProcedure(GESTION_PRODUCTOS& manager, string _currentLenguage)
     string codigo;
 
     // Solicitar al usuario el código del producto a eliminar
-    cout << YELLOW_COLOR << "Ingrese el código del producto que desea eliminar: " << RESET_COLOR;
+    cout << YELLOW_COLOR << menuTexts[currentLanguage][257] << RESET_COLOR;
     cin.ignore(); // Limpiar el búfer de entrada antes de getline
     getline(cin, codigo);
 
@@ -274,7 +274,7 @@ void removeProductProcedure(GESTION_PRODUCTOS& manager, string _currentLenguage)
     // Verificar si el producto existe antes de eliminarlo
     if (manager.existeProducto(codigo)) {
         // Eliminar el producto del gestor de productos
-        manager.eliminarProducto(codigo);
+        manager.eliminarProducto(codigo, _currentLenguage);
 
         // Mostrar mensaje de éxito
         cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][210] << endl;
@@ -304,5 +304,5 @@ void searchProduct(GESTION_PRODUCTOS& manager, string _currentLenguage) {
     cout << endl;
 
     // Buscar y mostrar la información del producto
-    manager.buscarYMostrarProducto(codigo);
+    manager.buscarYMostrarProducto(codigo, _currentLenguage);
 }
