@@ -4,11 +4,13 @@
 #include <sstream>
 #include "product_node_class.h"
 
-using namespace std;
-
 class LISTA_PRODUCTO {
 public:
+
+    // Constructor
     LISTA_PRODUCTO() : primero(nullptr), ultimo(nullptr) {}
+
+    // Destructor
     ~LISTA_PRODUCTO() {
         while (primero != nullptr) {
             NODO_PRODUCTO* temp = primero;
@@ -17,14 +19,13 @@ public:
         }
     }
 
-    bool estaVacia() const {
-        return primero == nullptr;
-    }
+    // Verifica si la lista está vacía
+    bool estaVacia() const { return primero == nullptr; }
 
-    NODO_PRODUCTO* obtenerPrimero() const {
-        return primero;
-    }
+    // Método de acceso
+    NODO_PRODUCTO* obtenerPrimero() const { return primero; }
 
+    // Método para agregar un producto a la lista
     void agregarProducto(const PRODUCTO& producto) {
         NODO_PRODUCTO* nuevoNodo = new NODO_PRODUCTO(
             producto.getCodigo(),
@@ -40,6 +41,7 @@ public:
             producto.getColor(),
             producto.getGarantia()
         );
+        // Si la lista está vacía
         if (primero == nullptr) {
             primero = nuevoNodo;
             ultimo = nuevoNodo;
@@ -50,9 +52,11 @@ public:
         }
     }
 
+    // Método para agregar un producto a la lista
     int contarProductos() const {
         int contador = 0;
         NODO_PRODUCTO* actual = primero;
+        // Recorrer la lista
         while (actual != nullptr) {
             contador++;
             actual = actual->siguiente;
@@ -60,17 +64,25 @@ public:
         return contador;
     }
 
-    void mostrarCatalogo() const {
+    // Método para mostrar el catálogo de productos
+    void mostrarCatalogo(string _currentLanguage) const {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLanguage;
+
         int cantidadProductos = contarProductos();
 
+        // Si la lista está vacía
         if (primero == nullptr) {
-            cout << MAGENTA_COLOR << "El catálogo está vacío." << endl;
+            cout << MAGENTA_COLOR << menuTexts[currentLanguage][254] << endl;
             return;
         }
 
-        cout << CYAN_COLOR << "Cantidad de productos en el catálogo: " << RESET_COLOR << cantidadProductos << " productos." << DOUBLE_SPACE;
+        cout << CYAN_COLOR << menuTexts[currentLanguage][255] << RESET_COLOR << cantidadProductos << menuTexts[currentLanguage][256] << DOUBLE_SPACE;
 
         NODO_PRODUCTO* actual = primero;
+
+        // Recorrer la lista
         while (actual != nullptr) {
             actual->producto.mostrarInformacion();
             cout << endl;
@@ -78,14 +90,22 @@ public:
         }
     }
 
-    void mostrarCatalogoArchivo() const {
+    void mostrarCatalogoArchivo(string _currentLenguage) const {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLenguage;
+
         ofstream file("total_products.txt");
+
+        // Si no se pudo abrir el archivo
         if (!file.is_open()) {
-            cerr << "Error al abrir el archivo total_products.txt" << endl;
+            cerr << menuTexts[currentLanguage][404] << endl;
             return;
         }
 
         NODO_PRODUCTO* actual = primero;
+        
+        // Recorrer la lista
         while (actual != nullptr) {
             actual->producto.mostrarInformacionArchivo(file);
             file << endl;
@@ -95,9 +115,13 @@ public:
         file.close();
     }
 
+    // Método para buscar un producto por código
     NODO_PRODUCTO* buscarProducto(const string& codigo) {
         NODO_PRODUCTO* actual = primero;
+
+        // Recorrer la lista
         while (actual != nullptr) {
+            // Si se encuentra el producto
             if (actual->producto.getCodigo() == codigo) {
                 return actual;
             }
@@ -106,11 +130,15 @@ public:
         return nullptr;
     }
 
+    // Método para buscar un producto por nombre
     void eliminarProducto(const string& codigo) {
+
+        // Si la lista está vacía
         if (primero == nullptr) {
             return;
         }
 
+        // Si el producto a eliminar es el primero
         if (primero->producto.getCodigo() == codigo) {
             NODO_PRODUCTO* temp = primero;
             primero = primero->siguiente;
@@ -119,7 +147,10 @@ public:
         }
 
         NODO_PRODUCTO* actual = primero;
+
+        // Recorrer la lista
         while (actual->siguiente != nullptr) {
+            // Si se encuentra el producto
             if (actual->siguiente->producto.getCodigo() == codigo) {
                 NODO_PRODUCTO* temp = actual->siguiente;
                 actual->siguiente = temp->siguiente;
@@ -130,8 +161,10 @@ public:
         }
     }
 
+    // Método para buscar un producto por nombre
     void actualizarProducto(const string& codigo, double nuevoPrecio, const string& nuevoCodigo, int nuevaGarantia) {
         NODO_PRODUCTO* producto = buscarProducto(codigo);
+        // Si se encuentra el producto
         if (producto != nullptr) {
             // Solo se actualizan el precio, código y garantía
             producto->producto.setPrecio(nuevoPrecio);

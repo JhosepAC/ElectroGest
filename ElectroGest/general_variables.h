@@ -293,6 +293,9 @@ map<string, map<int, string>> menuTexts = {
         {251, "Productos con la marca especificada: "},
         {252, "Productos ordenados por precio (ascendente):"},
         {253, "Productos ordenados por precio (descendente):"},
+        {254, "El catálogo esta vacío."},
+        {255, "Cantidad de productos en el catálogo: "},
+        {256, " productos."},
         {404, "Error al abrir el archivo" }
     }},
     {"english", {
