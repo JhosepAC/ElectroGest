@@ -1353,7 +1353,7 @@ void customerManagementMenu(string _currentLanguage) {
             }
             system("cls");
             cout << CYAN_COLOR << menuTexts[currentLanguage][66] << DOUBLE_SPACE;
-            gestionCliente.displayCustomerList();
+            gestionCliente.displayCustomerList(_currentLanguage);
             break;
         case 2:
             if (file.peek() == ifstream::traits_type::eof()) { // Verificar si el archivo está vacío
@@ -1369,9 +1369,9 @@ void customerManagementMenu(string _currentLanguage) {
                 string email;
                 cout << YELLOW_COLOR << menuTexts[currentLanguage][60] << RESET_COLOR;
                 cin >> email;
-                gestionCliente.deleteCustomer(email);
+                gestionCliente.deleteCustomer(email, _currentLanguage);
                 ShowConsoleCursor(false); // Oculta el cursor
-                _sleep(1500); // Espera 1.5 segundos
+                _sleep(1500); // Espera 1.5 segundo
             }
             break;
         case 3:
@@ -1388,7 +1388,7 @@ void customerManagementMenu(string _currentLanguage) {
                 string searchTerm;
                 cout << YELLOW_COLOR << menuTexts[currentLanguage][57] << RESET_COLOR;
                 cin >> searchTerm;
-                gestionCliente.searchCustomers(searchTerm);
+                gestionCliente.searchCustomers(searchTerm, _currentLanguage);
             }
             break;
         case 4:
