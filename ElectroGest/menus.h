@@ -1016,7 +1016,7 @@ void supplierManagementMenu(string _currentLanguage) {
 
     GestionarProveedores supplierManager; // Crear un objeto de la clase GestionarProveedores
 
-    supplierManager.cargarListaDesdeArchivo();
+    supplierManager.cargarListaDesdeArchivo(_currentLanguage);
     
     do {
         system("cls");
