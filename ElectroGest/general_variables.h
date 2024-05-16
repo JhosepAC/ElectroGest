@@ -323,6 +323,10 @@ map<string, map<int, string>> menuTexts = {
         {285, "El número de teléfono debe tener exactamente 9 dígitos. Inténtelo de nuevo." },
         {286, "Error al abrir el archivo de proveedores." },
         {287, "Proveedor actualizado correctamente." },
+        {288, "Dirección"},
+        {289, "Teléfono" },
+        {290, "Posición no válida."},
+        {291, "Proveedor encontrado en la posición "},
         {404, "Error al abrir el archivo" }
     }},
     {"english", {

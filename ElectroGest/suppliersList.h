@@ -13,14 +13,15 @@ public:
     ListaProveedores();
     ~ListaProveedores();
 
-    void cargarDesdeArchivo(const std::string& archivo);
+    // Métodos de la clase ListaProveedores
+    void cargarDesdeArchivo(const string& archivo, string _currentLanguage);
     Proveedor* obtenerProveedor(int posicion) const;
     int size() const;
-    int buscarProveedorPorNombre(const std::string& nombreBuscar) const;
+    int buscarProveedorPorNombre(const string& nombreBuscar) const;
     void agregarProveedor(Proveedor* proveedor);
-    void mostrarProveedores() const;
-    void eliminarProveedor(int posicion);
-    void buscarProveedor(const std::string& nombreBuscar) const;
+    void mostrarProveedores(string _currentLanguage) const;
+    void eliminarProveedor(int posicion, string _currentLanguage);
+    void buscarProveedor(const string& nombreBuscar, string _currentLanguage) const;
 
     bool ListaProveedores::proveedorEncontrado() const {
         return tamano > 0; // Si el tamaño de la lista es mayor que cero, se considera que se ha encontrado al menos un proveedor
@@ -36,6 +37,7 @@ ListaProveedores::ListaProveedores() : primero(nullptr), ultimo(nullptr), tamano
 
 ListaProveedores::~ListaProveedores() {
     Nodo* actual = primero;
+    // Iterar sobre la lista y eliminar cada nodo
     while (actual != nullptr) {
         Nodo* siguiente = actual->getSiguiente();
         delete actual;
@@ -43,14 +45,22 @@ ListaProveedores::~ListaProveedores() {
     }
 }
 
-void ListaProveedores::cargarDesdeArchivo(const std::string& archivo) {
-    std::ifstream archivoProveedores(archivo);
+void ListaProveedores::cargarDesdeArchivo(const string& archivo, string _currentLanguage) {
+
+    // Idioma predeterminado
+    string currentLanguage = _currentLanguage;
+
+    ifstream archivoProveedores(archivo);
+
+    // Verificar si el archivo se abrió correctamente
     if (!archivoProveedores.is_open()) {
-        std::cout << "Error al abrir el archivo de proveedores." << std::endl;
+        cout << menuTexts[currentLanguage][404] << endl;
         return;
     }
 
-    std::string linea;
+    string linea;
+
+    // Iterar sobre cada línea del archivo
     while (getline(archivoProveedores, linea)) {
         stringstream ss(linea);
         string nombre, direccion;
@@ -65,10 +75,12 @@ void ListaProveedores::cargarDesdeArchivo(const std::string& archivo) {
 }
 
 Proveedor* ListaProveedores::obtenerProveedor(int posicion) const {
+    // Verificar si la posición está dentro del rango de la lista
     if (posicion < 0 || posicion >= tamano) {
         return nullptr; // Fuera de rango, devolver nullptr
     }
     Nodo* actual = primero;
+    // Iterar sobre la lista hasta llegar a la posición deseada
     for (int i = 0; i < posicion; ++i) {
         actual = actual->getSiguiente();
     }
@@ -79,21 +91,24 @@ int ListaProveedores::size() const {
     return tamano;
 }
 
-int ListaProveedores::buscarProveedorPorNombre(const std::string& nombreBuscar) const {
+int ListaProveedores::buscarProveedorPorNombre(const string& nombreBuscar) const {
     Nodo* actual = primero;
     int posicion = 0;
     while (actual != nullptr) {
         Proveedor* proveedor = actual->getProveedor();
-        std::string nombre = proveedor->getNombre();
+        string nombre = proveedor->getNombre();
 
         // Convertir a minúsculas y eliminar espacios en blanco al principio y al final
         transform(nombre.begin(), nombre.end(), nombre.begin(), ::tolower);
         nombre.erase(remove_if(nombre.begin(), nombre.end(), ::isspace), nombre.end());
 
-        std::string nombreBuscarFormatted = nombreBuscar;
+        string nombreBuscarFormatted = nombreBuscar;
+
+        // Convertir a minúsculas y eliminar espacios en blanco al principio y al final
         transform(nombreBuscarFormatted.begin(), nombreBuscarFormatted.end(), nombreBuscarFormatted.begin(), ::tolower);
         nombreBuscarFormatted.erase(remove_if(nombreBuscarFormatted.begin(), nombreBuscarFormatted.end(), ::isspace), nombreBuscarFormatted.end());
 
+        // Si se encuentra el proveedor, devolver la posición
         if (nombre == nombreBuscarFormatted) {
             return posicion;
         }
@@ -107,6 +122,8 @@ int ListaProveedores::buscarProveedorPorNombre(const std::string& nombreBuscar) 
 
 void ListaProveedores::agregarProveedor(Proveedor* proveedor) {
     Nodo* nuevoNodo = new Nodo(proveedor);
+
+    // Si la lista está vacía, el nuevo nodo será el primero y el último
     if (primero == nullptr) {
         primero = nuevoNodo;
         ultimo = nuevoNodo;
@@ -118,11 +135,15 @@ void ListaProveedores::agregarProveedor(Proveedor* proveedor) {
     tamano++;
 }
 
-void ListaProveedores::mostrarProveedores() const {
+void ListaProveedores::mostrarProveedores(string _currentLanguage) const {
+
+    // Idioma predeterminado
+    string currentLanguage = _currentLanguage;
+
     Nodo* actual = primero;
 
     // Imprimir encabezados de la tabla
-    cout << CYAN_COLOR << left << setw(25) << "Nombre" << setw(40) << "Dirección" << setw(15) << "Teléfono" << endl;
+    cout << CYAN_COLOR << left << setw(25) << menuTexts[currentLanguage][217] << setw(40) << menuTexts[currentLanguage][288] << setw(15) << menuTexts[currentLanguage][289] << endl; // Nombre, Dirección, Teléfono
 
     // Imprimir separador de columnas
     cout << GRAY_COLOR << setw(25) << setfill('-') << RESET_COLOR << "" << setw(40) << "" << setw(15) << "" << setfill(' ') << endl;
@@ -137,9 +158,14 @@ void ListaProveedores::mostrarProveedores() const {
     }
 }
 
-void ListaProveedores::eliminarProveedor(int posicion) {
+void ListaProveedores::eliminarProveedor(int posicion, string _currentLanguage) {
+
+    // Idioma predeterminado
+    string currentLanguage = _currentLanguage;
+
+    // Verificar si la posición está dentro del rango de la lista
     if (posicion < 0 || posicion >= tamano) {
-        std::cout << "Posición no válida." << std::endl;
+        cout << menuTexts[currentLanguage][290] << endl; // Posición inválida
         return;
     }
 
@@ -155,6 +181,8 @@ void ListaProveedores::eliminarProveedor(int posicion) {
     // Buscar el nodo anterior al que se va a eliminar
     Nodo* anterior = nullptr;
     Nodo* actual = primero;
+
+    // Iterar sobre la lista hasta llegar a la posición deseada
     for (int i = 0; i < posicion; ++i) {
         anterior = actual;
         actual = actual->getSiguiente();
@@ -172,25 +200,34 @@ void ListaProveedores::eliminarProveedor(int posicion) {
     --tamano;
 }
 
-void ListaProveedores::buscarProveedor(const std::string& nombreBuscar) const {
+void ListaProveedores::buscarProveedor(const string& nombreBuscar, string _currentLanguage) const {
+    
+    // Idioma predeterminado
+    string currentLanguage = _currentLanguage;
+
     Nodo* actual = primero;
     int posicion = 0;
     bool encontrado = false;
+
+    // Iterar sobre la lista de proveedores
     while (actual != nullptr) {
         Proveedor* proveedor = actual->getProveedor();
-        std::string nombre = proveedor->getNombre();
+        string nombre = proveedor->getNombre();
 
         // Convertir a minúsculas y eliminar espacios en blanco al principio y al final
         transform(nombre.begin(), nombre.end(), nombre.begin(), ::tolower);
         nombre.erase(remove_if(nombre.begin(), nombre.end(), ::isspace), nombre.end());
 
-        std::string nombreBuscarFormatted = nombreBuscar;
+        string nombreBuscarFormatted = nombreBuscar;
+
+        // Convertir a minúsculas y eliminar espacios en blanco al principio y al final
         transform(nombreBuscarFormatted.begin(), nombreBuscarFormatted.end(), nombreBuscarFormatted.begin(), ::tolower);
         nombreBuscarFormatted.erase(remove_if(nombreBuscarFormatted.begin(), nombreBuscarFormatted.end(), ::isspace), nombreBuscarFormatted.end());
 
+        // Si se encuentra el proveedor, imprimir sus datos y la posición
         if (nombre == nombreBuscarFormatted) {
             encontrado = true;
-            std::cout << "Proveedor encontrado en la posición " << posicion << ": " << proveedor->getNombre() << ", " << proveedor->getDireccion() << ", " << proveedor->getTelefono() << std::endl;
+            cout << menuTexts[currentLanguage][291] << posicion << ": " << proveedor->getNombre() << ", " << proveedor->getDireccion() << ", " << proveedor->getTelefono() << endl;
             break;
         }
 
@@ -199,7 +236,7 @@ void ListaProveedores::buscarProveedor(const std::string& nombreBuscar) const {
     }
 
     if (!encontrado) {
-        std::cout << "Proveedor no encontrado." << std::endl;
+        cout << menuTexts[currentLanguage][278] << endl;
     }
 }
 
