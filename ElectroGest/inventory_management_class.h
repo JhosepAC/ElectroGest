@@ -18,99 +18,131 @@ private:
     map<string, int> inventario;
 
 public:
-    GESTION_INVENTARIO() {
-        cargarInventarioDesdeArchivo(); // Cargar el inventario desde el archivo al iniciar el programa
-        cargarMovimientosDesdeArchivo(); // Cargar el historial de movimientos desde el archivo al iniciar el programa
+    GESTION_INVENTARIO(string _currentLanguage) {
+        cargarInventarioDesdeArchivo(_currentLanguage); // Cargar el inventario desde el archivo al iniciar el programa
+        cargarMovimientosDesdeArchivo(_currentLanguage); // Cargar el historial de movimientos desde el archivo al iniciar el programa
     }
 
-    bool existeProducto(const std::string& codigoProducto) const {
-        return inventario.find(codigoProducto) != inventario.end();
+    // Función para verificar si un producto existe en el inventario
+    bool existeProducto(const string& codigoProducto) const {
+        return inventario.find(codigoProducto) != inventario.end(); // Devuelve true si el producto existe en el inventario
     }
 
-    void consultarStock(const std::string& codigoProducto) const {
+    // Función para obtener el stock de un producto
+    void consultarStock(const string& codigoProducto, string _currentLanguage) const {
+
+        // Iidioma predeterminado
+        string currentLanguage = _currentLanguage;
+
+        // Buscar el producto en el inventario
         auto it = inventario.find(codigoProducto);
+
+        // Si el producto existe en el inventario
         if (it != inventario.end()) {
-            cout << CYAN_COLOR << "Consulta de Stock:" << RESET_COLOR << std::endl;
-            cout << GRAY_COLOR << "Código: " << RESET_COLOR << codigoProducto << std::endl;
-            cout << GRAY_COLOR << "Stock actual: " << RESET_COLOR << it->second << std::endl;
+            cout << CYAN_COLOR << menuTexts[currentLanguage][146] << RESET_COLOR << endl; // Stock del producto
+            cout << GRAY_COLOR << menuTexts[currentLanguage][147] << RESET_COLOR << codigoProducto << endl; // Código del producto
+            cout << GRAY_COLOR << menuTexts[currentLanguage][148] << it->second << endl; // Stock del producto
             
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar..." << RESET_COLOR << endl;
+            cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51] << RESET_COLOR << endl; // Presiona cualquier tecla para continuar
         }
         else {
-            std::cout << DOUBLE_SPACE << RED_COLOR << "El producto con código " << codigoProducto << " no se encuentra en el inventario." << RESET_COLOR << std::endl;
-            Sleep(1000); // Esperar 1 segundo (1000 ms)
+            cout << DOUBLE_SPACE << RED_COLOR << menuTexts[currentLanguage][149] << codigoProducto << menuTexts[currentLanguage][150] << RESET_COLOR << endl; // El producto no se encuentra en el inventario
+            Sleep(1500); // Esperar 1.5 segundos
         }
     }
 
-    bool verificarStock(const std::string& codigoProducto, int cantidad) const {
-        auto it = inventario.find(codigoProducto);
+    // Función para verificar si hay suficiente stock de un producto
+    bool verificarStock(const string& codigoProducto, int cantidad) const {
+        auto it = inventario.find(codigoProducto); // Buscar el producto en el inventario
+        // Devolver true si el producto existe en el inventario y la cantidad es suficiente
         if (it != inventario.end()) {
             return it->second >= cantidad;
         }
         return false; // El producto no está en el inventario
     }
 
-    void verInventario() const {
+    // Función para mostrar el inventario
+    void verInventario(string _current, string _currentLanguage) const {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLanguage;
+
+        // Si el inventario está vacío
         if (inventario.empty()) {
             ShowConsoleCursor(false); // Ocultar el cursor de la consola
-            std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El inventario está vacío." << RESET_COLOR << std::endl;
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][151] << RESET_COLOR << endl; // El inventario está vacío
             Sleep(1000); // Esperar 1 segundo (1000 ms)
             return;
         }
 
         system("cls"); // Limpiar la pantalla antes de mostrar el inventario
 
-        cout << CYAN_COLOR << "=== INVENTARIO ===" << RESET_COLOR << DOUBLE_SPACE;
+        cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][152] << " ===" << RESET_COLOR << DOUBLE_SPACE; // Inventario
         for (const auto& pair : inventario) {
-            cout << BLUE_COLOR << "Código: " << RESET_COLOR << pair.first << std::endl;
-            cout << BLUE_COLOR << "Stock: " << RESET_COLOR << pair.second << std::endl;
+            cout << BLUE_COLOR << menuTexts[currentLanguage][147] << RESET_COLOR << pair.first << endl; // Código del producto
+            cout << BLUE_COLOR << menuTexts[currentLanguage][148] << RESET_COLOR << pair.second << endl;// Stock del producto
             cout << YELLOW_COLOR << "-------------------------" << DOUBLE_SPACE;
         }
 
         ShowConsoleCursor(false); // Ocultar el cursor de la consola
-        cout << endl << GRAY_COLOR << "Presiona cualquier tecla para continuar..." << RESET_COLOR << endl;
+        cout << endl << GRAY_COLOR << menuTexts[currentLanguage][51] << RESET_COLOR << endl; // Presiona cualquier tecla para continuar
         _getch(); // Esperar a que el usuario presione una tecla
     }
 
-    void añadirStock(const std::string& codigoProducto, int cantidad) {
-        inventario[codigoProducto] += cantidad;
-        historialMovimientos.push(HISTORIAL_INVENTARIO(codigoProducto, cantidad, true));
-        guardarMovimientosEnArchivo(); // Guardar los movimientos en el archivo después de agregar stock
-        guardarInventarioEnArchivo(); // Guardar el inventario en el archivo después de agregar stock
+    // Función para añadir stock a un producto
+    void añadirStock(const string& codigoProducto, int cantidad, string _currentLanguage) {
+        inventario[codigoProducto] += cantidad; // Añadir la cantidad al stock del producto
+        historialMovimientos.push(HISTORIAL_INVENTARIO(codigoProducto, cantidad, true)); // Agregar el movimiento al historial
+        guardarMovimientosEnArchivo(_currentLanguage); // Guardar los movimientos en el archivo después de agregar stock
+        guardarInventarioEnArchivo(_currentLanguage); // Guardar el inventario en el archivo después de agregar stock
     }
 
-    void retirarStock(const std::string& codigoProducto, int cantidad) {
+    // Función para retirar stock de un producto
+    void retirarStock(const string& codigoProducto, int cantidad, string _currentLanguage) {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLanguage;
+
+        // Si el producto existe en el inventario
         if (inventario.find(codigoProducto) != inventario.end()) {
+            // Si hay suficiente stock
             if (inventario[codigoProducto] >= cantidad) {
                 inventario[codigoProducto] -= cantidad;
                 historialMovimientos.push(HISTORIAL_INVENTARIO(codigoProducto, cantidad, false));
-                guardarMovimientosEnArchivo(); // Guardar los movimientos en el archivo después de retirar stock
-                guardarInventarioEnArchivo(); // Guardar el inventario en el archivo después de retirar stock
+                guardarMovimientosEnArchivo(_currentLanguage); // Guardar los movimientos en el archivo después de retirar stock
+                guardarInventarioEnArchivo(_currentLanguage); // Guardar el inventario en el archivo después de retirar stock
             }
             else {
                 ShowConsoleCursor(false); // Ocultar el cursor de la consola
-                std::cout << MAGENTA_COLOR << DOUBLE_SPACE << "No hay suficiente stock de este producto para retirar." << std::endl;
-                Sleep(1500); // Esperar 1 segundo (1000 ms)
+                cout << MAGENTA_COLOR << DOUBLE_SPACE << menuTexts[currentLanguage][153] << endl; // No hay suficiente stock
+                Sleep(1500); // Esperar 1.5 segundos
             }
         }
         else {
             ShowConsoleCursor(false); // Ocultar el cursor de la consola
-            std::cout << MAGENTA_COLOR << DOUBLE_SPACE << "El producto no se encuentra en el inventario." << std::endl;
-            Sleep(1500); // Esperar 1 segundo (1000 ms)
+            cout << MAGENTA_COLOR << DOUBLE_SPACE << menuTexts[currentLanguage][156] << endl; // El producto no se encuentra en el inventario
+            Sleep(1500); // Esperar 1.5 segundos
         }
     }
 
     // Método para cargar el inventario desde un archivo
-    void cargarInventarioDesdeArchivo() {
-        std::ifstream file("inventory.txt");
+    void cargarInventarioDesdeArchivo(string _currentLanguage) {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLanguage;
+
+        ifstream file("inventory.txt");
+
+        // Si el archivo no se pudo abrir
         if (!file.is_open()) {
-            std::cerr << "No se pudo abrir el archivo inventory.txt" << std::endl;
+            cerr << menuTexts[currentLanguage][404] << endl; // No se pudo abrir el archivo inventory.txt para cargar el inventario
             return;
         }
 
-        std::string codigoProducto;
+        string codigoProducto;
         int cantidad;
 
+        // Leer el archivo línea por línea
         while (file >> codigoProducto >> cantidad) {
             inventario[codigoProducto] = cantidad;
         }
@@ -119,96 +151,122 @@ public:
     }
 
     // Método para guardar el inventario en un archivo
-    void guardarInventarioEnArchivo() const {
-        std::ofstream file("inventory.txt");
+    void guardarInventarioEnArchivo(string _currentLanguage) const {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLanguage;
+
+        ofstream file("inventory.txt");
+
+        // Si el archivo no se pudo abrir
         if (!file.is_open()) {
-            std::cerr << MAGENTA_COLOR << DOUBLE_SPACE << "No se pudo abrir el archivo inventory.txt para guardar el inventario." << std::endl;
+            cerr << MAGENTA_COLOR << DOUBLE_SPACE << menuTexts[currentLanguage][404] << endl; // No se pudo abrir el archivo inventory.txt para guardar el inventario
             return;
         }
 
+        // Escribir el inventario en el archivo
         for (const auto& pair : inventario) {
-            file << pair.first << " " << pair.second << std::endl;
+            file << pair.first << " " << pair.second << endl;
         }
 
         file.close();
     }
 
     // Método para guardar el historial de movimientos en un archivo
-    void guardarMovimientosEnArchivo() const {
-        std::ofstream file("movement_history.txt", std::ios_base::app); // Abre el archivo en modo de añadir al final
+    void guardarMovimientosEnArchivo(string _currentLanguage) const {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLanguage;
+
+        ofstream file("movement_history.txt", ios_base::app); // Abre el archivo en modo de añadir al final
+
+        // Si el archivo no se pudo abrir
         if (!file.is_open()) {
-            std::cerr << "No se pudo abrir el archivo movement_history.txt para guardar los movimientos." << std::endl;
+            cerr << menuTexts[currentLanguage][404] << endl;
             return;
         }
 
-        std::stack<HISTORIAL_INVENTARIO> copiaHistorial = historialMovimientos; // Copia el historial de movimientos
+        stack<HISTORIAL_INVENTARIO> copiaHistorial = historialMovimientos; // Copia el historial de movimientos
 
         // Escribir los movimientos en el archivo
         while (!copiaHistorial.empty()) {
             HISTORIAL_INVENTARIO movimiento = copiaHistorial.top();
             copiaHistorial.pop();
-            file << movimiento.codigoProducto << " " << movimiento.cantidad << " ";
+            file << movimiento.codigoProducto << " " << movimiento.cantidad << " "; // Código del producto y cantidad
             if (movimiento.esEntrada)
-                file << "Entrada";
+                file << menuTexts[currentLanguage][154]; // Entrada
             else
-                file << "Salida";
-            file << std::endl;
+                file << menuTexts[currentLanguage][155]; // Salida
+            file << endl;
         }
 
         file.close();
     }
 
 
-    void mostrarHistorialMovimientos() const {
+    void mostrarHistorialMovimientos(string _currentLanguage) const {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLanguage;
+
+        // Si el historial de movimientos está vacío
         if (historialMovimientos.empty()) {
-            std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El historial de movimientos está vacío." << RESET_COLOR << std::endl;
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][157] << RESET_COLOR << endl; // El historial de movimientos está vacío
             return;
         }
 
-        cout << CYAN_COLOR << "=== Historial de Movimientos ===" << RESET_COLOR << DOUBLE_SPACE;
-        cout << BLUE_COLOR << "Código Producto" << std::setw(15) << "Cantidad" << std::setw(20) << "Movimiento" << std::setw(20) << "Fecha y Hora" << std::endl;
+        cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][158] << " ===" << RESET_COLOR << DOUBLE_SPACE;
+        cout << BLUE_COLOR << menuTexts[currentLanguage][159] << setw(15) << menuTexts[currentLanguage][160] << setw(20) << menuTexts[currentLanguage][161] << setw(20) << menuTexts[currentLanguage][162] << endl;
         cout << RESET_COLOR;
 
         // Copiar el historial de movimientos para mantener el original intacto
-        std::stack<HISTORIAL_INVENTARIO> copiaHistorial = historialMovimientos;
+        stack<HISTORIAL_INVENTARIO> copiaHistorial = historialMovimientos;
 
         while (!copiaHistorial.empty()) {
             HISTORIAL_INVENTARIO movimiento = copiaHistorial.top();
             copiaHistorial.pop();
 
             // Obtener la fecha y hora actual
-            auto now = std::chrono::system_clock::now();
-            std::time_t now_time = std::chrono::system_clock::to_time_t(now);
-            std::string formatted_time = std::ctime(&now_time);
+            auto now = chrono::system_clock::now();
+            time_t now_time = chrono::system_clock::to_time_t(now);
+            string formatted_time = ctime(&now_time);
 
             cout << movimiento.codigoProducto
                 << setw(19) << movimiento.cantidad
-                << setw(22) << (movimiento.esEntrada ? "Entrada" : "Salida")
+                << setw(22) << (movimiento.esEntrada ? menuTexts[currentLanguage][154] : menuTexts[currentLanguage][155]) // Entrada o Salida
                 << setw(36) << formatted_time;
         }
     }
 
-    void cargarMovimientosDesdeArchivo() {
-        std::ifstream file("movement_history.txt");
+    void cargarMovimientosDesdeArchivo(string _currentLanguage) {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLanguage;
+
+        ifstream file("movement_history.txt");
+
+        // Si el archivo no se pudo abrir
         if (!file.is_open()) {
-            std::cerr << "No se pudo abrir el archivo movement_history.txt" << std::endl;
+            cerr << menuTexts[currentLanguage][404] << endl; // No se pudo abrir el archivo movement_history.txt para cargar el historial de movimientos
             return;
         }
 
-        historialMovimientos = std::stack<HISTORIAL_INVENTARIO>(); // Limpiar el historial de movimientos
+        historialMovimientos = stack<HISTORIAL_INVENTARIO>(); // Limpiar el historial de movimientos
 
-        std::string linea;
-        while (std::getline(file, linea)) {
-            std::istringstream ss(linea);
-            std::string codigoProducto;
+        string linea;
+
+        // Leer el archivo línea por línea
+        while (getline(file, linea)) {
+            istringstream ss(linea);
+            string codigoProducto;
             int cantidad;
-            std::string movimiento;
+            string movimiento;
 
             // Extraer los datos de la línea
             ss >> codigoProducto >> cantidad >> movimiento;
 
             // Determinar si es una entrada o una salida
-            bool esEntrada = (movimiento == "Entrada");
+            bool esEntrada = (movimiento == menuTexts[currentLanguage][154]);
 
             // Agregar el movimiento a la pila
             historialMovimientos.push(HISTORIAL_INVENTARIO(codigoProducto, cantidad, esEntrada));
