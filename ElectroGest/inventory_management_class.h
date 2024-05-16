@@ -18,10 +18,7 @@ private:
     map<string, int> inventario;
 
 public:
-    GESTION_INVENTARIO(string _currentLanguage) {
-        cargarInventarioDesdeArchivo(_currentLanguage); // Cargar el inventario desde el archivo al iniciar el programa
-        cargarMovimientosDesdeArchivo(_currentLanguage); // Cargar el historial de movimientos desde el archivo al iniciar el programa
-    }
+    GESTION_INVENTARIO() {}
 
     // Función para verificar si un producto existe en el inventario
     bool existeProducto(const string& codigoProducto) const {
@@ -62,7 +59,7 @@ public:
     }
 
     // Función para mostrar el inventario
-    void verInventario(string _current, string _currentLanguage) const {
+    void verInventario(string _currentLanguage) const {
 
         // Idioma predeterminado
         string currentLanguage = _currentLanguage;

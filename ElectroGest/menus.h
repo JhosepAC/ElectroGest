@@ -896,13 +896,16 @@ void inventoryManagementMenu(string _currentLanguage) {
 
     string currentLanguage = _currentLanguage; // Idioma predeterminado
 
+    gestionInventarios.cargarInventarioDesdeArchivo(_currentLanguage); // Cargar el inventario desde el archivo al iniciar el programa
+    gestionInventarios.cargarMovimientosDesdeArchivo(_currentLanguage); // Cargar el historial de movimientos desde el archivo al iniciar el programa
+
     do {
         system("cls");
         std::cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][12] << " ===" << endl << RESET_COLOR << std::endl;
-        std::cout << "<1> " << menuTexts[currentLanguage][113] << std::endl;
-        std::cout << "<2> " << menuTexts[currentLanguage][114] << std::endl;
-        std::cout << "<3> " << menuTexts[currentLanguage][115] << std::endl;
-        std::cout << "<4> " << menuTexts[currentLanguage][116] << std::endl;
+        std::cout << "<1> " << menuTexts[currentLanguage][113] << std::endl; // Ver inventario
+        std::cout << "<2> " << menuTexts[currentLanguage][114] << std::endl; // Añadir stock
+        std::cout << "<3> " << menuTexts[currentLanguage][115] << std::endl; // Retirar stock
+        std::cout << "<4> " << menuTexts[currentLanguage][116] << std::endl; // Historial de movimientos
         std::cout << "<5> " << menuTexts[currentLanguage][4] << std::endl;
         ShowConsoleCursor(true); // Muestra el cursor
         std::cout << endl << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR;
@@ -920,7 +923,7 @@ void inventoryManagementMenu(string _currentLanguage) {
 
         switch (opcion) {
         case 1:
-            gestionInventarios.verInventario();
+            gestionInventarios.verInventario(_currentLanguage);
             break;
         case 2:
             system("cls");
@@ -942,7 +945,7 @@ void inventoryManagementMenu(string _currentLanguage) {
                     }
                     std::cout << YELLOW_COLOR << menuTexts[currentLanguage][129] << RESET_COLOR;
                 }
-                gestionInventarios.añadirStock(producto->producto.getCodigo(), cantidad); // Utiliza el código del producto
+                gestionInventarios.añadirStock(producto->producto.getCodigo(), cantidad, _currentLanguage); // Utiliza el código del producto
 
                 ShowConsoleCursor(false); // Oculta el cursor
                 cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][130] << RESET_COLOR;
@@ -974,7 +977,7 @@ void inventoryManagementMenu(string _currentLanguage) {
                     std::cout << YELLOW_COLOR << menuTexts[currentLanguage][129] << RESET_COLOR; // Ingrese una cantidad válida
                 }
 
-                gestionInventarios.retirarStock(producto->producto.getCodigo(), cantidad);
+                gestionInventarios.retirarStock(producto->producto.getCodigo(), cantidad, _currentLanguage);
 
                 ShowConsoleCursor(false); // Oculta el cursor
                 cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][136] << RESET_COLOR; // Stock retirado con éxito
@@ -989,7 +992,7 @@ void inventoryManagementMenu(string _currentLanguage) {
         case 4:
             system("cls");
             // Mostrar historial de movimientos
-            gestionInventarios.mostrarHistorialMovimientos();
+            gestionInventarios.mostrarHistorialMovimientos(_currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
             std::cout << DOUBLE_SPACE << GRAY_COLOR <<  menuTexts[currentLanguage][50]; // Presione cualquier tecla para continuar
             _getch();
@@ -1277,7 +1280,7 @@ void orderManagementMenu(string _currentLanguage) {
                 PEDIDO pedido = sistemaPedidos.getPedidoPendientePorIndice(indicePedido);
                 if (inventario.verificarStock(pedido.getCodigoProducto(), pedido.getCantidad())) {
                     // Procesar el pedido
-                    inventario.retirarStock(pedido.getCodigoProducto(), pedido.getCantidad());
+                    inventario.retirarStock(pedido.getCodigoProducto(), pedido.getCantidad(), _currentLanguage);
                     sistemaPedidos.procesarPedido(indicePedido);
                     ShowConsoleCursor(false); // Oculta el cursor
                     std::cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][75];
