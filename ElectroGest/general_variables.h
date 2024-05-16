@@ -314,6 +314,15 @@ map<string, map<int, string>> menuTexts = {
         {273, "Proveedor eliminado correctamente." },
         {274, "Proveedor encontrado:" },
         {278, "Proveedor no encontrado." },
+        {279, "Actualizar Información de Proveedor" },
+        {280, "Ingrese el nombre del proveedor que desea actualizar: " },
+        {281, "Proveedor no encontrado. Actualización cancelada." },
+        {282, "Ingrese el nuevo nombre del proveedor (deje vacío para mantener el mismo): " },
+        {283, "Ingrese la nueva dirección del proveedor (deje vacío para mantener la misma): " },
+        {284, "Ingrese el nuevo teléfono del proveedor (deje 0 para mantener el mismo): " },
+        {285, "El número de teléfono debe tener exactamente 9 dígitos. Inténtelo de nuevo." },
+        {286, "Error al abrir el archivo de proveedores." },
+        {287, "Proveedor actualizado correctamente." },
         {404, "Error al abrir el archivo" }
     }},
     {"english", {

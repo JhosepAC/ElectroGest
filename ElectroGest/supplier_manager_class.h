@@ -105,6 +105,103 @@ public:
         cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][268] << endl; // Mensaje de proveedor agregado
     }
 
+    void actualizarProveedor(const string& archivo, string _currentLanguage) {
+
+        // Idioma predeterminado
+        string currentLanguage = _currentLanguage;
+
+        string nombreBuscar;
+        bool telefonoValido = false;
+
+        cout << CYAN_COLOR << "=== " << menuTexts[_currentLanguage][279] << " ===" << DOUBLE_SPACE; // Menú de actualizar proveedor
+        cout << YELLOW_COLOR << menuTexts[_currentLanguage][280] << RESET_COLOR; // Solicitar nombre del proveedor a actualizar
+        cin.ignore();
+        getline(cin, nombreBuscar);
+
+        // Buscar el proveedor por nombre
+        int opcion = -1;
+
+        // Iterar sobre la lista de proveedores y buscar por nombre
+        for (int i = 0; i < listaProveedores.size(); ++i) {
+            Proveedor* proveedor = listaProveedores.obtenerProveedor(i);
+
+            // Si se encuentra el proveedor, almacenar la posición
+            if (proveedor->getNombre() == nombreBuscar) {
+                opcion = i;
+                break;
+            }
+        }
+
+        // Si no se encontró el proveedor, mostrar un mensaje y salir
+        if (opcion == -1) {
+            ShowConsoleCursor(false);
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[_currentLanguage][281] << endl; // Mensaje de proveedor no encontrado
+            _sleep(1500);
+            return;
+        }
+
+        Proveedor* proveedor = listaProveedores.obtenerProveedor(opcion);
+
+        string nuevoNombre, nuevaDireccion, nuevoTelefono;
+
+        cout << YELLOW_COLOR << menuTexts[_currentLanguage][282] << RESET_COLOR; // Solicitar nuevo nombre
+        getline(cin, nuevoNombre);
+        cout << YELLOW_COLOR << menuTexts[_currentLanguage][283] << RESET_COLOR; // Solicitar nueva dirección
+        getline(cin, nuevaDireccion);
+
+        // Solicitar el teléfono hasta que sea válido
+        while (!telefonoValido) {
+            cout << YELLOW_COLOR << menuTexts[_currentLanguage][284] << RESET_COLOR; // Solicitar nuevo teléfono
+            cin >> nuevoTelefono;
+
+            // Verificar si el teléfono tiene exactamente 9 dígitos
+            if (nuevoTelefono.length() == 9 && nuevoTelefono.find_first_not_of("0123456789") == string::npos) {
+                telefonoValido = true;
+            }
+            else {
+                cout << endl << MAGENTA_COLOR << menuTexts[_currentLanguage][285] << RESET_COLOR << DOUBLE_SPACE;
+            }
+        }
+
+        // Actualizar los datos del proveedor
+        if (!nuevoNombre.empty()) {
+            proveedor->setNombre(nuevoNombre);
+        }
+
+        // Actualizar la dirección si no está vacía
+        if (!nuevaDireccion.empty()) {
+            proveedor->setDireccion(nuevaDireccion);
+        }
+
+        // Actualizar el teléfono si no está vacío
+        if (!nuevoTelefono.empty()) {
+            proveedor->setTelefono(nuevoTelefono);
+        }
+
+        // Actualizar el archivo
+        ofstream archivoProveedores(archivo); // Abrir el archivo para escribir
+
+        // Verificar si el archivo se abrió correctamente
+        if (!archivoProveedores.is_open()) {
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[_currentLanguage][404] << endl; // Mensaje de error al abrir el archivo
+            return;
+        }
+
+        // Escribir los datos actualizados en el archivo
+        for (int i = 0; i < listaProveedores.size(); ++i) {
+            Proveedor* proveedor = listaProveedores.obtenerProveedor(i);
+            archivoProveedores << proveedor->getNombre() << "," << proveedor->getDireccion() << "," << proveedor->getTelefono() << endl;
+        }
+
+        archivoProveedores.close(); // Cerrar el archivo después de escribir
+
+        // Guardar en el archivo
+        guardarListaEnArchivo(_currentLanguage);
+
+        ShowConsoleCursor(false);
+        cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[_currentLanguage][287] << endl;
+    }
+
     // Método para eliminar un proveedor
     void eliminarProveedor(const string& archivo, string _currentLanguage) {
 
