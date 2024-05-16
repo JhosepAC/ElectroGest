@@ -10,10 +10,10 @@ public:
     GestionarProveedores() {}
 
     // Método para cargar la lista de proveedores desde el archivo
-    void cargarListaDesdeArchivo() { listaProveedores.cargarDesdeArchivo(archivoProveedores); }
+    void cargarListaDesdeArchivo(string _currentLanguage) { listaProveedores.cargarDesdeArchivo(archivoProveedores, _currentLanguage); }
 
     // Método para cargar datos desde el archivo
-    void cargarDatosDesdeArchivo() { listaProveedores.cargarDesdeArchivo(archivoProveedores);}
+    void cargarDatosDesdeArchivo(string _currentLanguage) { listaProveedores.cargarDesdeArchivo(archivoProveedores, _currentLanguage);}
 
     // Método para mostrar la lista de proveedores
     void verListaProveedores(string _currenLanguage) const {
@@ -22,7 +22,7 @@ public:
         string currentLanguage = _currenLanguage;
 
         cout << CYAN_COLOR << menuTexts[currentLanguage][260] << RESET_COLOR << DOUBLE_SPACE;
-        listaProveedores.mostrarProveedores();
+        listaProveedores.mostrarProveedores(_currenLanguage);
     }
 
     // Método para agregar un proveedor
@@ -210,7 +210,7 @@ public:
 
         cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][269] << " ===" << DOUBLE_SPACE << RESET_COLOR; // Menú de eliminar proveedor
         cout << GRAY_COLOR << menuTexts[currentLanguage][270] << DOUBLE_SPACE << RESET_COLOR; // Mostrar la lista de proveedores
-        listaProveedores.mostrarProveedores();
+        listaProveedores.mostrarProveedores(_currentLanguage);
 
         int opcion;
         cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][271] << RESET_COLOR; // Solicitar la opción a eliminar
@@ -224,7 +224,7 @@ public:
         }
 
         Proveedor* proveedorEliminar = listaProveedores.obtenerProveedor(opcion - 1);
-        listaProveedores.eliminarProveedor(opcion - 1);
+        listaProveedores.eliminarProveedor(opcion - 1, _currentLanguage);
 
         // Actualizar el archivo eliminando el proveedor
         ifstream archivoProveedoresLectura(archivo);
