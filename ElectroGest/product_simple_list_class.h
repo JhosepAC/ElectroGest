@@ -6,7 +6,6 @@
 
 class LISTA_PRODUCTO {
 public:
-
     // Constructor
     LISTA_PRODUCTO() : primero(nullptr), ultimo(nullptr) {}
 
@@ -19,10 +18,10 @@ public:
         }
     }
 
-    // Verifica si la lista está vacía
+    // Check if the list is empty
     bool estaVacia() const { return primero == nullptr; }
 
-    // Método de acceso
+    // Get the first node
     NODO_PRODUCTO* obtenerPrimero() const { return primero; }
 
     // Método para agregar un producto a la lista
@@ -52,11 +51,10 @@ public:
         }
     }
 
-    // Método para agregar un producto a la lista
+    // Count the number of products
     int contarProductos() const {
         int contador = 0;
         NODO_PRODUCTO* actual = primero;
-        // Recorrer la lista
         while (actual != nullptr) {
             contador++;
             actual = actual->siguiente;
@@ -64,15 +62,10 @@ public:
         return contador;
     }
 
-    // Método para mostrar el catálogo de productos
-    void mostrarCatalogo(string _currentLanguage) const {
-
-        // Idioma predeterminado
-        string currentLanguage = _currentLanguage;
-
+    // Display the product catalog
+    void mostrarCatalogo(const string& currentLanguage) const {
         int cantidadProductos = contarProductos();
 
-        // Si la lista está vacía
         if (primero == nullptr) {
             cout << MAGENTA_COLOR << menuTexts[currentLanguage][254] << endl;
             return;
@@ -81,8 +74,6 @@ public:
         cout << CYAN_COLOR << menuTexts[currentLanguage][255] << RESET_COLOR << cantidadProductos << menuTexts[currentLanguage][256] << DOUBLE_SPACE;
 
         NODO_PRODUCTO* actual = primero;
-
-        // Recorrer la lista
         while (actual != nullptr) {
             actual->producto.mostrarInformacion();
             cout << endl;
@@ -90,38 +81,26 @@ public:
         }
     }
 
-    void mostrarCatalogoArchivo(string _currentLenguage) const {
-
-        // Idioma predeterminado
-        string currentLanguage = _currentLenguage;
-
+    void mostrarCatalogoArchivo(const string& currentLanguage) const {
         ofstream file("total_products.txt");
-
-        // Si no se pudo abrir el archivo
         if (!file.is_open()) {
             cerr << menuTexts[currentLanguage][404] << endl;
             return;
         }
 
         NODO_PRODUCTO* actual = primero;
-        
-        // Recorrer la lista
         while (actual != nullptr) {
             actual->producto.mostrarInformacionArchivo(file);
             file << endl;
             actual = actual->siguiente;
         }
-
         file.close();
     }
 
-    // Método para buscar un producto por código
+    // Find a product by code
     NODO_PRODUCTO* buscarProducto(const string& codigo) {
         NODO_PRODUCTO* actual = primero;
-
-        // Recorrer la lista
         while (actual != nullptr) {
-            // Si se encuentra el producto
             if (actual->producto.getCodigo() == codigo) {
                 return actual;
             }
@@ -130,15 +109,10 @@ public:
         return nullptr;
     }
 
-    // Método para buscar un producto por nombre
+    // Delete a product by code
     void eliminarProducto(const string& codigo) {
+        if (primero == nullptr) return;
 
-        // Si la lista está vacía
-        if (primero == nullptr) {
-            return;
-        }
-
-        // Si el producto a eliminar es el primero
         if (primero->producto.getCodigo() == codigo) {
             NODO_PRODUCTO* temp = primero;
             primero = primero->siguiente;
@@ -147,10 +121,7 @@ public:
         }
 
         NODO_PRODUCTO* actual = primero;
-
-        // Recorrer la lista
         while (actual->siguiente != nullptr) {
-            // Si se encuentra el producto
             if (actual->siguiente->producto.getCodigo() == codigo) {
                 NODO_PRODUCTO* temp = actual->siguiente;
                 actual->siguiente = temp->siguiente;
@@ -161,12 +132,10 @@ public:
         }
     }
 
-    // Método para buscar un producto por nombre
+    // Update a product by code
     void actualizarProducto(const string& codigo, double nuevoPrecio, const string& nuevoCodigo, int nuevaGarantia) {
         NODO_PRODUCTO* producto = buscarProducto(codigo);
-        // Si se encuentra el producto
         if (producto != nullptr) {
-            // Solo se actualizan el precio, código y garantía
             producto->producto.setPrecio(nuevoPrecio);
             producto->producto.setCodigo(nuevoCodigo);
             producto->producto.setGarantia(nuevaGarantia);

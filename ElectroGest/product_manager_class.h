@@ -72,13 +72,13 @@ public:
             value.erase(0, value.find_first_not_of(" ")); // Elimina espacios iniciales
 
             // Asignar el valor a la variable correspondiente
-            if (key == menuTexts[currentLanguage][217]) nombre = value;
+            if (key == "Nombre") nombre = value;
             // Si la clave es "Código", asignar el valor a la variable correspondiente
-            else if (key == menuTexts[currentLanguage][218]) codigo = value;
+            else if (key == "Codigo") codigo = value;
             // Si la clave es "Marca", asignar el valor a la variable correspondiente
-            else if (key == menuTexts[currentLanguage][219]) marca = value;
+            else if (key == "Marca") marca = value;
             // Si la clave es "Precio", asignar el valor a la variable correspondiente
-            else if (key == menuTexts[currentLanguage][220]) {
+            else if (key == "Precio") {
                 // Buscar la posición del carácter '/' en la cadena
                 size_t pos = value.find_first_of('/');
                 if (pos != string::npos) {
@@ -99,8 +99,8 @@ public:
                     cerr << menuTexts[currentLanguage][216] << value << endl;
                 }
             }
-            else if (key == menuTexts[currentLanguage][221]) modelo = value;
-            else if (key == menuTexts[currentLanguage][222]) {
+            else if (key == "Modelo") modelo = value;
+            else if (key == "Ancho (cm)") {
                 try {
                     ancho = stod(value);
                 }
@@ -111,7 +111,7 @@ public:
                     cerr << menuTexts[currentLanguage][224] << e.what() << endl;
                 }
             }
-            else if (key == menuTexts[currentLanguage][225]) {
+            else if (key == "Alto (cm)") {
                 try {
                     alto = stod(value);
                 }
@@ -122,7 +122,7 @@ public:
                     cerr << menuTexts[currentLanguage][227] << e.what() << endl;
                 }
             }
-            else if (key == menuTexts[currentLanguage][228]) {
+            else if (key == "Largo (cm)") {
                 try {
                     largo = stod(value);
                 }
@@ -133,7 +133,7 @@ public:
                     cerr << menuTexts[currentLanguage][230] << e.what() << endl;
                 }
             }
-            else if (key == menuTexts[currentLanguage][231]) {
+            else if (key == "Peso (Kg)") {
                 try {
                     peso = stod(value);
                 }
@@ -144,9 +144,9 @@ public:
                     cerr << menuTexts[currentLanguage][233] << e.what() << endl;
                 }
             }
-            else if (key == menuTexts[currentLanguage][234]) material = value;
-            else if (key == menuTexts[currentLanguage][235]) color = value;
-            else if (key == menuTexts[currentLanguage][236]) {
+            else if (key == "Material") material = value;
+            else if (key == "Color") color = value;
+            else if (key == "Garantia (meses)") {
                 try {
                     garantia = stoi(value);
                 }
@@ -162,13 +162,15 @@ public:
     }
 
     // Método para guardar el catálogo de productos en un archivo
-    void guardarEnArchivo(string _currentLenguage) {
-
-        // Idioma predeterminado
-        string currentLanguage = _currentLenguage;
-
+    void guardarEnArchivo(string& currentLanguage) {
         ofstream file("total_products.txt");
-        listaProductos.mostrarCatalogoArchivo(_currentLenguage); // Elimina el argumento file de aquí
+
+        if (!file.is_open()) {
+            cerr << menuTexts[currentLanguage][404] << endl;
+            return;
+        }
+
+        listaProductos.mostrarCatalogoArchivo(currentLanguage); // Elimina el argumento file de aquí
         file.close();
     }
 
@@ -453,28 +455,18 @@ public:
     }
 
     // Método para ordenar productos por precio de forma ascendente
-    void ordenarProductosPorPrecioAscendente(string _currentLenguage) {
-
-        // Idioma predeterminado
-        string currentLanguage = _currentLenguage;
-
-        // Convertir la lista de productos a un vector para facilitar el ordenamiento
+    void ordenarProductosPorPrecioAscendente(const string& currentLanguage) {
         vector<PRODUCTO> productosVector;
-
-        // Recorrer la lista de productos y agregar cada producto al vector
         for (NODO_PRODUCTO* actual = listaProductos.obtenerPrimero(); actual != nullptr; actual = actual->siguiente) {
-            productosVector.push_back(actual->producto); // Agregar el producto al vector
+            productosVector.push_back(actual->producto);
         }
 
-        // Ordenar el vector de productos por precio de forma ascendente
         sort(productosVector.begin(), productosVector.end(), [](const PRODUCTO& a, const PRODUCTO& b) {
             return a.getPrecio() < b.getPrecio();
             });
 
-        // Mostrar los productos ordenados
         cout << CYAN_COLOR << menuTexts[currentLanguage][252] << DOUBLE_SPACE;
 
-        // Recorrer el vector de productos y mostrar la información de cada producto
         for (const auto& producto : productosVector) {
             producto.mostrarInformacion();
             cout << endl;
@@ -482,27 +474,20 @@ public:
     }
 
     // Método para ordenar productos por precio de forma descendente
-    void ordenarProductosPorPrecioDescendente(string _currentLenguage) {
-
-        // Idioma predeterminado
-        string currentLanguage = _currentLenguage;
-
-        // Convertir la lista de productos a un vector para facilitar el ordenamiento
+    void ordenarProductosPorPrecioDescendente(const string& currentLanguage) {
         vector<PRODUCTO> productosVector;
 
-        // Recorrer la lista de productos y agregar cada producto al vector
+        // Recorrer todos los productos en la lista y agregarlos al vector de productos
         for (NODO_PRODUCTO* actual = listaProductos.obtenerPrimero(); actual != nullptr; actual = actual->siguiente) {
-            productosVector.push_back(actual->producto); // Agregar el producto al vector
+            productosVector.push_back(actual->producto);
         }
 
-        // Ordenar el vector de productos por precio de forma descendente
         sort(productosVector.begin(), productosVector.end(), [](const PRODUCTO& a, const PRODUCTO& b) {
-            return a.getPrecio() > b.getPrecio(); // Ordenar de forma descendente
+            return a.getPrecio() > b.getPrecio();
             });
 
-        cout << CYAN_COLOR << menuTexts[currentLanguage][253] << DOUBLE_SPACE; // Productos ordenados por precio de forma descendente:
+        cout << CYAN_COLOR << menuTexts[currentLanguage][253] << DOUBLE_SPACE;
 
-        // Recorrer el vector de productos y mostrar la información de cada producto
         for (const auto& producto : productosVector) {
             producto.mostrarInformacion();
             cout << endl;

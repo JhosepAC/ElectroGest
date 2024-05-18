@@ -29,36 +29,36 @@ using namespace std;
 void generalMenu(); // Menú general
 
 // Menús de vendedores
-void sellerLoginMenu(string _currentLanguage); // Menú de inicio de sesión para vendedor
-void sellerMenu(string usuario, string _currentLanguag); // Menú de vendedor
+void sellerLoginMenu(string currentLanguage); // Menú de inicio de sesión para vendedor
+void sellerMenu(string usuario, string currentLanguage); // Menú de vendedor
 
 // Cliente
-void clientRegisterMenu(string _currentLanguag); // Menú de registro para comprador
-void clientLoginMenu(string _currentLanguag); // Menú de inicio de sesión para comprador
-void clientMenu(string _currentLanguag); // Menú de comprador
-void homeClientMenu(string _currentLanguag); // Menú de inicio para comprador
-void savePassword(const string& email, const string& password, string _currentLanguag); // Guardar la contraseña cifrada
-void saveClientInfo(const CLIENTE& client, string _currentLanguag); // Guardar la información del comprador en un archivo   
+void clientRegisterMenu(string currentLanguage); // Menú de registro para comprador
+void clientLoginMenu(string currentLanguage); // Menú de inicio de sesión para comprador
+void clientMenu(string currentLanguage); // Menú de comprador
+void homeClientMenu(string currentLanguage); // Menú de inicio para comprador
+void savePassword(const string& email, const string& password, string currentLanguage); // Guardar la contraseña cifrada
+void saveClientInfo(const CLIENTE& client, string currentLanguage); // Guardar la información del comprador en un archivo   
 
 // Productos
-void productCatalogMenu(string _currentLanguag); // Menú de catálogo de productos
-void productManagementMenu(string _currentLanguag); // Menú de gestión de productos 
-void filtrarProductosPorCategoria(string _currentLanguag); // Filtrar productos por categoría
+void productCatalogMenu(string currentLanguage); // Menú de catálogo de productos
+void productManagementMenu(string currentLanguage); // Menú de gestión de productos 
+void filtrarProductosPorCategoria(string currentLanguage); // Filtrar productos por categoría
 
 // Inventario
-void inventoryManagementMenu(string _currentLanguag); // Menú de gestión de inventario
+void inventoryManagementMenu(string currentLanguage); // Menú de gestión de inventario
 
 // Proveedores
-void supplierManagementMenu(string _currentLanguag); // Menú de gestión de proveedores
+void supplierManagementMenu(string currentLanguage); // Menú de gestión de proveedores
 
 // Pedido
-void orderingMenu(string _currentLanguag); // Menú de pedidos
-void orderManagementMenu(string _currentLanguag); // Menú de gestión de pedidos
+void orderingMenu(string currentLanguage); // Menú de pedidos
+void orderManagementMenu(string currentLanguage); // Menú de gestión de pedidos
 
 // Gestión de clientes
-void customerManagementMenu(string _currentLanguag); // Menú de gestión de clientes
+void customerManagementMenu(string currentLanguage); // Menú de gestión de clientes
 
-void sortProductsPrice(string _currentLanguag); // Ordenar productos por precio
+void sortProductsPrice(string& currentLanguage); // Ordenar productos por precio
 
 //#####################################################################//
 //################## IMPLEMENTACIÓN DE LOS MENÚS #####################//
@@ -246,19 +246,19 @@ void sellerMenu(string usuario, string _currentLanguage) {
         // Evaluador de opciones
         switch (opcion) {
         case 1:
-            productManagementMenu(_currentLanguage); // Menú de gestión de productos
+            productManagementMenu(currentLanguage); // Menú de gestión de productos
             break;
         case 2:
-            inventoryManagementMenu(_currentLanguage); // Menú de gestión de inventario
+            inventoryManagementMenu(currentLanguage); // Menú de gestión de inventario
             break;
         case 3:
-            supplierManagementMenu(_currentLanguage); // Menú de gestión de proveedores
+            supplierManagementMenu(currentLanguage); // Menú de gestión de proveedores
             break;
         case 4:
-            orderManagementMenu(_currentLanguage); // Menú de gestión de pedidos
+            orderManagementMenu(currentLanguage); // Menú de gestión de pedidos
             break;
         case 5:
-            customerManagementMenu(_currentLanguage); // Menú de gestión de clientes
+            customerManagementMenu(currentLanguage); // Menú de gestión de clientes
             break;
         case 6:
 			break;
@@ -443,13 +443,13 @@ void clientRegisterMenu(string _currentLanguage) {
     comprador.setGenero(input_genero);
 
     // Guardar la información del comprador en un archivo
-    saveClientInfo(comprador, _currentLanguage);
-    savePassword(input_correo, input_contrasenia, _currentLanguage); // Guardar la contraseña cifrada
+    saveClientInfo(comprador, currentLanguage);
+    savePassword(input_correo, input_contrasenia, currentLanguage); // Guardar la contraseña cifrada
 
     ShowConsoleCursor(false); // Oculta el cursor
 
     Sleep(1500); // Espera 1.5 segundos
-    homeClientMenu(_currentLanguage); // Muestra el menú del vendedor
+    homeClientMenu(currentLanguage); // Muestra el menú del vendedor
 }
 
 // Función para mostrar el menú de inicio de sesión para comprador
@@ -506,7 +506,7 @@ void clientLoginMenu(string _currentLanguage) {
                 cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][45] << DOUBLE_SPACE;
                 Sleep(2000);
                 system("cls");
-                homeClientMenu(_currentLanguage); // Mostrar el menú del comprador
+                homeClientMenu(currentLanguage); // Mostrar el menú del comprador
                 break;
             }
         }
@@ -518,14 +518,14 @@ void clientLoginMenu(string _currentLanguage) {
     }
 
     if (loggedIn) {
-        clientMenu(_currentLanguage);
+        clientMenu(currentLanguage);
     }
     else {
         ShowConsoleCursor(false);
         cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][47] << DOUBLE_SPACE;
         Sleep(2000);
         system("cls");
-        clientLoginMenu(_currentLanguage);
+        clientLoginMenu(currentLanguage);
     }
 }
 
@@ -563,11 +563,11 @@ void clientMenu(string _currentLanguage) {
         {
         case 1:
             system("cls");
-            clientRegisterMenu(_currentLanguage);
+            clientRegisterMenu(currentLanguage);
             break;
         case 2:
             system("cls");
-            clientLoginMenu(_currentLanguage);
+            clientLoginMenu(currentLanguage);
             break;
         case 3:
 			break;
@@ -583,11 +583,13 @@ void homeClientMenu(string _currentLanguage) {
 	system("cls");
     SISTEMA_PEDIDOS sistemaPedidos;
 
-    sistemaPedidos.cargarPedidosPendientes(_currentLanguage);
-    sistemaPedidos.cargarPedidosProcesados(_currentLanguage);
+    // Idioma predeterminado
+    string currentLanguage = _currentLanguage;
+
+    sistemaPedidos.cargarPedidosPendientes(currentLanguage);
+    sistemaPedidos.cargarPedidosProcesados(currentLanguage);
 
 	int opcion = 0;
-    string currentLanguage = "espanol"; // Idioma predeterminado
 
     do {
         cout << CYAN_COLOR << menuTexts[currentLanguage][43] << DOUBLE_SPACE << RESET_COLOR;
@@ -614,14 +616,14 @@ void homeClientMenu(string _currentLanguage) {
         {
         case 1:
             system("cls");
-            productCatalogMenu(_currentLanguage);
+            productCatalogMenu(currentLanguage);
             break;
         case 2:
-            orderingMenu(_currentLanguage);
+            orderingMenu(currentLanguage);
             break;
         case 3:
             system("cls");
-            sistemaPedidos.mostrarHistorialPedidos(_currentLanguage);
+            sistemaPedidos.mostrarHistorialPedidos(currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
@@ -710,14 +712,14 @@ void productCatalogMenu(string _currentLanguage) {
         {
         case 1: 
             system("cls");
-            productManager.mostrarTodosLosProductos(_currentLanguage);
+            productManager.mostrarTodosLosProductos(currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
             system("cls");
             break;
         case 2:
-            filtrarProductosPorCategoria(_currentLanguage);
+            filtrarProductosPorCategoria(currentLanguage);
             break;
         case 3:
             system("cls");
@@ -725,7 +727,7 @@ void productCatalogMenu(string _currentLanguage) {
             cin.ignore();
             getline(cin, nombre);
             cout << endl;
-            productManager.buscarProductoPorNombre(nombre, _currentLanguage);
+            productManager.buscarProductoPorNombre(nombre, currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
@@ -773,7 +775,7 @@ void filtrarProductosPorCategoria(string _currentLanguage) {
         switch (opcion) {
         case 1:
             system("cls");
-            productManager.filtrarPorPrecio(productManager, _currentLanguage);
+            productManager.filtrarPorPrecio(productManager, currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
@@ -781,7 +783,7 @@ void filtrarProductosPorCategoria(string _currentLanguage) {
             break;
         case 2:
             system("cls");
-            productManager.filtrarPorColor(productManager, _currentLanguage);
+            productManager.filtrarPorColor(productManager, currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
@@ -789,7 +791,7 @@ void filtrarProductosPorCategoria(string _currentLanguage) {
             break;
         case 3:
             system("cls");
-            productManager.filtrarPorMarca(productManager, _currentLanguage);
+            productManager.filtrarPorMarca(productManager, currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
@@ -809,7 +811,7 @@ void productManagementMenu(string _currentLanguage) {
     string currentLanguage = _currentLanguage; // Idioma predeterminado
 
     // Cargar los productos desde el archivo
-    manager.cargarDesdeArchivo(_currentLanguage);
+    manager.cargarDesdeArchivo(currentLanguage);
 
     do{
 
@@ -839,7 +841,7 @@ void productManagementMenu(string _currentLanguage) {
         switch (opcion) {
         case 1:
             system("cls");
-            manager.mostrarTodosLosProductos(_currentLanguage);
+            manager.mostrarTodosLosProductos(currentLanguage);
 
             do
             {
@@ -852,7 +854,7 @@ void productManagementMenu(string _currentLanguage) {
                 cin >> opcion_ordenar;
 
                 if (opcion_ordenar == 1) {
-                    sortProductsPrice(_currentLanguage);
+                    sortProductsPrice(currentLanguage);
                 }
 				else if (opcion_ordenar == 2) {
 					break;
@@ -867,19 +869,19 @@ void productManagementMenu(string _currentLanguage) {
             break;
         case 2:
             system("cls");
-            addNewProduct(manager, _currentLanguage);
+            addNewProduct(manager, currentLanguage);
             break;
         case 3:
             system("cls");
-            updateProductProcedure(manager, _currentLanguage);
+            updateProductProcedure(manager, currentLanguage);
             break;
         case 4:
             system("cls");
-            removeProductProcedure(manager, _currentLanguage);
+            removeProductProcedure(manager, currentLanguage);
             break;
         case 5:
             system("cls");
-            searchProduct(manager, _currentLanguage);
+            searchProduct(manager, currentLanguage);
             break;
         case 6:
             break;
@@ -899,8 +901,8 @@ void inventoryManagementMenu(string _currentLanguage) {
 
     string currentLanguage = _currentLanguage; // Idioma predeterminado
 
-    gestionInventarios.cargarInventarioDesdeArchivo(_currentLanguage); // Cargar el inventario desde el archivo al iniciar el programa
-    gestionInventarios.cargarMovimientosDesdeArchivo(_currentLanguage); // Cargar el historial de movimientos desde el archivo al iniciar el programa
+    gestionInventarios.cargarInventarioDesdeArchivo(currentLanguage); // Cargar el inventario desde el archivo al iniciar el programa
+    gestionInventarios.cargarMovimientosDesdeArchivo(currentLanguage); // Cargar el historial de movimientos desde el archivo al iniciar el programa
 
     do {
         system("cls");
@@ -926,7 +928,7 @@ void inventoryManagementMenu(string _currentLanguage) {
 
         switch (opcion) {
         case 1:
-            gestionInventarios.verInventario(_currentLanguage);
+            gestionInventarios.verInventario(currentLanguage);
             break;
         case 2:
             system("cls");
@@ -948,7 +950,7 @@ void inventoryManagementMenu(string _currentLanguage) {
                     }
                     std::cout << YELLOW_COLOR << menuTexts[currentLanguage][129] << RESET_COLOR;
                 }
-                gestionInventarios.añadirStock(producto->producto.getCodigo(), cantidad, _currentLanguage); // Utiliza el código del producto
+                gestionInventarios.añadirStock(producto->producto.getCodigo(), cantidad, currentLanguage); // Utiliza el código del producto
 
                 ShowConsoleCursor(false); // Oculta el cursor
                 cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][130] << RESET_COLOR;
@@ -980,7 +982,7 @@ void inventoryManagementMenu(string _currentLanguage) {
                     std::cout << YELLOW_COLOR << menuTexts[currentLanguage][129] << RESET_COLOR; // Ingrese una cantidad válida
                 }
 
-                gestionInventarios.retirarStock(producto->producto.getCodigo(), cantidad, _currentLanguage);
+                gestionInventarios.retirarStock(producto->producto.getCodigo(), cantidad, currentLanguage);
 
                 ShowConsoleCursor(false); // Oculta el cursor
                 cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][136] << RESET_COLOR; // Stock retirado con éxito
@@ -995,7 +997,7 @@ void inventoryManagementMenu(string _currentLanguage) {
         case 4:
             system("cls");
             // Mostrar historial de movimientos
-            gestionInventarios.mostrarHistorialMovimientos(_currentLanguage);
+            gestionInventarios.mostrarHistorialMovimientos(currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
             std::cout << DOUBLE_SPACE << GRAY_COLOR <<  menuTexts[currentLanguage][50]; // Presione cualquier tecla para continuar
             _getch();
@@ -1016,7 +1018,7 @@ void supplierManagementMenu(string _currentLanguage) {
 
     GestionarProveedores supplierManager; // Crear un objeto de la clase GestionarProveedores
 
-    supplierManager.cargarListaDesdeArchivo(_currentLanguage);
+    supplierManager.cargarListaDesdeArchivo(currentLanguage);
     
     do {
         system("cls");
@@ -1051,7 +1053,7 @@ void supplierManagementMenu(string _currentLanguage) {
 				break;
 			}
             system("cls");
-            supplierManager.verListaProveedores(_currentLanguage);
+            supplierManager.verListaProveedores(currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
@@ -1059,7 +1061,7 @@ void supplierManagementMenu(string _currentLanguage) {
             break;
         case 2:
             system("cls");
-            supplierManager.agregarProveedor(archivoProveedores, _currentLanguage);
+            supplierManager.agregarProveedor(archivoProveedores, currentLanguage);
             Sleep(1000);
             system("cls");
             break;
@@ -1072,7 +1074,7 @@ void supplierManagementMenu(string _currentLanguage) {
                 break;
             }
             system("cls");
-            supplierManager.actualizarProveedor(archivoProveedores, _currentLanguage);
+            supplierManager.actualizarProveedor(archivoProveedores, currentLanguage);
             Sleep(1000);
             system("cls");
             break;
@@ -1085,7 +1087,7 @@ void supplierManagementMenu(string _currentLanguage) {
                 break;
             }
             system("cls");
-            supplierManager.eliminarProveedor(archivoProveedores, _currentLanguage);
+            supplierManager.eliminarProveedor(archivoProveedores, currentLanguage);
             Sleep(1000);
             system("cls");
             break;
@@ -1101,7 +1103,7 @@ void supplierManagementMenu(string _currentLanguage) {
             cout << YELLOW_COLOR << menuTexts[currentLanguage][124] << RESET_COLOR; // Ingrese el nombre del proveedor a buscar
             cin.ignore();
             getline(cin, nombreBuscar);
-            supplierManager.buscarProveedor(nombreBuscar, _currentLanguage);
+            supplierManager.buscarProveedor(nombreBuscar, currentLanguage);
             cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
             system("cls");
@@ -1118,15 +1120,17 @@ void orderingMenu(string _currentLanguage) {
     CARRO_COMPRAS carrito; // Crear un objeto de la clase CarritoCompra
     SISTEMA_PEDIDOS sistemaPedidos;
 
-    sistemaPedidos.cargarPedidosPendientes(_currentLanguage);
-    sistemaPedidos.cargarPedidosProcesados(_currentLanguage);
+    // Idioma predeterminado
+    string currentLanguage = _currentLanguage;
+
+    sistemaPedidos.cargarPedidosPendientes(currentLanguage);
+    sistemaPedidos.cargarPedidosProcesados(currentLanguage);
 
     int opcion;
 
     bool running = true;
 
     std::string codigoProducto;
-    string currentLanguage = _currentLanguage; // Idioma predeterminado
     int cantidad;
 
     while (running) {
@@ -1195,11 +1199,11 @@ void orderingMenu(string _currentLanguage) {
             }
             break;
         case 2:
-            carrito.verCarrito(_currentLanguage); // Ver el contenido del carrito
+            carrito.verCarrito(currentLanguage); // Ver el contenido del carrito
             break;
         case 3:
             if (!carrito.isEmpty()) {
-                sistemaPedidos.guardarPedidos(carrito.getPedidos(), _currentLanguage);
+                sistemaPedidos.guardarPedidos(carrito.getPedidos(), currentLanguage);
                 carrito.limpiarCarrito(); // Limpiar el carrito después de confirmar el pedido
                 ShowConsoleCursor(false);
                 std::cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][98];
@@ -1236,11 +1240,13 @@ void orderManagementMenu(string _currentLanguage) {
     // Antes del bucle o en algún lugar antes de utilizarlo en tu código
     GESTION_INVENTARIO inventario;
 
-    sistemaPedidos.cargarPedidosPendientes(_currentLanguage);
-    sistemaPedidos.cargarPedidosProcesados(_currentLanguage);
+    // Idioma predeterminado
+    string currentLanguage = _currentLanguage;
+
+    sistemaPedidos.cargarPedidosPendientes(currentLanguage);
+    sistemaPedidos.cargarPedidosProcesados(currentLanguage);
 
     int opcion;
-    string currentLanguage = _currentLanguage; // Idioma predeterminado
 
     while (true) {
         system("cls");  
@@ -1267,24 +1273,24 @@ void orderManagementMenu(string _currentLanguage) {
 
         switch (opcion) {
         case 1:
-            sistemaPedidos.verPedidosPendientes(_currentLanguage);
+            sistemaPedidos.verPedidosPendientes(currentLanguage);
             break;
         case 2:
-            sistemaPedidos.verPedidosProcesados(_currentLanguage);
+            sistemaPedidos.verPedidosProcesados(currentLanguage);
             break;
         case 3:
             system("cls");
-            sistemaPedidos.verPedidosPendientes(_currentLanguage);
+            sistemaPedidos.verPedidosPendientes(currentLanguage);
             ShowConsoleCursor(true); // Muestra el cursor
             cout << YELLOW_COLOR << menuTexts[currentLanguage][76] << RESET_COLOR;
             int indicePedido;
             std::cin >> indicePedido;
             if (indicePedido >= 0 && indicePedido < sistemaPedidos.getNumPedidosPendientes()) {
-                PEDIDO pedido = sistemaPedidos.getPedidoPendientePorIndice(indicePedido, _currentLanguage);
+                PEDIDO pedido = sistemaPedidos.getPedidoPendientePorIndice(indicePedido, currentLanguage);
                 if (inventario.verificarStock(pedido.getCodigoProducto(), pedido.getCantidad())) {
                     // Procesar el pedido
-                    inventario.retirarStock(pedido.getCodigoProducto(), pedido.getCantidad(), _currentLanguage);
-                    sistemaPedidos.procesarPedido(indicePedido, _currentLanguage);
+                    inventario.retirarStock(pedido.getCodigoProducto(), pedido.getCantidad(), currentLanguage);
+                    sistemaPedidos.procesarPedido(indicePedido, currentLanguage);
                     ShowConsoleCursor(false); // Oculta el cursor
                     std::cout << DOUBLE_SPACE << GREEN_COLOR << menuTexts[currentLanguage][75];
                     Sleep(1500);
@@ -1302,11 +1308,11 @@ void orderManagementMenu(string _currentLanguage) {
             }
             break;
         case 4:
-            sistemaPedidos.eliminarPedidos(_currentLanguage);
+            sistemaPedidos.eliminarPedidos(currentLanguage);
             break;
         case 5:
             system("cls");
-            sistemaPedidos.mostrarHistorialPedidos(_currentLanguage);
+            sistemaPedidos.mostrarHistorialPedidos(currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
@@ -1359,7 +1365,7 @@ void customerManagementMenu(string _currentLanguage) {
             }
             system("cls");
             cout << CYAN_COLOR << menuTexts[currentLanguage][66] << DOUBLE_SPACE;
-            gestionCliente.displayCustomerList(_currentLanguage);
+            gestionCliente.displayCustomerList(currentLanguage);
             break;
         case 2:
             if (file.peek() == ifstream::traits_type::eof()) { // Verificar si el archivo está vacío
@@ -1375,7 +1381,7 @@ void customerManagementMenu(string _currentLanguage) {
                 string email;
                 cout << YELLOW_COLOR << menuTexts[currentLanguage][60] << RESET_COLOR;
                 cin >> email;
-                gestionCliente.deleteCustomer(email, _currentLanguage);
+                gestionCliente.deleteCustomer(email, currentLanguage);
                 ShowConsoleCursor(false); // Oculta el cursor
                 _sleep(1500); // Espera 1.5 segundo
             }
@@ -1394,7 +1400,7 @@ void customerManagementMenu(string _currentLanguage) {
                 string searchTerm;
                 cout << YELLOW_COLOR << menuTexts[currentLanguage][57] << RESET_COLOR;
                 cin >> searchTerm;
-                gestionCliente.searchCustomers(searchTerm, _currentLanguage);
+                gestionCliente.searchCustomers(searchTerm, currentLanguage);
             }
             break;
         case 4:
@@ -1403,18 +1409,17 @@ void customerManagementMenu(string _currentLanguage) {
     } while (opcion != 4);
 }
 
-void sortProductsPrice(string _currentLanguage) {
+void sortProductsPrice(string& currentLanguage) {
     
     GESTION_PRODUCTOS productManager;
 
     int opcion;
-	string currentLanguage = _currentLanguage; // Idioma predeterminado
 
 	do {
 		system("cls");
-		cout << CYAN_COLOR << "=== Ordenar Productos por Precio ===" << RESET_COLOR << DOUBLE_SPACE;
-		cout << "<1> " << menuTexts[currentLanguage][55] << endl;
-		cout << "<2> " << menuTexts[currentLanguage][56] << endl;
+		cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][292] << " ===" << RESET_COLOR << DOUBLE_SPACE;
+		cout << "<1> " << menuTexts[currentLanguage][55] << endl; // Ordenar por precio ascendente
+		cout << "<2> " << menuTexts[currentLanguage][56] << endl; // Ordenar por precio descendente 
 		cout << "<3> " << menuTexts[currentLanguage][50];
         ShowConsoleCursor(true); // Muestra el cursor
 		cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR;
@@ -1433,7 +1438,7 @@ void sortProductsPrice(string _currentLanguage) {
 		switch (opcion) {
 		case 1:
 			system("cls");
-			productManager.ordenarProductosPorPrecioAscendente(_currentLanguage);
+			productManager.ordenarProductosPorPrecioAscendente(currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
             _getch();
@@ -1441,14 +1446,14 @@ void sortProductsPrice(string _currentLanguage) {
             break;
         case 2:
             system("cls");
-            productManager.ordenarProductosPorPrecioDescendente(_currentLanguage);
+            productManager.ordenarProductosPorPrecioDescendente(currentLanguage);
             ShowConsoleCursor(false); // Oculta el cursor
 			cout << DOUBLE_SPACE << GRAY_COLOR << menuTexts[currentLanguage][51];
 			_getch();
 			system("cls");
 			break;
 		case 3:
-            productManagementMenu(_currentLanguage);
+            productManagementMenu(currentLanguage);
 			break;
 		}
 	} while (opcion != 3);
