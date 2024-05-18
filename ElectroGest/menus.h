@@ -66,22 +66,19 @@ void sortProductsPrice(); // Ordenar productos por precio
 void generalMenu() {
     int opcion = 0; // Opción elegida por el usuario
 
-    string currentLanguage = "espanol"; // Idioma predeterminado
-
     do {
         system("cls");
 
         cout << CYAN_COLOR;
         cout << "=====================================" << endl;
-        cout << menuTexts[currentLanguage][1] << endl; // Sistema de gestión de ventas
+        cout << "     ¡Bienvenido a ElectroGest!      " << endl; // Sistema de gestión de ventas
         cout << "=====================================" << endl;
         cout << DOUBLE_SPACE << RESET_COLOR;
-        cout << "<1> " << menuTexts[currentLanguage][2] << endl; // Iniciar sesión como vendedor
-        cout << "<2> " << menuTexts[currentLanguage][3] << endl; // Iniciar sesión como cliente
-        cout << "<3> " << menuTexts[currentLanguage][8] << endl; // Cambiar idioma
-        cout << "<4> " << menuTexts[currentLanguage][4] << endl; // Salir
+        cout << "<1> Iniciar sesión como vendedor" << endl; // Iniciar sesión como vendedor
+        cout << "<2> Iniciar sesión como cliente" << endl; // Iniciar sesión como cliente
+        cout << "<3> Salir" << endl;
         ShowConsoleCursor(true); // Mostar cursor 
-        cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR; // Ingrese una opción
+        cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione una opción: " << RESET_COLOR; // Ingrese una opción
         cin >> opcion;
 
         // Verifica si la entrada falló
@@ -89,14 +86,7 @@ void generalMenu() {
             cin.clear(); // Limpia el estado de cin
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
-            Sleep(1500); // Espera 1.5 segundos
-            continue; // Continúa al siguiente ciclo del bucle do-while
-        }
-        else if (opcion > 4)
-        {
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Opción no válida
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor, ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
@@ -110,13 +100,10 @@ void generalMenu() {
             clientMenu(); // Menú de cliente
             break;
         case 3:
-            changeLanguage(currentLanguage); // Cambiar el idioma
-            break;
-        case 4:
             exit(0); // Salir del programa
             break;
         }
-    } while (opcion != 4); // Continuar hasta que el usuario elija salir
+    } while (opcion != 3); // Continuar hasta que el usuario elija salir
 }
 
 // Menús de vendedores
@@ -130,17 +117,16 @@ void sellerLoginMenu() {
     // Definir variables
     string usuario, contrasena;
     string usuarioArchivo, contrasenaArchivo;
-    string currentLanguage = "espanol"; // Idioma predeterminado
 
     // Crear el objeto ProductManager
     GestionarProveedores supplierManager;
 
     // Solicita al usuario que ingrese sus datos
-    cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][9] << " ===" << DOUBLE_SPACE;
-    cout << GRAY_COLOR << menuTexts[currentLanguage][10] << DOUBLE_SPACE; // Ingrese sus credenciales
-    cout << YELLOW_COLOR << menuTexts[currentLanguage][11] << RESET_COLOR; // Usuario
+    cout << CYAN_COLOR << "=== BIENVENIDO, VEDEDOR ===" << DOUBLE_SPACE;
+    cout << GRAY_COLOR << "Ingrese sus datos para iniciar sesión." << DOUBLE_SPACE; // Ingrese sus credenciales
+    cout << YELLOW_COLOR << "Usuario: " << RESET_COLOR; // Usuario
     cin >> usuario; // Lee el nombre de usuario
-    cout << YELLOW_COLOR << menuTexts[currentLanguage][12] << RESET_COLOR; // Contraseña
+    cout << YELLOW_COLOR << "Contraseña: " << RESET_COLOR; // Contraseña
 
     // Oculta la contraseña mientras se escribe
     char caracter;
@@ -168,7 +154,7 @@ void sellerLoginMenu() {
 
     // Verifica si el archivo se abrió correctamente
     if (!archivo.is_open()) {
-        cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][404] << endl; // Error al abrir el archivo
+        cout << DOUBLE_SPACE << MAGENTA_COLOR << "Error al abrir el archivo." << endl; // Error al abrir el archivo
         return;
     }
 
@@ -190,7 +176,7 @@ void sellerLoginMenu() {
     }
     else {
         ShowConsoleCursor(false); // Oculta el cursor
-        cout << DOUBLE_SPACE << RED_COLOR << menuTexts[currentLanguage][13] << endl; // Usuario o contraseña incorrectos
+        cout << DOUBLE_SPACE << RED_COLOR << "Usuario o contraseña incorrectos. Por favor, inténtelo de nuevo." << endl; // Usuario o contraseña incorrectos
         Sleep(1500); // Espera 1.5 segundo
         system("cls"); // Limpia la consola
         ShowConsoleCursor(true); // Muestra el cursor
@@ -206,36 +192,28 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
     GESTION_PRODUCTOS productManager; // Crear el objeto GESTION_PRODUCTOS
 
     int opcion; // Opción elegida por el usuario
-    string currentLanguage = "espanol"; // Idioma predeterminado
 
     // Bucle para mostrar el menú y obtener la opción del usuario
     do {
 
         system("cls"); // Limpia la consola
 
-        cout << CYAN_COLOR << "¡" << menuTexts[currentLanguage][14] << usuario << menuTexts[currentLanguage][15] << ":)" << DOUBLE_SPACE << RESET_COLOR; // Bienvenido
-        cout << "<1> " << menuTexts[currentLanguage][16] << endl; // Gestión de productos
-        cout << "<2> " << menuTexts[currentLanguage][17] << endl; // Gestión de inventario
-        cout << "<3> " << menuTexts[currentLanguage][18] << endl; // Gestión de proveedores
-        cout << "<4> " << menuTexts[currentLanguage][19] << endl; // Gestión de pedidos
-        cout << "<5> " << menuTexts[currentLanguage][20] << endl; // Gestión de clientes
-        cout << "<6> " << menuTexts[currentLanguage][4]; // Salir
+        cout << CYAN_COLOR << "¡Bienvenido, " << usuario << "! " << ":)" << DOUBLE_SPACE << RESET_COLOR; // Bienvenido
+        cout << "<1> " << "Gestionar productos" << endl; // Gestión de productos
+        cout << "<2> " << "Gestionar inventario" << endl; // Gestión de inventario
+        cout << "<3> " << "Gestionar proveedores" << endl; // Gestión de proveedores
+        cout << "<4> " << "Gestionar pedidos" << endl; // Gestión de pedidos
+        cout << "<5> " << "Gestionar clientes" << endl; // Gestión de clientes
+        cout << "<6> " << "Salir"; // Salir
         ShowConsoleCursor(true); // Muestra el cursor
-        cout << DOUBLE_SPACE << YELLOW_COLOR << menuTexts[currentLanguage][5] << RESET_COLOR; cin >> opcion; // Ingrese una opción
+        cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione una opcíón: " << RESET_COLOR; cin >> opcion; // Ingrese una opción
 
         // Verifica si la entrada falló
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
-            Sleep(1500); // Espera 1.5 segundos
-            continue; // Continúa al siguiente ciclo del bucle do-while
-        }
-        else if (opcion > 6)
-        {
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Opción no válida
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
@@ -273,16 +251,15 @@ void clientRegisterMenu() {
 
     // Definir variables
     string input;
-    string currentLanguage = "espanol"; // Idioma predeterminado
 
     system("cls"); // Limpia la consola
 
-    cout << CYAN_COLOR << "=== " << menuTexts[currentLanguage][21] << " ===" << DOUBLE_SPACE; // Registro de comprador
-    cout << GRAY_COLOR << menuTexts[currentLanguage][22] << DOUBLE_SPACE; // Ingrese sus datos
+    cout << CYAN_COLOR << "=== BIENVENIDO, CLIENTE ===" << DOUBLE_SPACE; // Registro de comprador
+    cout << GRAY_COLOR << "Por favor, complete el siguiente formulario para registrarse" << DOUBLE_SPACE; // Ingrese sus datos
     cin.ignore(); // Limpia el buffer del teclado
 
     // Solicitar al usuario que ingrese un nombre
-    cout << YELLOW_COLOR << menuTexts[currentLanguage][23] << RESET_COLOR; // Nombre
+    cout << YELLOW_COLOR << "Nombre: " << RESET_COLOR; // Nombre
     string input_nombre;
     getline(cin, input_nombre);
 
@@ -306,7 +283,7 @@ void clientRegisterMenu() {
     comprador.setNombre(primer_nombre);
 
     // Solicitar al usuario que ingrese un apellido
-    cout << YELLOW_COLOR << menuTexts[currentLanguage][24] << RESET_COLOR; // Apellido
+    cout << YELLOW_COLOR << "Apellido: " << RESET_COLOR; // Apellido
     string input_apellido;
     getline(cin, input_apellido);
 
@@ -334,19 +311,19 @@ void clientRegisterMenu() {
 
     do {
         // Solicitar al usuario que ingrese un correo electrónico
-        cout << YELLOW_COLOR << menuTexts[currentLanguage][25] << RESET_COLOR; // Correo electrónico
+        cout << YELLOW_COLOR << "Correo electrónico" << RESET_COLOR; // Correo electrónico
         getline(cin, input_correo);
 
         // Verificar si la dirección de correo electrónico cumple con la expresión regular
         if (!regex_match(input_correo, correoRegex)) {
             // La dirección de correo electrónico no es válida
-            cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][34] << DOUBLE_SPACE;
+            cout << endl << MAGENTA_COLOR << "Dirección de correo electrónico no válida." << DOUBLE_SPACE;
         }
     } while (!regex_match(input_correo, correoRegex));
     comprador.setCorreoElectronico(input_correo);
 
     // Solicitar al usuario que ingrese una contraseña
-    cout << YELLOW_COLOR << menuTexts[currentLanguage][12] << RESET_COLOR; // Contraseña
+    cout << YELLOW_COLOR << "Contraseña: " << RESET_COLOR; // Contraseña
     string input_contrasenia;
     getline(cin, input_contrasenia);
     comprador.setContrasenia(input_contrasenia);
@@ -354,13 +331,13 @@ void clientRegisterMenu() {
     // Validar que se haya ingresado una contraseña
     while (input_contrasenia.empty()) {
         cout << endl << MAGENTA_COLOR << "Debe ingresar una contraseña. Por favor, inténtelo de nuevo." << RESET_COLOR << endl;
-        cout << YELLOW_COLOR << menuTexts[currentLanguage][12] << RESET_COLOR; // Contraseña
+        cout << YELLOW_COLOR << "Contraseña: " << RESET_COLOR; // Contraseña
         getline(cin, input_contrasenia);
         comprador.setContrasenia(input_contrasenia);
     }
 
     // Solicitar al usuario que confirme la contraseña
-    cout << YELLOW_COLOR << menuTexts[currentLanguage][26] << RESET_COLOR; // Confirmar Contraseña
+    cout << YELLOW_COLOR << "Confirmar contraseña: " << RESET_COLOR; // Confirmar Contraseña
     string input_confirmar_contrasenia;
     getline(cin, input_confirmar_contrasenia);
 
@@ -369,17 +346,17 @@ void clientRegisterMenu() {
         cout << MAGENTA_COLOR << endl << "Las contraseñas no coinciden. Por favor, inténtelo de nuevo." << RESET_COLOR << DOUBLE_SPACE;
 
         // Solicitar al usuario que ingrese la contraseña nuevamente
-        cout << YELLOW_COLOR << menuTexts[currentLanguage][12] << RESET_COLOR; // Contraseña
+        cout << YELLOW_COLOR << "Contraseña: " << RESET_COLOR; // Contraseña
         getline(cin, input_contrasenia);
         comprador.setContrasenia(input_contrasenia);
 
         // Solicitar al usuario que confirme la contraseña nuevamente
-        cout << YELLOW_COLOR << menuTexts[currentLanguage][26] << RESET_COLOR; // Confirmar Contraseña
+        cout << YELLOW_COLOR << "Confirmar contraseña: " << RESET_COLOR; // Confirmar Contraseña
         getline(cin, input_confirmar_contrasenia);
     }
 
     // Solicitar al usuario que ingrese la dirección
-    cout << YELLOW_COLOR << menuTexts[currentLanguage][28] << RESET_COLOR; // Dirección
+    cout << YELLOW_COLOR << "Dirección: " << RESET_COLOR; // Dirección
     string input_direccion;
     getline(cin, input_direccion);
     comprador.setDireccion(input_direccion);
@@ -387,11 +364,11 @@ void clientRegisterMenu() {
     string input_telefono;
     do {
         // Solicitar al usuario que ingrese el teléfono
-        cout << YELLOW_COLOR << menuTexts[currentLanguage][29] << RESET_COLOR; // Teléfono
+        cout << YELLOW_COLOR << "Teléfono: " << RESET_COLOR; // Teléfono
         getline(cin, input_telefono);
         // Verificar si la entrada es un número de 9 dígitos y no existe en el archivo
         if (input_telefono.length() != 9 || !all_of(input_telefono.begin(), input_telefono.end(), ::isdigit)) {
-            cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][30] << DOUBLE_SPACE; // Número de teléfono no válido
+            cout << endl << MAGENTA_COLOR << "El teléfono debe tener exactamente 9 dígitos. Intente de nuevo." << DOUBLE_SPACE; // Número de teléfono no válido
         }
         else if(clienteManager.numeroExistente(input_telefono))
 		{
@@ -403,7 +380,7 @@ void clientRegisterMenu() {
     string input_nacimiento;
     do {
         // Solicitar al usuario que ingrese la fecha de nacimiento
-        cout << YELLOW_COLOR << menuTexts[currentLanguage][31] << RESET_COLOR; // Fecha de nacimiento
+        cout << YELLOW_COLOR << "Fecha de nacimiento: (DD/MM/AAAA): " << RESET_COLOR; // Fecha de nacimiento
         getline(cin, input_nacimiento);
 
         // Definir un stringstream para separar la entrada en día, mes y año
@@ -414,7 +391,7 @@ void clientRegisterMenu() {
 
         // Validar el formato de la fecha y los rangos de día, mes y año
         if (iss.fail() || slash1 != '/' || slash2 != '/' || dia < 1 || dia > 31 || mes < 1 || mes > 12 || anio < 1944 || anio > 2006) {
-            cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][35] << DOUBLE_SPACE; // Fecha de nacimiento no válida
+            cout << endl << MAGENTA_COLOR << "Fecha de nacimiento no válida." << DOUBLE_SPACE; // Fecha de nacimiento no válida
         }
         else {
             // La fecha de nacimiento es válida
@@ -428,10 +405,10 @@ void clientRegisterMenu() {
     string input_genero;
     do {
         // Solicitar al usuario que ingrese el género
-        cout << YELLOW_COLOR << menuTexts[currentLanguage][32] << RESET_COLOR; // Sexo
+        cout << YELLOW_COLOR << "Sexo (M, F): " << RESET_COLOR; // Sexo
         getline(cin, input_genero);
         if (input_genero != "M" && input_genero != "F") {
-            cout << endl << MAGENTA_COLOR << menuTexts[currentLanguage][33] << DOUBLE_SPACE; // Género no válido
+            cout << endl << MAGENTA_COLOR << "Ingrese un sexo válido (M, F). Intente de nuevo." << DOUBLE_SPACE; // Género no válido
         }
     } while (input_genero != "M" && input_genero != "F");
     comprador.setGenero(input_genero);
@@ -546,7 +523,7 @@ void clientMenu() {
             cin.clear(); // Limpia el estado de cin
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
@@ -597,7 +574,7 @@ void homeClientMenu() {
             cin.clear(); // Limpia el estado de cin
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
@@ -689,7 +666,7 @@ void productCatalogMenu() {
             cin.clear(); // Limpia el estado de cin
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
@@ -753,7 +730,7 @@ void filtrarProductosPorCategoria() {
             cin.clear(); // Limpia el estado de cin
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
@@ -816,7 +793,7 @@ void productManagementMenu() {
             cin.clear(); // Limpia el estado de cin
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
@@ -901,7 +878,7 @@ void inventoryManagementMenu() {
             cin.clear(); // Limpia el estado de cin
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
@@ -1239,7 +1216,7 @@ void orderManagementMenu() {
             cin.clear(); // Limpia el estado de cin
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
-            std::cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
+            std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
@@ -1320,7 +1297,7 @@ void customerManagementMenu() {
             cin.clear(); // Limpia el estado de cin
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
@@ -1404,7 +1381,7 @@ void sortProductsPrice() {
 			cin.clear(); // Limpia el estado de cin
 			cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
 			ShowConsoleCursor(false); // Oculta el cursor
-			cout << DOUBLE_SPACE << MAGENTA_COLOR << menuTexts[currentLanguage][6]; // Entrada no válida
+			cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
 			Sleep(1500); // Espera 1.5 segundos
 			continue; // Continúa al siguiente ciclo del bucle do-while
 		}
