@@ -11,11 +11,34 @@ using namespace std;
 class GESTION_CLIENTE {
 public:
 
-    // Método para mostrar la lista de clientes
+    // Método para registrar un nuevo cliente
     void displayCustomerList() {
         ifstream file("client_registration.txt");
         if (file.is_open()) {
             string line;
+
+            // Imprimir encabezados de la tabla
+            cout << CYAN_COLOR
+                << left << setw(15) << "Nombre"
+                << setw(20) << "Apellido"
+                << setw(35) << "Correo"
+                << setw(20) << "Dirección"
+                << setw(15) << "Teléfono"
+                << setw(25) << "Fecha de Nacimiento"
+                << setw(10) << "Género"
+                << RESET_COLOR << endl;
+
+            // Imprimir separador de columnas
+            cout << YELLOW_COLOR
+                << setw(15) << setfill('-') << ""
+                << setw(20) << ""
+                << setw(35) << ""
+                << setw(20) << ""
+                << setw(15) << ""
+                << setw(25) << ""
+                << setw(10) << ""
+                << setfill(' ') << RESET_COLOR << endl;
+
             while (getline(file, line)) {
                 istringstream iss(line);
                 string nombre, apellido, correo, contrasenia, direccion, telefono, fechaNacimiento, genero;
@@ -30,18 +53,20 @@ public:
                 getline(iss, fechaNacimiento, ',');
                 getline(iss, genero, ',');
 
-                // Mostrar la información del cliente
-                cout << BLUE_COLOR << "Nombre: " << RESET_COLOR << nombre << " " << apellido << endl;
-                cout << BLUE_COLOR << "Correo: " << RESET_COLOR << correo << endl;
-                cout << BLUE_COLOR << "Dirección: " << RESET_COLOR << direccion << endl;
-                cout << BLUE_COLOR << "Teléfono: " << RESET_COLOR << telefono << endl;
-                cout << BLUE_COLOR << "Fecha de nacimiento: " << RESET_COLOR << fechaNacimiento << endl;
-                cout << BLUE_COLOR << "Género: " << RESET_COLOR << genero << DOUBLE_SPACE;
-                cout << YELLOW_COLOR << "-------------------" << DOUBLE_SPACE;
+                // Mostrar la información del cliente en una sola línea
+                cout << left
+                    << setw(15) << nombre
+                    << setw(20) << apellido
+                    << setw(35) << correo
+                    << setw(20) << direccion
+                    << setw(15) << telefono
+                    << setw(25) << fechaNacimiento
+                    << setw(10) << genero << DOUBLE_SPACE;
+
             }
             file.close();
             ShowConsoleCursor(false);
-            cout << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
+            cout << GRAY_COLOR << "\nPresiona cualquier tecla para continuar..." << RESET_COLOR;
             _getch();
         }
         else {

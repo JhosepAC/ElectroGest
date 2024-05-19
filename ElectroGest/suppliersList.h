@@ -120,20 +120,23 @@ void ListaProveedores::agregarProveedor(Proveedor* proveedor) {
 
 void ListaProveedores::mostrarProveedores() const {
     Nodo* actual = primero;
+    int indice = 1;  // Variable para el índice de los proveedores
 
     // Imprimir encabezados de la tabla
-    cout << CYAN_COLOR << left << setw(25) << "Nombre" << setw(40) << "Dirección" << setw(15) << "Teléfono" << endl;
+    cout << CYAN_COLOR << left << setw(5) << "No." << setw(25) << "Nombre" << setw(20) << "Dirección" << setw(15) << "Teléfono" << endl;
 
     // Imprimir separador de columnas
-    cout << GRAY_COLOR << setw(25) << setfill('-') << RESET_COLOR << "" << setw(40) << "" << setw(15) << "" << setfill(' ') << endl;
+    cout << GRAY_COLOR << setw(5) << setfill('-') << "" << setw(25) << "" << setw(20) << "" << setw(15) << "" << setfill(' ') << RESET_COLOR << endl;
 
     // Iterar sobre la lista de proveedores e imprimir cada uno en formato de tabla
     while (actual != nullptr) {
         Proveedor* proveedor = actual->getProveedor();
-        cout << left << setw(25) << proveedor->getNombre()
-            << setw(40) << proveedor->getDireccion()
+        cout << left << setw(5) << indice
+            << setw(25) << proveedor->getNombre()
+            << setw(20) << proveedor->getDireccion()
             << setw(15) << proveedor->getTelefono() << endl;
         actual = actual->getSiguiente();
+        indice++;  // Incrementar el índice
     }
 }
 

@@ -31,12 +31,12 @@ void sellerLoginMenu(); // Menú de inicio de sesión para vendedor
 void sellerMenu(string usuario, GestionarProveedores& supplierManager); // Menú de vendedor
 
 // Cliente
-void clientRegisterMenu(); // Menú de registro para comprador
-void clientLoginMenu(); // Menú de inicio de sesión para comprador
-void clientMenu(); // Menú de comprador
-void homeClientMenu(); // Menú de inicio para comprador
+void clientRegisterMenu(); // Menú de registro para cliente
+void clientLoginMenu(); // Menú de inicio de sesión para cliente
+void clientMenu(); // Menú de cliente
+void homeClientMenu(); // Menú de inicio para cliente
 void savePassword(const string& email, const string& password); // Guardar la contraseña cifrada
-void saveClientInfo(const CLIENTE& client); // Guardar la información del comprador en un archivo   
+void saveClientInfo(const CLIENTE& client); // Guardar la información del cliente en un archivo   
 
 // Productos
 void productCatalogMenu(); // Menú de catálogo de productos
@@ -71,14 +71,14 @@ void generalMenu() {
 
         cout << CYAN_COLOR;
         cout << "=====================================" << endl;
-        cout << "     ¡Bienvenido a ElectroGest!      " << endl; // Sistema de gestión de ventas
+        cout << "     ¡Bienvenido a ElectroGest!      " << endl;
         cout << "=====================================" << endl;
         cout << DOUBLE_SPACE << RESET_COLOR;
-        cout << "<1> Iniciar sesión como vendedor" << endl; // Iniciar sesión como vendedor
-        cout << "<2> Iniciar sesión como cliente" << endl; // Iniciar sesión como cliente
+        cout << "<1> Iniciar sesión como vendedor" << endl;
+        cout << "<2> Iniciar sesión como cliente" << endl;
         cout << "<3> Salir" << endl;
-        ShowConsoleCursor(true); // Mostar cursor 
-        cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione una opción: " << RESET_COLOR; // Ingrese una opción
+        ShowConsoleCursor(true); // Mostar cursor
+        cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opción: " << RESET_COLOR; // Ingrese una opción
         cin >> opcion;
 
         // Verifica si la entrada falló
@@ -122,11 +122,11 @@ void sellerLoginMenu() {
     GestionarProveedores supplierManager;
 
     // Solicita al usuario que ingrese sus datos
-    cout << CYAN_COLOR << "=== BIENVENIDO, VEDEDOR ===" << DOUBLE_SPACE;
+    cout << CYAN_COLOR << "=== ¡BIENVENIDO, VENDEDOR! ===" << DOUBLE_SPACE;
     cout << GRAY_COLOR << "Ingrese sus datos para iniciar sesión." << DOUBLE_SPACE; // Ingrese sus credenciales
-    cout << YELLOW_COLOR << "Usuario: " << RESET_COLOR; // Usuario
+    cout << YELLOW_COLOR << "Usuario: " << RESET_COLOR;
     cin >> usuario; // Lee el nombre de usuario
-    cout << YELLOW_COLOR << "Contraseña: " << RESET_COLOR; // Contraseña
+    cout << YELLOW_COLOR << "Contraseña: " << RESET_COLOR;
 
     // Oculta la contraseña mientras se escribe
     char caracter;
@@ -148,7 +148,7 @@ void sellerLoginMenu() {
         }
     }
 
-    ifstream archivo("seller_data.txt"); // Abre el archivo
+    ifstream archivo("seller_data.txt"); // Abre el archivo de vendedores
 
     bool encontrado = false;
 
@@ -177,7 +177,7 @@ void sellerLoginMenu() {
     else {
         ShowConsoleCursor(false); // Oculta el cursor
         cout << DOUBLE_SPACE << RED_COLOR << "Usuario o contraseña incorrectos. Por favor, inténtelo de nuevo." << endl; // Usuario o contraseña incorrectos
-        Sleep(1500); // Espera 1.5 segundo
+        Sleep(1500); // Espera 1.5 segundos
         system("cls"); // Limpia la consola
         ShowConsoleCursor(true); // Muestra el cursor
         sellerLoginMenu(); // Intenta nuevamente
@@ -193,12 +193,17 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
 
     int opcion; // Opción elegida por el usuario
 
+    string usuarioTP = usuario; // Nombre de usuario
+    transform(usuarioTP.begin(), usuarioTP.end(), usuarioTP.begin(), [](unsigned char c) {
+        return std::toupper(c);
+    });
+
     // Bucle para mostrar el menú y obtener la opción del usuario
     do {
 
         system("cls"); // Limpia la consola
 
-        cout << CYAN_COLOR << "¡Bienvenido, " << usuario << "! " << ":)" << DOUBLE_SPACE << RESET_COLOR; // Bienvenido
+        cout << CYAN_COLOR << "=== ¡BIENVENIDO, " << usuarioTP << "! " << "===" << DOUBLE_SPACE << RESET_COLOR; // Bienvenido
         cout << "<1> " << "Gestionar productos" << endl; // Gestión de productos
         cout << "<2> " << "Gestionar inventario" << endl; // Gestión de inventario
         cout << "<3> " << "Gestionar proveedores" << endl; // Gestión de proveedores
@@ -206,7 +211,7 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
         cout << "<5> " << "Gestionar clientes" << endl; // Gestión de clientes
         cout << "<6> " << "Salir"; // Salir
         ShowConsoleCursor(true); // Muestra el cursor
-        cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione una opcíón: " << RESET_COLOR; cin >> opcion; // Ingrese una opción
+        cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opcíón: " << RESET_COLOR; cin >> opcion; // Ingrese una opción
 
         // Verifica si la entrada falló
         if (cin.fail()) { // Verifica si la entrada falló
@@ -243,10 +248,10 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
 
 // Menús de clientes 
 
-// Función para mostrar el menú de registro para comprador
+// Función para mostrar el menú de registro para cliente
 void clientRegisterMenu() {
     // Crear un objeto CLIENTE
-    CLIENTE comprador;
+    CLIENTE cliente;
     GESTION_CLIENTE clienteManager;
 
     // Definir variables
@@ -254,7 +259,7 @@ void clientRegisterMenu() {
 
     system("cls"); // Limpia la consola
 
-    cout << CYAN_COLOR << "=== BIENVENIDO, CLIENTE ===" << DOUBLE_SPACE; // Registro de comprador
+    cout << CYAN_COLOR << "=== BIENVENIDO, CLIENTE ===" << DOUBLE_SPACE; // Registro de cliente
     cout << GRAY_COLOR << "Por favor, complete el siguiente formulario para registrarse" << DOUBLE_SPACE; // Ingrese sus datos
     cin.ignore(); // Limpia el buffer del teclado
 
@@ -280,7 +285,7 @@ void clientRegisterMenu() {
         primer_nombre = input_nombre;
     }
 
-    comprador.setNombre(primer_nombre);
+    cliente.setNombre(primer_nombre);
 
     // Solicitar al usuario que ingrese un apellido
     cout << YELLOW_COLOR << "Apellido: " << RESET_COLOR; // Apellido
@@ -304,7 +309,7 @@ void clientRegisterMenu() {
         primer_apellido = input_apellido;
     }
 
-    comprador.setApellido(primer_apellido);
+    cliente.setApellido(primer_apellido);
 
     string input_correo;
     regex correoRegex(R"([a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook)\.(com|net|org|edu))");
@@ -320,20 +325,20 @@ void clientRegisterMenu() {
             cout << endl << MAGENTA_COLOR << "Dirección de correo electrónico no válida." << DOUBLE_SPACE;
         }
     } while (!regex_match(input_correo, correoRegex));
-    comprador.setCorreoElectronico(input_correo);
+    cliente.setCorreoElectronico(input_correo);
 
     // Solicitar al usuario que ingrese una contraseña
     cout << YELLOW_COLOR << "Contraseña: " << RESET_COLOR; // Contraseña
     string input_contrasenia;
     getline(cin, input_contrasenia);
-    comprador.setContrasenia(input_contrasenia);
+    cliente.setContrasenia(input_contrasenia);
 
     // Validar que se haya ingresado una contraseña
     while (input_contrasenia.empty()) {
         cout << endl << MAGENTA_COLOR << "Debe ingresar una contraseña. Por favor, inténtelo de nuevo." << RESET_COLOR << endl;
         cout << YELLOW_COLOR << "Contraseña: " << RESET_COLOR; // Contraseña
         getline(cin, input_contrasenia);
-        comprador.setContrasenia(input_contrasenia);
+        cliente.setContrasenia(input_contrasenia);
     }
 
     // Solicitar al usuario que confirme la contraseña
@@ -348,7 +353,7 @@ void clientRegisterMenu() {
         // Solicitar al usuario que ingrese la contraseña nuevamente
         cout << YELLOW_COLOR << "Contraseña: " << RESET_COLOR; // Contraseña
         getline(cin, input_contrasenia);
-        comprador.setContrasenia(input_contrasenia);
+        cliente.setContrasenia(input_contrasenia);
 
         // Solicitar al usuario que confirme la contraseña nuevamente
         cout << YELLOW_COLOR << "Confirmar contraseña: " << RESET_COLOR; // Confirmar Contraseña
@@ -359,7 +364,7 @@ void clientRegisterMenu() {
     cout << YELLOW_COLOR << "Dirección: " << RESET_COLOR; // Dirección
     string input_direccion;
     getline(cin, input_direccion);
-    comprador.setDireccion(input_direccion);
+    cliente.setDireccion(input_direccion);
 
     string input_telefono;
     do {
@@ -375,7 +380,7 @@ void clientRegisterMenu() {
 			cout << endl << MAGENTA_COLOR << "Número de teléfono ya registrado." << DOUBLE_SPACE; // Número de teléfono ya registrado
 		}
     } while (input_telefono.length() != 9 || !all_of(input_telefono.begin(), input_telefono.end(), ::isdigit) || clienteManager.numeroExistente(input_telefono));
-    comprador.setTelefono(input_telefono);
+    cliente.setTelefono(input_telefono);
 
     string input_nacimiento;
     do {
@@ -395,9 +400,9 @@ void clientRegisterMenu() {
         }
         else {
             // La fecha de nacimiento es válida
-            // Asignar la fecha de nacimiento al comprador
+            // Asignar la fecha de nacimiento al cliente
             string fechaNacimiento = to_string(dia) + "/" + to_string(mes) + "/" + to_string(anio);
-            comprador.setFechaNacimiento(fechaNacimiento);
+            cliente.setFechaNacimiento(fechaNacimiento);
             break;
         }
     } while (true); // Repetir hasta que se ingrese una fecha de nacimiento válida
@@ -411,10 +416,10 @@ void clientRegisterMenu() {
             cout << endl << MAGENTA_COLOR << "Ingrese un sexo válido (M, F). Intente de nuevo." << DOUBLE_SPACE; // Género no válido
         }
     } while (input_genero != "M" && input_genero != "F");
-    comprador.setGenero(input_genero);
+    cliente.setGenero(input_genero);
 
-    // Guardar la información del comprador en un archivo
-    saveClientInfo(comprador);
+    // Guardar la información del cliente en un archivo
+    saveClientInfo(cliente);
     savePassword(input_correo, input_contrasenia); // Guardar la contraseña cifrada
 
     ShowConsoleCursor(false); // Oculta el cursor
@@ -423,7 +428,7 @@ void clientRegisterMenu() {
     homeClientMenu(); // Muestra el menú del vendedor
 }
 
-// Función para mostrar el menú de inicio de sesión para comprador
+// Función para mostrar el menú de inicio de sesión para cliente
 void clientLoginMenu() {
 
     ShowConsoleCursor(true); // Muestra el cursor
@@ -431,17 +436,17 @@ void clientLoginMenu() {
     string email, password;
     bool loggedIn = false;
 
-    cout << CYAN_COLOR << "¡Bienvenido, comprador!" << DOUBLE_SPACE;
+    cout << CYAN_COLOR << "=== ¡BIENVENIDO, CLIENTE! ===" << DOUBLE_SPACE;
     cout << GRAY_COLOR << "Ingrese sus datos para iniciar sesión." << DOUBLE_SPACE;
 
     cout << YELLOW_COLOR << "Correo electrónico: " << RESET_COLOR;
-    cin.ignore();
+    cin >> ws; // Elimina los espacios en blanco iniciales  
     getline(cin, email);
     cout << YELLOW_COLOR << "Contraseña: " << RESET_COLOR;
 
     // Oculta la contraseña mientras se escribe
-    char caracter;
     password = "";
+    char caracter;
     while (true) {
         caracter = _getch(); // Lee un carácter sin mostrarlo
         if (caracter == 13) // 13 es el código ASCII para la tecla Enter
@@ -458,7 +463,7 @@ void clientLoginMenu() {
         }
     }
 
-    // Abrir el archivo de registro de compradores
+    // Abrir el archivo de registro de clientees
     ifstream file("passwords.txt");
     if (file.is_open()) {
         string line;
@@ -473,9 +478,9 @@ void clientLoginMenu() {
                 loggedIn = true;
                 ShowConsoleCursor(false);
                 cout << DOUBLE_SPACE << GREEN_COLOR << "Inicio de sesión exitoso." << DOUBLE_SPACE;
-                Sleep(2000);
+                Sleep(1500);
                 system("cls");
-                homeClientMenu(); // Mostrar el menú del comprador
+                homeClientMenu(); // Mostrar el menú del cliente
                 break;
             }
         }
@@ -492,25 +497,22 @@ void clientLoginMenu() {
     else {
         ShowConsoleCursor(false);
         cout << DOUBLE_SPACE << MAGENTA_COLOR << "Correo electrónico o contraseña incorrectos. Por favor, inténtelo de nuevo." << DOUBLE_SPACE;
-        Sleep(2000);
+        Sleep(1500);
         system("cls");
-        clientLoginMenu();
     }
 }
 
-// Función para mostrar el menú de comprador
+// Función para mostrar el menú de cliente
 void clientMenu() {
 
-    int opcion = 0;
-
-    string currentLanguage = "espanol"; // Idioma predeterminado
+    int opcion = 0; // Opción elegida por el usuario
 
     do
     {
         system("cls");
 
-        cout << CYAN_COLOR << "¡Bienvenido, comprador!" << DOUBLE_SPACE << RESET_COLOR;
-        cout << "<1> Registrarte" << endl;
+        cout << CYAN_COLOR << "=== ¡BIENVENIDO! ===" << DOUBLE_SPACE << RESET_COLOR;
+        cout << "<1> Crear una cuenta" << endl;
         cout << "<2> Iniciar sesión" << endl;
         cout << "<3> Salir";
         cout << DOUBLE_SPACE << YELLOW_COLOR;
@@ -532,11 +534,11 @@ void clientMenu() {
         {
         case 1:
             system("cls");
-            clientRegisterMenu();
+            clientRegisterMenu(); // Menú de registro para cliente
             break;
         case 2:
             system("cls");
-            clientLoginMenu();
+            clientLoginMenu(); // Menú de inicio de sesión para cliente
             break;
         case 3:
 			break;
@@ -545,21 +547,19 @@ void clientMenu() {
 
 }
 
-// Función para mostrar el menú de inicio para comprador
+// Función para mostrar el menú de inicio para cliente
 void homeClientMenu() {
-    ShowConsoleCursor(true);   
 
-	system("cls");
     SISTEMA_PEDIDOS sistemaPedidos;
+	
+    int opcion = 0;
 
-    sistemaPedidos.cargarPedidosPendientes();
-    sistemaPedidos.cargarPedidosProcesados();
-
-	int opcion = 0;
-    string currentLanguage = "espanol"; // Idioma predeterminado
+    sistemaPedidos.cargarPedidosProcesados(); // Cargar los pedidos procesados
+    sistemaPedidos.cargarPedidosPendientes(); // Cargar los pedidos pendientes
 
     do {
-        cout << CYAN_COLOR << "¡Bienvenido, comprador!" << DOUBLE_SPACE << RESET_COLOR;
+        system("cls");
+        cout << CYAN_COLOR << "=== ¡BIENVENIDO, CLIENTE! ===" << DOUBLE_SPACE << RESET_COLOR;
         cout << "<1> Ver cátalogo de productos" << endl;
         cout << "<2> Realizar pedido" << endl;
         cout << "<3> Ver estado de pedidos" << endl;
@@ -591,10 +591,6 @@ void homeClientMenu() {
         case 3:
             system("cls");
             sistemaPedidos.mostrarHistorialPedidos();
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
-            _getch();
-            system("cls");
             break;
         case 4:
             break;
@@ -602,7 +598,7 @@ void homeClientMenu() {
     } while (opcion != 4);
 }
 
-// Función para guardar la información del comprador en el archivo
+// Función para guardar la información del cliente en el archivo
 void saveClientInfo(const CLIENTE& client) {
     ofstream file("client_registration.txt", ios::app); // Abre el archivo en modo append
     if (file.is_open()) {
@@ -645,14 +641,12 @@ void productCatalogMenu() {
 
     GESTION_PRODUCTOS productManager;
 
-    string currentLanguage = "espanol"; // Idioma predeterminado
-
     do
     {
 
         system("cls");
 
-        cout << CYAN_COLOR << "=== Cátalogo de productos ===" << RESET_COLOR << DOUBLE_SPACE;
+        cout << CYAN_COLOR << "=== CÁTALOGO DE PRODUCTOS ===" << RESET_COLOR << DOUBLE_SPACE;
         cout << "<1> Ver productos" << endl;
         cout << "<2> Filtrar productos" << endl;
         cout << "<3> Buscar productos por nombre" << endl;
@@ -674,6 +668,13 @@ void productCatalogMenu() {
         switch (opcion)
         {
         case 1: 
+
+            // Verifica si el catálogo está vacío
+            if (productManager.getCantidadProductos() == 0) {
+                cout << DOUBLE_SPACE << MAGENTA_COLOR << "No hay productos en el catálogo." << endl; // No hay productos en el catálogo 
+                break;
+            }
+
             system("cls");
             productManager.mostrarTodosLosProductos();
             ShowConsoleCursor(false); // Oculta el cursor
@@ -691,10 +692,6 @@ void productCatalogMenu() {
             getline(cin, nombre);
             cout << endl;
             productManager.buscarProductoPorNombre(nombre);
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
-            _getch();
-            system("cls");  
 			break;
         case 4:
             break;
@@ -710,13 +707,11 @@ void filtrarProductosPorCategoria() {
 
     GESTION_PRODUCTOS productManager;
 
-    string currentLanguage = "espanol"; // Idioma predeterminado
-
     do {
 
         system("cls");
 
-        cout << CYAN_COLOR << "=== Filtrar productos por categoría ===" << RESET_COLOR << DOUBLE_SPACE;
+        cout << CYAN_COLOR << "=== FILTRAR PRODUCTOS POR CATEGORÍA ===" << RESET_COLOR << DOUBLE_SPACE;
         cout << "<1> Filtrar por precio" << endl;
         cout << "<2> Filtrar por color" << endl;
         cout << "<3> Filtrar por marca" << endl;
@@ -738,27 +733,15 @@ void filtrarProductosPorCategoria() {
         switch (opcion) {
         case 1:
             system("cls");
-            productManager.filtrarPorPrecio(productManager);
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
-            _getch();
-            system("cls");  
+            productManager.filtrarPorPrecio(productManager); 
             break;
         case 2:
             system("cls");
             productManager.filtrarPorColor(productManager);
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
-            _getch();
-            system("cls");
             break;
         case 3:
             system("cls");
             productManager.filtrarPorMarca(productManager);
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
-            _getch();
-            system("cls");
             break;
         case 4:
             break;
@@ -769,15 +752,14 @@ void filtrarProductosPorCategoria() {
 // Función para mostrar el menú y manejar la interacción con el usuario
 void productManagementMenu() {
     GESTION_PRODUCTOS manager; // Crear el gestor de productos con el archivo
-    int opcion;
-    int opcion_ordenar;
-    string currentLanguage = "espanol"; // Idioma predeterminado
+    int opcion; // Opción elegida por el usuario
+    int opcion_ordenar; // Opción para ordenar los productos
 
     do{
 
         system("cls"); // Limpiar la pantalla en sistemas Windows
 
-        cout << CYAN_COLOR << "=== Gestión de productos ===" << DOUBLE_SPACE << RESET_COLOR;
+        cout << CYAN_COLOR << "=== GESTIÓN DE PRODUCTOS ===" << DOUBLE_SPACE << RESET_COLOR;
         cout << "<1> Catálogo de productos" << endl;
         cout << "<2> Agregar nuevo producto" << endl;
         cout << "<3> Actualizar producto" << endl;
@@ -800,9 +782,14 @@ void productManagementMenu() {
 
         switch (opcion) {
         case 1:
-            system("cls");
-            manager.mostrarTodosLosProductos();
+            manager.mostrarTodosLosProductos(); // Muestra todos los productos
 
+            // Verifica si el catálogo está vacío
+            if (manager.getCantidadProductos() == 0) {
+                break;
+            }
+
+            // Pregunta al usuario si desea ordenar los productos por precio
             do
             {
 
@@ -829,19 +816,19 @@ void productManagementMenu() {
             break;
         case 2:
             system("cls");
-            addNewProduct(manager);
+            addNewProduct(manager); // Agregar un nuevo producto
             break;
         case 3:
             system("cls");
-            updateProductProcedure(manager);
+            updateProductProcedure(manager); // Actualizar un producto
             break;
         case 4:
             system("cls");
-            removeProductProcedure(manager);
+            removeProductProcedure(manager); // Eliminar un producto
             break;
         case 5:
             system("cls");
-            searchProduct(manager);
+            searchProduct(manager); // Buscar un producto
             break;
         case 6:
             break;
@@ -859,7 +846,8 @@ void inventoryManagementMenu() {
     GESTION_PRODUCTOS gestorProductos;
     GESTION_INVENTARIO gestionInventarios;
 
-    string currentLanguage = "espanol"; // Idioma predeterminado
+    gestionInventarios.cargarInventarioDesdeArchivo(); // Cargar el inventario desde el archivo al iniciar el programa
+    gestionInventarios.cargarMovimientosDesdeArchivo(); // Cargar el historial de movimientos desde el archivo al iniciar el programa
 
     do {
         system("cls");
@@ -1069,42 +1057,39 @@ void supplierManagementMenu() {
     } while (opcion != 6);
 }
 
-// Función para realizar un pedido
 void orderingMenu() {
     GESTION_INVENTARIO inventario;
-    CARRO_COMPRAS carrito; // Crear un objeto de la clase CarritoCompra
+    CARRO_COMPRAS carrito;
     SISTEMA_PEDIDOS sistemaPedidos;
 
-    sistemaPedidos.cargarPedidosPendientes();
-    sistemaPedidos.cargarPedidosProcesados();
+    inventario.cargarInventarioDesdeArchivo(); // Cargar el inventario desde el archivo al iniciar el programa
+    sistemaPedidos.cargarPedidosPendientes(); // Cargar pedidos pendientes desde el archivo
 
     int opcion;
-
     bool running = true;
-
     std::string codigoProducto;
     int cantidad;
 
     while (running) {
         system("cls");
         std::cout << CYAN_COLOR << "=== REALIZAR PEDIDO ===" << RESET_COLOR << DOUBLE_SPACE;
-        std::cout << "<1> Agregar Producto al Carrito\n";
-        std::cout << "<2> Ver Carrito\n";
-        std::cout << "<3> Confirmar Pedido\n";
-        std::cout << "<4> Cancelar Pedido\n";
+        std::cout << "<1> Agregar Producto al Carrito" << std::endl;
+        std::cout << "<2> Ver Carrito" << std::endl;
+        std::cout << "<3> Confirmar Pedido" << std::endl;
+        std::cout << "<4> Cancelar Pedido" << std::endl;
         std::cout << "<5> Salir";
         ShowConsoleCursor(true); // Muestra el cursor
         std::cout << YELLOW_COLOR << DOUBLE_SPACE << "Seleccione una opción: " << RESET_COLOR;
         std::cin >> opcion;
 
-        if (cin.fail()) { // Verifica si la entrada falló
-            cin.clear(); // Limpia el estado de cin
+        if (std::cin.fail()) {
+            std::cin.clear();
             cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false);
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número." << endl;
+            std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número." << std::endl;
             Sleep(1000);
             ShowConsoleCursor(true);
-            continue; // Continúa al siguiente ciclo del bucle do-while
+            continue;
         }
 
         switch (opcion) {
@@ -1113,7 +1098,6 @@ void orderingMenu() {
             std::cout << YELLOW_COLOR << "Ingrese el código del producto a agregar: " << RESET_COLOR;
             std::cin >> codigoProducto;
 
-            // Verificar que el producto exista
             if (!inventario.existeProducto(codigoProducto)) {
                 ShowConsoleCursor(false);
                 std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El producto no existe en el inventario." << RESET_COLOR;
@@ -1122,10 +1106,8 @@ void orderingMenu() {
             }
 
             std::cout << YELLOW_COLOR << "Ingrese la cantidad a agregar: " << RESET_COLOR;
-            int cantidad;
             while (!(std::cin >> cantidad) || cantidad <= 0) {
                 if (std::cin.fail()) {
-                    // Limpiar el estado de error y descartar la entrada inválida
                     std::cin.clear();
                     cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
                     std::cout << MAGENTA_COLOR << "Debe ingresar un número válido para la cantidad." << RESET_COLOR << DOUBLE_SPACE;
@@ -1136,9 +1118,7 @@ void orderingMenu() {
                 std::cout << YELLOW_COLOR << "Ingrese nuevamente la cantidad a agregar: " << RESET_COLOR;
             }
 
-            // Verificar si hay suficiente stock antes de agregar al carrito
             if (inventario.verificarStock(codigoProducto, cantidad)) {
-                // Aquí puedes implementar la lógica para agregar al carrito
                 carrito.agregarPedido(PEDIDO(codigoProducto, cantidad));
                 ShowConsoleCursor(false);
                 std::cout << DOUBLE_SPACE << GREEN_COLOR << "Producto agregado al carrito correctamente." << RESET_COLOR;
@@ -1150,37 +1130,52 @@ void orderingMenu() {
                 Sleep(1500);
             }
             break;
+
         case 2:
-            carrito.verCarrito(); // Ver el contenido del carrito
+            carrito.verCarrito();
             break;
+
         case 3:
             if (!carrito.isEmpty()) {
-                sistemaPedidos.guardarPedidos(carrito.getPedidos());
-                carrito.limpiarCarrito(); // Limpiar el carrito después de confirmar el pedido
+                // Agregar todos los pedidos del carrito a los pedidos pendientes
+                const std::vector<PEDIDO>& pedidosCarrito = carrito.obtenerPedidos();
+                for (const auto& pedido : pedidosCarrito) {
+                    sistemaPedidos.agregarPedidoPendiente(pedido);
+                }
+                sistemaPedidos.guardarPedidosPendientes(); // Guardar los pedidos pendientes en el archivo
+                carrito.limpiarCarrito();
                 ShowConsoleCursor(false);
-                std::cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido confirmado correctamente.";
+                std::cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido confirmado correctamente." << RESET_COLOR;
                 Sleep(1500);
+
+                // Cargar los pedidos pendientes desde el archivo nuevamente
+                sistemaPedidos.cargarPedidosPendientes();
+
+                orderManagementMenu(); // Mostrar el menú de gestión de pedidos
             }
             else {
                 ShowConsoleCursor(false);
-                std::cout << endl << MAGENTA_COLOR << "El carrito está vacío. No se puede confirmar el pedido.";
+                std::cout << std::endl << MAGENTA_COLOR << "El carrito está vacío. No se puede confirmar el pedido." << RESET_COLOR;
                 Sleep(1500);
             }
             break;
+
         case 4:
             if (!carrito.isEmpty()) {
                 ShowConsoleCursor(false);
-                std::cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido cancelado. El carrito ha sido vaciado.";
-                carrito.limpiarCarrito(); // Limpiar el carrito
+                std::cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido cancelado. El carrito ha sido vaciado." << RESET_COLOR;
+                carrito.limpiarCarrito();
                 Sleep(1500);
             }
             else {
                 ShowConsoleCursor(false);
-                std::cout << endl << MAGENTA_COLOR << "El carrito está vacío. No se puede cancelar el pedido.";
+                std::cout << std::endl << MAGENTA_COLOR << "El carrito está vacío. No se puede cancelar el pedido." << RESET_COLOR;
                 Sleep(1500);
             }
             break;
+
         case 5:
+            running = false;
             break;
         }
     }
@@ -1192,13 +1187,15 @@ void orderManagementMenu() {
     // Antes del bucle o en algún lugar antes de utilizarlo en tu código
     GESTION_INVENTARIO inventario;
 
-    sistemaPedidos.cargarPedidosPendientes();
-    sistemaPedidos.cargarPedidosProcesados();
+    sistemaPedidos.cargarPedidosPendientes(); // Cargar pedidos pendientes desde el archivo
+    sistemaPedidos.cargarPedidosProcesados(); // Cargar pedidos procesados desde el archivo
+    inventario.cargarInventarioDesdeArchivo(); // Cargar el inventario desde el archivo
 
     int opcion;
-    string currentLanguage = "espanol"; // Idioma predeterminado
 
-    while (true) {
+    bool running = true;
+
+    while (running) {
         system("cls");  
         std::cout << CYAN_COLOR << "=== GESTIÓN DE PEDIDOS ==" << RESET_COLOR << DOUBLE_SPACE;
         std::cout << "<1> Ver Pedidos Pendientes" << endl;
@@ -1224,6 +1221,10 @@ void orderManagementMenu() {
         switch (opcion) {
         case 1:
             sistemaPedidos.verPedidosPendientes();
+            ShowConsoleCursor(false); // Oculta el cursor
+            std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
+            _getch();
+            system("cls");
             break;
         case 2:
             sistemaPedidos.verPedidosProcesados();
@@ -1232,7 +1233,7 @@ void orderManagementMenu() {
             system("cls");
             sistemaPedidos.verPedidosPendientes();
             ShowConsoleCursor(true); // Muestra el cursor
-            cout << YELLOW_COLOR << "Ingrese el índice del pedido a procesar: " << RESET_COLOR;
+            cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese el índice del pedido a procesar: " << RESET_COLOR;
             int indicePedido;
             std::cin >> indicePedido;
             if (indicePedido >= 0 && indicePedido < sistemaPedidos.getNumPedidosPendientes()) {
@@ -1263,11 +1264,9 @@ void orderManagementMenu() {
         case 5:
             system("cls");
             sistemaPedidos.mostrarHistorialPedidos();
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
-            _getch();
             break;
         case 6:
+            running = false;
             break;
         }
     }
@@ -1277,7 +1276,6 @@ void orderManagementMenu() {
 void customerManagementMenu() {
     GESTION_CLIENTE gestionCliente;
     
-    string currentLanguage = "espanol"; // Idioma predeterminado
     int opcion;
 
     do {

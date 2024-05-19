@@ -18,10 +18,7 @@ private:
     map<string, int> inventario;
 
 public:
-    GESTION_INVENTARIO() {
-        cargarInventarioDesdeArchivo(); // Cargar el inventario desde el archivo al iniciar el programa
-        cargarMovimientosDesdeArchivo(); // Cargar el historial de movimientos desde el archivo al iniciar el programa
-    }
+    GESTION_INVENTARIO() {}
 
     bool existeProducto(const std::string& codigoProducto) const {
         return inventario.find(codigoProducto) != inventario.end();
@@ -57,14 +54,20 @@ public:
             Sleep(1000); // Esperar 1 segundo (1000 ms)
             return;
         }
-
+        
         system("cls"); // Limpiar la pantalla antes de mostrar el inventario
 
         cout << CYAN_COLOR << "=== INVENTARIO ===" << RESET_COLOR << DOUBLE_SPACE;
+
+        // Imprimir encabezado de la tabla
+        cout << BLUE_COLOR << setw(30) << left << "CÓDIGO DEL PRODUCTO" << "STOCK" << RESET_COLOR << endl;
+        cout << YELLOW_COLOR << setw(30) << left << "--------------------" << "-----" << RESET_COLOR << endl;
+        cout << endl;
+
+        // Imprimir contenido de la tabla
         for (const auto& pair : inventario) {
-            cout << BLUE_COLOR << "Código: " << RESET_COLOR << pair.first << std::endl;
-            cout << BLUE_COLOR << "Stock: " << RESET_COLOR << pair.second << std::endl;
-            cout << YELLOW_COLOR << "-------------------------" << DOUBLE_SPACE;
+            cout << setw(30) << left << pair.first << pair.second << endl;
+            cout << YELLOW_COLOR << "---------------------------------" << GRAY_COLOR << endl;
         }
 
         ShowConsoleCursor(false); // Ocultar el cursor de la consola
@@ -74,8 +77,17 @@ public:
 
     void añadirStock(const std::string& codigoProducto, int cantidad) {
         inventario[codigoProducto] += cantidad;
-        historialMovimientos.push(HISTORIAL_INVENTARIO(codigoProducto, cantidad, true));
-        guardarMovimientosEnArchivo(); // Guardar los movimientos en el archivo después de agregar stock
+
+        // Obtener la fecha y hora actual
+        auto now = std::chrono::system_clock::now();
+        std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+        std::stringstream ss;
+        ss << std::put_time(std::localtime(&now_time), "%Y-%m-%d %X");
+        std::string formatted_time = ss.str();
+
+        HISTORIAL_INVENTARIO movimiento(codigoProducto, cantidad, true, formatted_time);
+        historialMovimientos.push(movimiento);
+        guardarMovimientoEnArchivo(movimiento); // Guardar solo el nuevo movimiento
         guardarInventarioEnArchivo(); // Guardar el inventario en el archivo después de agregar stock
     }
 
@@ -83,8 +95,17 @@ public:
         if (inventario.find(codigoProducto) != inventario.end()) {
             if (inventario[codigoProducto] >= cantidad) {
                 inventario[codigoProducto] -= cantidad;
-                historialMovimientos.push(HISTORIAL_INVENTARIO(codigoProducto, cantidad, false));
-                guardarMovimientosEnArchivo(); // Guardar los movimientos en el archivo después de retirar stock
+
+                // Obtener la fecha y hora actual
+                auto now = std::chrono::system_clock::now();
+                std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+                std::stringstream ss;
+                ss << std::put_time(std::localtime(&now_time), "%Y-%m-%d %X");
+                std::string formatted_time = ss.str();
+
+                HISTORIAL_INVENTARIO movimiento(codigoProducto, cantidad, false, formatted_time);
+                historialMovimientos.push(movimiento);
+                guardarMovimientoEnArchivo(movimiento); // Guardar solo el nuevo movimiento
                 guardarInventarioEnArchivo(); // Guardar el inventario en el archivo después de retirar stock
             }
             else {
@@ -134,30 +155,20 @@ public:
     }
 
     // Método para guardar el historial de movimientos en un archivo
-    void guardarMovimientosEnArchivo() const {
+    void guardarMovimientoEnArchivo(const HISTORIAL_INVENTARIO& movimiento) const {
         std::ofstream file("movement_history.txt", std::ios_base::app); // Abre el archivo en modo de añadir al final
         if (!file.is_open()) {
             std::cerr << "No se pudo abrir el archivo movement_history.txt para guardar los movimientos." << std::endl;
             return;
         }
 
-        std::stack<HISTORIAL_INVENTARIO> copiaHistorial = historialMovimientos; // Copia el historial de movimientos
-
-        // Escribir los movimientos en el archivo
-        while (!copiaHistorial.empty()) {
-            HISTORIAL_INVENTARIO movimiento = copiaHistorial.top();
-            copiaHistorial.pop();
-            file << movimiento.codigoProducto << " " << movimiento.cantidad << " ";
-            if (movimiento.esEntrada)
-                file << "Entrada";
-            else
-                file << "Salida";
-            file << std::endl;
-        }
+        file << movimiento.codigoProducto << " "
+            << movimiento.cantidad << " "
+            << (movimiento.esEntrada ? "Entrada" : "Salida") << " "
+            << movimiento.fechaHora << std::endl;
 
         file.close();
     }
-
 
     void mostrarHistorialMovimientos() const {
         if (historialMovimientos.empty()) {
@@ -165,26 +176,27 @@ public:
             return;
         }
 
-        cout << CYAN_COLOR << "=== Historial de Movimientos ===" << RESET_COLOR << DOUBLE_SPACE;
-        cout << BLUE_COLOR << "Código Producto" << std::setw(15) << "Cantidad" << std::setw(20) << "Movimiento" << std::setw(20) << "Fecha y Hora" << std::endl;
-        cout << RESET_COLOR;
+        std::cout << CYAN_COLOR << "=== Historial de Movimientos ===" << RESET_COLOR << std::endl;
+        std::cout << DOUBLE_SPACE;
+        std::cout << BLUE_COLOR << std::left << std::setw(20) << "Código Producto"
+            << std::setw(15) << "Cantidad"
+            << std::setw(20) << "Movimiento"
+            << std::setw(20) << "Fecha y Hora"
+            << RESET_COLOR << std::endl;
+        std::cout << std::string(70, '=') << std::endl;
 
-        // Copiar el historial de movimientos para mantener el original intacto
+        // Crear una copia del historial de movimientos para mostrarlo sin modificar el original
         std::stack<HISTORIAL_INVENTARIO> copiaHistorial = historialMovimientos;
-
         while (!copiaHistorial.empty()) {
             HISTORIAL_INVENTARIO movimiento = copiaHistorial.top();
             copiaHistorial.pop();
 
-            // Obtener la fecha y hora actual
-            auto now = std::chrono::system_clock::now();
-            std::time_t now_time = std::chrono::system_clock::to_time_t(now);
-            std::string formatted_time = std::ctime(&now_time);
-
-            cout << movimiento.codigoProducto
-                << setw(19) << movimiento.cantidad
-                << setw(22) << (movimiento.esEntrada ? "Entrada" : "Salida")
-                << setw(36) << formatted_time;
+            std::cout << DOUBLE_SPACE;
+            std::cout << std::left << std::setw(20) << movimiento.codigoProducto
+                << std::setw(15) << movimiento.cantidad
+                << std::setw(20) << (movimiento.esEntrada ? "Entrada" : "Salida")
+                << std::setw(20) << movimiento.fechaHora
+                << std::endl;
         }
     }
 
@@ -203,15 +215,21 @@ public:
             std::string codigoProducto;
             int cantidad;
             std::string movimiento;
+            std::string fechaHora;
 
-            // Extraer los datos de la línea
+            // Leer y parsear cada línea del archivo
             ss >> codigoProducto >> cantidad >> movimiento;
+            std::getline(ss, fechaHora); // Leer el resto de la línea como fecha y hora
 
-            // Determinar si es una entrada o una salida
+            // Eliminar cualquier espacio inicial en la fecha y hora
+            if (!fechaHora.empty() && fechaHora[0] == ' ') {
+                fechaHora.erase(0, 1);
+            }
+
             bool esEntrada = (movimiento == "Entrada");
 
             // Agregar el movimiento a la pila
-            historialMovimientos.push(HISTORIAL_INVENTARIO(codigoProducto, cantidad, esEntrada));
+            historialMovimientos.push(HISTORIAL_INVENTARIO(codigoProducto, cantidad, esEntrada, fechaHora));
         }
 
         file.close();

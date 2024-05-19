@@ -64,9 +64,13 @@ public:
         int cantidadProductos = contarProductos();
 
         if (primero == nullptr) {
-            cout << MAGENTA_COLOR << "El catálogo está vacío." << endl;
+            ShowConsoleCursor(false);
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "El catálogo está vacío." << endl;
+            Sleep(1500);
             return;
         }
+
+        system("cls");
 
         cout << CYAN_COLOR << "Cantidad de productos en el catálogo: " << RESET_COLOR << cantidadProductos << " productos." << DOUBLE_SPACE;
 
@@ -76,6 +80,7 @@ public:
             cout << endl;
             actual = actual->siguiente;
         }
+
     }
 
     void mostrarCatalogoArchivo() const {

@@ -4,6 +4,7 @@
 #include <iomanip>
 #include "order_class.h"
 #include <conio.h>
+#include <stdexcept> // para manejar excepciones
 
 class SISTEMA_PEDIDOS {
 private:
@@ -11,7 +12,7 @@ private:
     std::vector<PEDIDO> pedidosProcesados;
 
 public:
-
+    // Método para obtener el número de pedidos pendientes
     int getNumPedidosPendientes() const {
         return pedidosPendientes.size();
     }
@@ -27,22 +28,13 @@ public:
         }
     }
 
-    // Método para guardar pedidos en un archivo
-    void guardarPedidos(const std::vector<PEDIDO>& pedidos) {
-        std::ofstream file("pending_orders.txt", std::ios::app);
-        if (!file.is_open()) {
-            std::cerr << "No se pudo abrir el archivo pending_orders.txt para guardar los pedidos." << std::endl;
-            return;
-        }
-
-        for (const auto& pedido : pedidos) {
-            file << pedido.getCodigoProducto() << " " << pedido.getCantidad() << std::endl;
-            pedidosPendientes.push_back(pedido);
-        }
-
-        file.close();
+    // Método para agregar un pedido pendiente
+    void agregarPedidoPendiente(const PEDIDO& pedido) {
+        pedidosPendientes.push_back(pedido);
+        guardarPedidosPendientes(); // Actualizamos el archivo inmediatamente
     }
 
+    // Método para guardar pedidos pendientes en un archivo
     void guardarPedidosPendientes() const {
         std::ofstream file("pending_orders.txt");
         if (!file.is_open()) {
@@ -71,7 +63,7 @@ public:
 
         file.close();
     }
-                           
+
     // Método para cargar pedidos pendientes desde un archivo
     void cargarPedidosPendientes() {
         std::ifstream file("pending_orders.txt");
@@ -83,6 +75,7 @@ public:
         std::string codigoProducto;
         int cantidad;
 
+        pedidosPendientes.clear();
         while (file >> codigoProducto >> cantidad) {
             pedidosPendientes.push_back(PEDIDO(codigoProducto, cantidad));
         }
@@ -101,6 +94,7 @@ public:
         std::string codigoProducto;
         int cantidad;
 
+        pedidosProcesados.clear();
         while (file >> codigoProducto >> cantidad) {
             pedidosProcesados.push_back(PEDIDO(codigoProducto, cantidad));
         }
@@ -112,18 +106,19 @@ public:
     void verPedidosPendientes() const {
         ShowConsoleCursor(false);
         if (pedidosPendientes.empty()) {
-            std::cout << endl << MAGENTA_COLOR << "No hay pedidos pendientes.";
-            _sleep(1500);
+            std::cout << std::endl << MAGENTA_COLOR << "No hay pedidos pendientes.";
+            Sleep(1500);
         }
         else {
             system("cls");
             std::cout << CYAN_COLOR << "=== PEDIDOS PENDIENTES ===" << DOUBLE_SPACE;
-            for (const auto& pedido : pedidosPendientes) {
-                std::cout << BLUE_COLOR << "Código: " << RESET_COLOR << pedido.getCodigoProducto() << BLUE_COLOR << ", Cantidad: " << RESET_COLOR << pedido.getCantidad() << "\n";
+            std::cout << std::left << std::setw(10) << "Índice" << std::setw(20) << "Código Producto" << std::setw(10) << "Cantidad" << std::endl;
+            std::cout << std::string(42, '=') << std::endl;
+            for (size_t i = 0; i < pedidosPendientes.size(); ++i) {
+                std::cout << BLUE_COLOR << std::setw(10) << i << RESET_COLOR
+                    << std::setw(20) << pedidosPendientes[i].getCodigoProducto()
+                    << std::setw(10) << pedidosPendientes[i].getCantidad() << "\n";
             }
-            std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
-            _getch();
-            system("cls");
         }
     }
 
@@ -131,14 +126,18 @@ public:
     void verPedidosProcesados() const {
         ShowConsoleCursor(false);
         if (pedidosProcesados.empty()) {
-            std::cout << endl << MAGENTA_COLOR << "No hay pedidos procesados.";
-            _sleep(1500);
+            std::cout << std::endl << MAGENTA_COLOR << "No hay pedidos procesados.";
+            Sleep(1500);
         }
         else {
             system("cls");
-            std::cout << CYAN_COLOR << "=== Pedidos Procesados ===" << DOUBLE_SPACE;
-            for (const auto& pedido : pedidosProcesados) {
-                std::cout << BLUE_COLOR <<  "Código: " << RESET_COLOR << pedido.getCodigoProducto() << BLUE_COLOR <<", Cantidad: " << RESET_COLOR << pedido.getCantidad() << "\n";
+            std::cout << CYAN_COLOR << "=== PEDIDOS PROCESADOS ===" << DOUBLE_SPACE;
+            std::cout << std::left << std::setw(10) << "Índice" << std::setw(20) << "Código Producto" << std::setw(10) << "Cantidad" << std::endl;
+            std::cout << std::string(42, '=') << std::endl;
+            for (size_t i = 0; i < pedidosProcesados.size(); ++i) {
+                std::cout << BLUE_COLOR << std::setw(10) << i << RESET_COLOR
+                    << std::setw(20) << pedidosProcesados[i].getCodigoProducto()
+                    << std::setw(10) << pedidosProcesados[i].getCantidad() << "\n";
             }
             std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
             _getch();
@@ -149,8 +148,8 @@ public:
     void eliminarPedidos() {
         ShowConsoleCursor(false);
         if (pedidosPendientes.empty()) {
-            std::cout << endl << MAGENTA_COLOR << "No hay pedidos pendientes que eliminar.";
-            _sleep(1500);
+            std::cout << std::endl << MAGENTA_COLOR << "No hay pedidos pendientes que eliminar.";
+            Sleep(1500);
             return;
         }
         pedidosPendientes.clear();
@@ -159,13 +158,13 @@ public:
         std::ofstream fileProcesados("orders_processed.txt");
         filePendientes.close();
         fileProcesados.close();
-        std::cout << endl << GREEN_COLOR << "Todos los pedidos han sido eliminados.";
-        _sleep(1500);
+        std::cout << std::endl << GREEN_COLOR << "Todos los pedidos han sido eliminados.";
+        Sleep(1500);
     }
 
     // Método para mostrar el historial de pedidos
     void mostrarHistorialPedidos() const {
-        std::cout << CYAN_COLOR << "=== Historial de Pedidos ===" << DOUBLE_SPACE;
+        std::cout << CYAN_COLOR << "=== HISTORIAL DE PEDIDOS ===" << DOUBLE_SPACE;
 
         // Mostrar pedidos pendientes
         std::cout << YELLOW_COLOR << "Pedidos Pendientes:" << RESET_COLOR << std::endl;
@@ -188,8 +187,13 @@ public:
                 std::cout << BLUE_COLOR << "Código: " << RESET_COLOR << pedido.getCodigoProducto() << BLUE_COLOR << ", Cantidad: " << RESET_COLOR << pedido.getCantidad() << std::endl;
             }
         }
+
+        ShowConsoleCursor(false);
+        std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
+        _getch();
     }
 
+    // Método para procesar un pedido
     void procesarPedido(int indice) {
         if (indice >= 0 && indice < pedidosPendientes.size()) {
             PEDIDO pedido = pedidosPendientes[indice];
@@ -206,5 +210,4 @@ public:
             Sleep(1500);
         }
     }
-
 };

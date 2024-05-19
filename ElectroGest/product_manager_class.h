@@ -1,5 +1,5 @@
 #pragma once
-#include "product_simple_list_class.h"  // Asume que la clase Lista ya está definida en otro archivo
+#include "product_simple_list_class.h" 
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -237,18 +237,18 @@ public:
                 std::string nombreMinusculas = nombre;
                 std::transform(nombreMinusculas.begin(), nombreMinusculas.end(), nombreMinusculas.begin(), ::tolower);
 
-                if (nombreProducto.compare(nombreMinusculas) == 0) {
+                // Verificar si el nombre del producto contiene la cadena ingresada
+                if (nombreProducto.find(nombreMinusculas) != std::string::npos) {
                     // Si se encuentra el producto, mostrar su información
                     encontrado = true;
-                    cout << endl;
+                    std::cout << YELLOW_COLOR << "Producto encontrado: " << RESET_COLOR << nombreProducto << std::endl;
                     for (int i = 0; i < 12; ++i) {
-                        getline(file, line);
+                        if (!getline(file, line)) break; // Asegurar que no se lea más allá del final del archivo
                         std::string::size_type pos = line.find(":");
                         if (pos != std::string::npos) {
                             std::string label = line.substr(0, pos);
                             std::string value = line.substr(pos + 1);
-                            std::cout << BLUE_COLOR << label << RESET_COLOR;
-                            std::cout << value << std::endl;
+                            std::cout << BLUE_COLOR << label << RESET_COLOR << value << std::endl;
                         }
                         else {
                             std::cout << line << std::endl;
@@ -262,7 +262,16 @@ public:
         file.close();
 
         if (!encontrado) {
+            ShowConsoleCursor(false); // Oculta el cursor
             std::cout << MAGENTA_COLOR << "No se encontraron productos con el nombre '" << nombre << "'." << std::endl << RESET_COLOR;
+            Sleep(1500); // Esperar 1.5 segundos antes de limpiar la pantalla
+            system("cls");
+        }
+        else {
+            ShowConsoleCursor(false); // Oculta el cursor
+            std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
+            _getch();
+            system("cls");
         }
     }
 
@@ -288,11 +297,20 @@ public:
         // Mostrar la lista de productos filtrados
         if (productosFiltrados.estaVacia()) {
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "No se encontraron productos dentro del rango de precios especificado." << endl;
+            Sleep(1500); // Esperar 1.5 segundos antes de limpiar la pantalla
+            system("cls");
         }
         else {
             cout << DOUBLE_SPACE << CYAN_COLOR << "Productos dentro del rango de precios especificado:" << endl;
             productosFiltrados.mostrarCatalogo();
+
+            ShowConsoleCursor(false); // Oculta el cursor
+            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
+            _getch();
+            system("cls");
         }
+
+
     }
 
     void filtrarPorColor(GESTION_PRODUCTOS& productManager) {
@@ -300,13 +318,21 @@ public:
         cout << YELLOW_COLOR << "Ingrese el color por el que desea filtrar: " << RESET_COLOR;
         cin >> color;
 
+        // Convertir el color ingresado a minúsculas para comparación sin distinción de mayúsculas y minúsculas
+        transform(color.begin(), color.end(), color.begin(), ::tolower);
+
         // Crear una nueva lista de productos filtrados por color
         LISTA_PRODUCTO productosFiltrados;
 
         // Recorrer todos los productos en el catálogo y agregar aquellos que coincidan con el color especificado
         NODO_PRODUCTO* actual = productManager.listaProductos.obtenerPrimero();
         while (actual != nullptr) {
-            if (actual->producto.getColor() == color) {
+            string colorProducto = actual->producto.getColor();
+            // Convertir el color del producto a minúsculas para comparación sin distinción de mayúsculas y minúsculas
+            transform(colorProducto.begin(), colorProducto.end(), colorProducto.begin(), ::tolower);
+
+            // Verificar si el color del producto contiene la cadena ingresada o si es similar
+            if (colorProducto.find(color) != string::npos) {
                 // Agregar el producto a la lista de productos filtrados
                 productosFiltrados.agregarProducto(actual->producto);
             }
@@ -315,11 +341,19 @@ public:
 
         // Mostrar la lista de productos filtrados
         if (productosFiltrados.estaVacia()) {
+            ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "No se encontraron productos con el color especificado." << endl;
+            Sleep(1500); // Esperar 1.5 segundos antes de limpiar la pantalla
+            system("cls");
         }
         else {
             cout << DOUBLE_SPACE << CYAN_COLOR << "Productos con el color especificado:" << endl;
             productosFiltrados.mostrarCatalogo();
+
+            ShowConsoleCursor(false); // Oculta el cursor
+            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
+            _getch();
+            system("cls");
         }
     }
 
@@ -328,13 +362,21 @@ public:
         cout << YELLOW_COLOR << "Ingrese la marca por la que desea filtrar: " << RESET_COLOR;
         cin >> marca;
 
+        // Convertir la marca ingresada a minúsculas para comparación sin distinción de mayúsculas y minúsculas
+        transform(marca.begin(), marca.end(), marca.begin(), ::tolower);
+
         // Crear una nueva lista de productos filtrados por marca
         LISTA_PRODUCTO productosFiltrados;
 
         // Recorrer todos los productos en el catálogo y agregar aquellos que coincidan con la marca especificada
         NODO_PRODUCTO* actual = productManager.listaProductos.obtenerPrimero();
         while (actual != nullptr) {
-            if (actual->producto.getMarca() == marca) {
+            string marcaProducto = actual->producto.getMarca();
+            // Convertir la marca del producto a minúsculas para comparación sin distinción de mayúsculas y minúsculas
+            transform(marcaProducto.begin(), marcaProducto.end(), marcaProducto.begin(), ::tolower);
+
+            // Verificar si la marca del producto contiene la cadena ingresada o si es similar
+            if (marcaProducto.find(marca) != string::npos) {
                 // Agregar el producto a la lista de productos filtrados
                 productosFiltrados.agregarProducto(actual->producto);
             }
@@ -344,10 +386,17 @@ public:
         // Mostrar la lista de productos filtrados
         if (productosFiltrados.estaVacia()) {
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "No se encontraron productos con la marca especificada." << endl;
+            Sleep(1500); // Esperar 1.5 segundos antes de limpiar la pantalla
+            system("cls");
         }
         else {
             cout << DOUBLE_SPACE << CYAN_COLOR << "Productos con la marca especificada:" << endl;
             productosFiltrados.mostrarCatalogo();
+
+            ShowConsoleCursor(false); // Oculta el cursor
+            cout << DOUBLE_SPACE << GRAY_COLOR << "Presiona cualquier tecla para continuar...";
+            _getch();
+            system("cls");
         }
     }
 
@@ -391,5 +440,9 @@ public:
         }
     }
 
+    int getCantidadProductos() {
+        int cantidadProductos = listaProductos.contarProductos();
+        return cantidadProductos;
+    }
 
 };

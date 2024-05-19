@@ -19,4 +19,5 @@ Andrea,Gutiérrez,andrea.gutierrez@email.com,contraseña17,Breña,987654337,7/7/198
 Daniel,Flores,daniel.flores@email.com,contraseña18,Pucusana,987654338,8/8/1973,M
 Verónica,Chávez,veronica.chavez@email.com,contraseña19,Miraflores,987654339,9/9/1982,F
 Sergio,Rojas,sergio.rojas@email.com,contraseña20,San Borja,987654340,11/11/1990,M
+Carlos,Perez,carlos.perez@gmail.com, usuario789,San Miguel,971405120,8/6/2006,M
 Fatima,Encarnacion,fatima.encarnacion@gmail.com,usuario456,La Molina,971251652,8/6/2006,F
