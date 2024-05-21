@@ -84,7 +84,7 @@ void generalMenu() {
         // Verifica si la entrada falló
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
-            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor, ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
@@ -195,7 +195,7 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
 
     string usuarioTP = usuario; // Nombre de usuario
     transform(usuarioTP.begin(), usuarioTP.end(), usuarioTP.begin(), [](unsigned char c) {
-        return std::toupper(c);
+        return toupper(c);
     });
 
     // Bucle para mostrar el menú y obtener la opción del usuario
@@ -216,7 +216,7 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
         // Verifica si la entrada falló
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
-            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
@@ -251,7 +251,10 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
 // Función para mostrar el menú de registro para cliente
 void clientRegisterMenu() {
     // Crear un objeto CLIENTE
-    CLIENTE cliente;
+    unordered_set<string> existingIds = loadExistingIds();
+
+    // Create a CLIENTE object with unique ID generation
+    CLIENTE cliente(existingIds);    
     GESTION_CLIENTE clienteManager;
 
     // Definir variables
@@ -312,11 +315,11 @@ void clientRegisterMenu() {
     cliente.setApellido(primer_apellido);
 
     string input_correo;
-    regex correoRegex(R"([a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook)\.(com|net|org|edu))");
+    regex correoRegex(R"([a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|email)\.(com|net|org|edu))");
 
     do {
         // Solicitar al usuario que ingrese un correo electrónico
-        cout << YELLOW_COLOR << "Correo electrónico" << RESET_COLOR; // Correo electrónico
+        cout << YELLOW_COLOR << "Correo electrónico: " << RESET_COLOR; // Correo electrónico
         getline(cin, input_correo);
 
         // Verificar si la dirección de correo electrónico cumple con la expresión regular
@@ -480,6 +483,11 @@ void clientLoginMenu() {
                 cout << DOUBLE_SPACE << GREEN_COLOR << "Inicio de sesión exitoso." << DOUBLE_SPACE;
                 Sleep(1500);
                 system("cls");
+
+                // Guardar el email en la instancia de CLIENTE_ACTUAL
+                CLIENTE_ACTUAL* cliente = CLIENTE_ACTUAL::obtenerInstancia();
+                cliente->setClienteID(email);
+
                 homeClientMenu(); // Mostrar el menú del cliente
                 break;
             }
@@ -523,7 +531,7 @@ void clientMenu() {
         // Verifica si la entrada falló
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
-            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
@@ -541,7 +549,7 @@ void clientMenu() {
             clientLoginMenu(); // Menú de inicio de sesión para cliente
             break;
         case 3:
-			break;
+            break;
         }
     } while (opcion != 3);
 
@@ -549,34 +557,59 @@ void clientMenu() {
 
 // Función para mostrar el menú de inicio para cliente
 void homeClientMenu() {
-
     SISTEMA_PEDIDOS sistemaPedidos;
-	
-    int opcion = 0;
 
-    sistemaPedidos.cargarPedidosProcesados(); // Cargar los pedidos procesados
-    sistemaPedidos.cargarPedidosPendientes(); // Cargar los pedidos pendientes
+    CLIENTE_ACTUAL* cliente = CLIENTE_ACTUAL::obtenerInstancia();
+
+    cout << GRAY_COLOR << "Verificando el código del usuario";
+    // Animación de los puntos
+    for (int i = 0; i < 3; ++i) {
+        cout << "." << flush;
+        Sleep(500); // Espera 500 ms
+    }
+
+    for (int i = 0; i < 3; ++i) {
+        cout << "\b \b" << flush;
+        Sleep(500); // Espera 500 ms
+    }
+
+    for (int i = 0; i < 3; ++i) {
+        cout << "." << flush;
+        Sleep(500); // Espera 500 ms
+    }
+
+    if (cliente->cargarClienteIDDesdeArchivo("client_registration.txt", cliente->getClienteID())) {
+        cout << DOUBLE_SPACE << GREEN_COLOR << "Código del cliente cargado exitosamente: " << RESET_COLOR << cliente->getClienteID() << endl;
+        Sleep(1500);
+    }
+    else {
+        cout << DOUBLE_SPACE << RED_COLOR << "No se pudo cargar el código del cliente." << DOUBLE_SPACE;
+        Sleep(1500);
+        return;
+    }
+
+    int opcion = 0;
 
     do {
         system("cls");
         cout << CYAN_COLOR << "=== ¡BIENVENIDO, CLIENTE! ===" << DOUBLE_SPACE << RESET_COLOR;
-        cout << "<1> Ver cátalogo de productos" << endl;
+        cout << "<1> Ver catálogo de productos" << endl;
         cout << "<2> Realizar pedido" << endl;
         cout << "<3> Ver estado de pedidos" << endl;
-        cout << "<4> Salir";
+        cout << "<4> Salir" << endl;
         cout << DOUBLE_SPACE << YELLOW_COLOR;
         ShowConsoleCursor(true); // Mostrar el cursor
         cout << "Ingrese una opción: " << RESET_COLOR;
         cin >> opcion;
 
         // Verifica si la entrada falló
-        if (cin.fail()) { // Verifica si la entrada falló
-            cin.clear(); // Limpia el estado de cin
-            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
-            Sleep(1500); // Espera 1.5 segundos
-            continue; // Continúa al siguiente ciclo del bucle do-while
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n');
+            ShowConsoleCursor(false);
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número.";
+            Sleep(1500);
+            continue;
         }
 
         switch (opcion)
@@ -589,8 +622,7 @@ void homeClientMenu() {
             orderingMenu();
             break;
         case 3:
-            system("cls");
-            sistemaPedidos.mostrarHistorialPedidos();
+            sistemaPedidos.verHistorialPedidosCliente(cliente->getClienteID());
             break;
         case 4:
             break;
@@ -602,7 +634,8 @@ void homeClientMenu() {
 void saveClientInfo(const CLIENTE& client) {
     ofstream file("client_registration.txt", ios::app); // Abre el archivo en modo append
     if (file.is_open()) {
-        file << client.getNombre() << ","
+        file << client.getIdCliente() << ","
+            << client.getNombre() << ","
             << client.getApellido() << ","
             << client.getCorreoElectronico() << ","
             << client.getContrasenia() << ","
@@ -617,6 +650,7 @@ void saveClientInfo(const CLIENTE& client) {
     else {
         cout << "No se pudo abrir el archivo para guardar la información." << endl;
     }
+
 }
 
 // Función para guardar la contraseña cifrada
@@ -658,7 +692,7 @@ void productCatalogMenu() {
         // Verifica si la entrada falló
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
-            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
@@ -723,7 +757,7 @@ void filtrarProductosPorCategoria() {
         // Verifica si la entrada falló
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
-            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
@@ -773,7 +807,7 @@ void productManagementMenu() {
         // Verifica si la entrada falló
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
-            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
@@ -839,7 +873,7 @@ void productManagementMenu() {
 // Función para mostrar el menú de gestión de inventario
 void inventoryManagementMenu() {
     int opcion;
-    std::string codigoProducto;
+    string codigoProducto;
     int cantidad;
 
     NODO_PRODUCTO* producto = nullptr; // Declara producto fuera del switch
@@ -851,20 +885,20 @@ void inventoryManagementMenu() {
 
     do {
         system("cls");
-        std::cout << CYAN_COLOR << "=== Menú de Gestión de Inventarios ===" << endl << RESET_COLOR << std::endl;
-        std::cout << "<1> Ver Inventario" << std::endl;
-        std::cout << "<2> Añadir Stock" << std::endl;
-        std::cout << "<3> Retirar Stock" << std::endl;
-        std::cout << "<4> Historial de Movimientos" << std::endl;
-        std::cout << "<5> Salir" << std::endl;
+        cout << CYAN_COLOR << "=== Menú de Gestión de Inventarios ===" << endl << RESET_COLOR << endl;
+        cout << "<1> Ver Inventario" << endl;
+        cout << "<2> Añadir Stock" << endl;
+        cout << "<3> Retirar Stock" << endl;
+        cout << "<4> Historial de Movimientos" << endl;
+        cout << "<5> Salir" << endl;
         ShowConsoleCursor(true); // Muestra el cursor
-        std::cout << endl << YELLOW_COLOR << "Ingrese la opción deseada: " << RESET_COLOR;
-        std::cin >> opcion;
+        cout << endl << YELLOW_COLOR << "Ingrese la opción deseada: " << RESET_COLOR;
+        cin >> opcion;
 
         // Verifica si la entrada falló
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
-            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
@@ -877,23 +911,23 @@ void inventoryManagementMenu() {
             break;
         case 2:
             system("cls");
-            std::cout << YELLOW_COLOR << "Ingrese el código del producto que desea agregar al inventario: " << RESET_COLOR;
-            std::cin >> codigoProducto;
+            cout << YELLOW_COLOR << "Ingrese el código del producto que desea agregar al inventario: " << RESET_COLOR;
+            cin >> codigoProducto;
             producto = gestorProductos.buscarProducto(codigoProducto); // Obtiene un puntero al producto
             if (producto != nullptr) {
                 int cantidad;
-                std::cout << YELLOW_COLOR << "Ingrese la cantidad de stock a añadir: " << RESET_COLOR;
-                while (!(std::cin >> cantidad) || cantidad <= 0) {
-                    if (std::cin.fail()) {
+                cout << YELLOW_COLOR << "Ingrese la cantidad de stock a añadir: " << RESET_COLOR;
+                while (!(cin >> cantidad) || cantidad <= 0) {
+                    if (cin.fail()) {
                         // Limpiar el estado de error y descartar la entrada inválida
-                        std::cin.clear();
-                        cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
-                        std::cout << endl << MAGENTA_COLOR << "Debe ingresar un número válido para la cantidad de stock." << RESET_COLOR << DOUBLE_SPACE;
+                        cin.clear();
+                        cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+                        cout << endl << MAGENTA_COLOR << "Debe ingresar un número válido para la cantidad de stock." << RESET_COLOR << DOUBLE_SPACE;
                     }
                     else {
-                        std::cout << MAGENTA_COLOR << "La cantidad de stock debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
+                        cout << MAGENTA_COLOR << "La cantidad de stock debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
                     }
-                    std::cout << YELLOW_COLOR << "Ingrese nuevamente la cantidad de stock: " << RESET_COLOR;
+                    cout << YELLOW_COLOR << "Ingrese nuevamente la cantidad de stock: " << RESET_COLOR;
                 }
                 gestionInventarios.añadirStock(producto->producto.getCodigo(), cantidad); // Utiliza el código del producto
 
@@ -903,28 +937,28 @@ void inventoryManagementMenu() {
             }
             else {
                 ShowConsoleCursor(false); // Oculta el cursor
-                std::cout << endl << MAGENTA_COLOR << "El producto no se encuentra en la lista de productos." << std::endl;
+                cout << endl << MAGENTA_COLOR << "El producto no se encuentra en la lista de productos." << endl;
                 Sleep(1500);
             }
             break;
         case 3:
             system("cls");
-            std::cout << YELLOW_COLOR << "Ingrese el código del producto del cual desea retirar stock: " << RESET_COLOR;
-            std::cin >> codigoProducto;
+            cout << YELLOW_COLOR << "Ingrese el código del producto del cual desea retirar stock: " << RESET_COLOR;
+            cin >> codigoProducto;
             producto = gestorProductos.buscarProducto(codigoProducto); // Asigna valor a producto
             if (producto != nullptr) {
-                std::cout << YELLOW_COLOR << "Ingrese la cantidad de stock a retirar: " << RESET_COLOR;
-                while (!(std::cin >> cantidad) || cantidad <= 0) {
-                    if (std::cin.fail()) {
+                cout << YELLOW_COLOR << "Ingrese la cantidad de stock a retirar: " << RESET_COLOR;
+                while (!(cin >> cantidad) || cantidad <= 0) {
+                    if (cin.fail()) {
                         // Limpiar el estado de error y descartar la entrada inválida
-                        std::cin.clear();
-                        cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
-                        std::cout << MAGENTA_COLOR << "Debe ingresar un número válido para la cantidad de stock." << RESET_COLOR << DOUBLE_SPACE;
+                        cin.clear();
+                        cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+                        cout << MAGENTA_COLOR << "Debe ingresar un número válido para la cantidad de stock." << RESET_COLOR << DOUBLE_SPACE;
                     }
                     else {
-                        std::cout << MAGENTA_COLOR << "La cantidad de stock debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
+                        cout << MAGENTA_COLOR << "La cantidad de stock debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
                     }
-                    std::cout << YELLOW_COLOR << "Ingrese nuevamente la cantidad de stock: " << RESET_COLOR;
+                    cout << YELLOW_COLOR << "Ingrese nuevamente la cantidad de stock: " << RESET_COLOR;
                 }
 
                 gestionInventarios.retirarStock(producto->producto.getCodigo(), cantidad);
@@ -935,7 +969,7 @@ void inventoryManagementMenu() {
             }
             else {
                 ShowConsoleCursor(false); // Oculta el cursor
-                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El producto no se encuentra en la lista de productos." << std::endl;
+                cout << DOUBLE_SPACE << MAGENTA_COLOR << "El producto no se encuentra en la lista de productos." << endl;
                 Sleep(1500);
             }
             break;
@@ -944,7 +978,7 @@ void inventoryManagementMenu() {
             // Mostrar historial de movimientos
             gestionInventarios.mostrarHistorialMovimientos();
             ShowConsoleCursor(false); // Oculta el cursor
-            std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
+            cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
             _getch();
             break;
         case 5:
@@ -978,7 +1012,7 @@ void supplierManagementMenu() {
 
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
-            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false);
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número." << endl;
             Sleep(1000);
@@ -1057,36 +1091,38 @@ void supplierManagementMenu() {
     } while (opcion != 6);
 }
 
+// Función para mostrar el menú de realizar pedido para cliente
 void orderingMenu() {
     GESTION_INVENTARIO inventario;
     CARRO_COMPRAS carrito;
     SISTEMA_PEDIDOS sistemaPedidos;
 
     inventario.cargarInventarioDesdeArchivo(); // Cargar el inventario desde el archivo al iniciar el programa
-    sistemaPedidos.cargarPedidosPendientes(); // Cargar pedidos pendientes desde el archivo
 
     int opcion;
     bool running = true;
-    std::string codigoProducto;
+    string codigoProducto;
     int cantidad;
+
+    string clienteID = CLIENTE_ACTUAL::obtenerInstancia()->getClienteID();
 
     while (running) {
         system("cls");
-        std::cout << CYAN_COLOR << "=== REALIZAR PEDIDO ===" << RESET_COLOR << DOUBLE_SPACE;
-        std::cout << "<1> Agregar Producto al Carrito" << std::endl;
-        std::cout << "<2> Ver Carrito" << std::endl;
-        std::cout << "<3> Confirmar Pedido" << std::endl;
-        std::cout << "<4> Cancelar Pedido" << std::endl;
-        std::cout << "<5> Salir";
+        cout << CYAN_COLOR << "=== REALIZAR PEDIDO ===" << RESET_COLOR << DOUBLE_SPACE;
+        cout << "<1> Agregar Producto al Carrito" << endl;
+        cout << "<2> Ver Carrito" << endl;
+        cout << "<3> Confirmar Pedido" << endl;
+        cout << "<4> Cancelar Pedido" << endl;
+        cout << "<5> Salir";
         ShowConsoleCursor(true); // Muestra el cursor
-        std::cout << YELLOW_COLOR << DOUBLE_SPACE << "Seleccione una opción: " << RESET_COLOR;
-        std::cin >> opcion;
+        cout << YELLOW_COLOR << DOUBLE_SPACE << "Seleccione una opción: " << RESET_COLOR;
+        cin >> opcion;
 
-        if (std::cin.fail()) {
-            std::cin.clear();
-            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n');
             ShowConsoleCursor(false);
-            std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número." << std::endl;
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número." << endl;
             Sleep(1000);
             ShowConsoleCursor(true);
             continue;
@@ -1095,38 +1131,38 @@ void orderingMenu() {
         switch (opcion) {
         case 1:
             system("cls");
-            std::cout << YELLOW_COLOR << "Ingrese el código del producto a agregar: " << RESET_COLOR;
-            std::cin >> codigoProducto;
+            cout << YELLOW_COLOR << "Ingrese el código del producto a agregar: " << RESET_COLOR;
+            cin >> codigoProducto;
 
             if (!inventario.existeProducto(codigoProducto)) {
                 ShowConsoleCursor(false);
-                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "El producto no existe en el inventario." << RESET_COLOR;
+                cout << DOUBLE_SPACE << MAGENTA_COLOR << "El producto no existe en el inventario." << RESET_COLOR;
                 Sleep(1500);
                 break;
             }
 
-            std::cout << YELLOW_COLOR << "Ingrese la cantidad a agregar: " << RESET_COLOR;
-            while (!(std::cin >> cantidad) || cantidad <= 0) {
-                if (std::cin.fail()) {
-                    std::cin.clear();
-                    cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
-                    std::cout << MAGENTA_COLOR << "Debe ingresar un número válido para la cantidad." << RESET_COLOR << DOUBLE_SPACE;
+            cout << YELLOW_COLOR << "Ingrese la cantidad a agregar: " << RESET_COLOR;
+            while (!(cin >> cantidad) || cantidad <= 0) {
+                if (cin.fail()) {
+                    cin.clear();
+                    cin.ignore((numeric_limits<streamsize>::max)(), '\n');
+                    cout << MAGENTA_COLOR << "Debe ingresar un número válido para la cantidad." << RESET_COLOR << DOUBLE_SPACE;
                 }
                 else {
-                    std::cout << MAGENTA_COLOR << "La cantidad debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
+                    cout << MAGENTA_COLOR << "La cantidad debe ser un número positivo." << RESET_COLOR << DOUBLE_SPACE;
                 }
-                std::cout << YELLOW_COLOR << "Ingrese nuevamente la cantidad a agregar: " << RESET_COLOR;
+                cout << YELLOW_COLOR << "Ingrese nuevamente la cantidad a agregar: " << RESET_COLOR;
             }
 
             if (inventario.verificarStock(codigoProducto, cantidad)) {
-                carrito.agregarPedido(PEDIDO(codigoProducto, cantidad));
+                carrito.agregarPedido(PEDIDO(clienteID, codigoProducto, cantidad));
                 ShowConsoleCursor(false);
-                std::cout << DOUBLE_SPACE << GREEN_COLOR << "Producto agregado al carrito correctamente." << RESET_COLOR;
+                cout << DOUBLE_SPACE << GREEN_COLOR << "Producto agregado al carrito correctamente." << RESET_COLOR;
                 Sleep(1500);
             }
             else {
                 ShowConsoleCursor(false);
-                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "No hay suficiente stock de este producto." << RESET_COLOR;
+                cout << DOUBLE_SPACE << MAGENTA_COLOR << "No hay suficiente stock de este producto." << RESET_COLOR;
                 Sleep(1500);
             }
             break;
@@ -1137,25 +1173,19 @@ void orderingMenu() {
 
         case 3:
             if (!carrito.isEmpty()) {
-                // Agregar todos los pedidos del carrito a los pedidos pendientes
-                const std::vector<PEDIDO>& pedidosCarrito = carrito.obtenerPedidos();
+                const vector<PEDIDO>& pedidosCarrito = carrito.obtenerPedidos();
                 for (const auto& pedido : pedidosCarrito) {
                     sistemaPedidos.agregarPedidoPendiente(pedido);
                 }
-                sistemaPedidos.guardarPedidosPendientes(); // Guardar los pedidos pendientes en el archivo
+                sistemaPedidos.guardarPedidosPendientes();
                 carrito.limpiarCarrito();
                 ShowConsoleCursor(false);
-                std::cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido confirmado correctamente." << RESET_COLOR;
+                cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido confirmado correctamente." << RESET_COLOR;
                 Sleep(1500);
-
-                // Cargar los pedidos pendientes desde el archivo nuevamente
-                sistemaPedidos.cargarPedidosPendientes();
-
-                orderManagementMenu(); // Mostrar el menú de gestión de pedidos
             }
             else {
                 ShowConsoleCursor(false);
-                std::cout << std::endl << MAGENTA_COLOR << "El carrito está vacío. No se puede confirmar el pedido." << RESET_COLOR;
+                cout << endl << MAGENTA_COLOR << "El carrito está vacío. No se puede confirmar el pedido." << RESET_COLOR;
                 Sleep(1500);
             }
             break;
@@ -1163,13 +1193,13 @@ void orderingMenu() {
         case 4:
             if (!carrito.isEmpty()) {
                 ShowConsoleCursor(false);
-                std::cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido cancelado. El carrito ha sido vaciado." << RESET_COLOR;
+                cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido cancelado. El carrito ha sido vaciado." << RESET_COLOR;
                 carrito.limpiarCarrito();
                 Sleep(1500);
             }
             else {
                 ShowConsoleCursor(false);
-                std::cout << std::endl << MAGENTA_COLOR << "El carrito está vacío. No se puede cancelar el pedido." << RESET_COLOR;
+                cout << endl << MAGENTA_COLOR << "El carrito está vacío. No se puede cancelar el pedido." << RESET_COLOR;
                 Sleep(1500);
             }
             break;
@@ -1187,83 +1217,55 @@ void orderManagementMenu() {
     // Antes del bucle o en algún lugar antes de utilizarlo en tu código
     GESTION_INVENTARIO inventario;
 
-    sistemaPedidos.cargarPedidosPendientes(); // Cargar pedidos pendientes desde el archivo
-    sistemaPedidos.cargarPedidosProcesados(); // Cargar pedidos procesados desde el archivo
     inventario.cargarInventarioDesdeArchivo(); // Cargar el inventario desde el archivo
 
     int opcion;
 
     bool running = true;
 
+    int indicePedido;
+
     while (running) {
         system("cls");  
-        std::cout << CYAN_COLOR << "=== GESTIÓN DE PEDIDOS ==" << RESET_COLOR << DOUBLE_SPACE;
-        std::cout << "<1> Ver Pedidos Pendientes" << endl;
-        std::cout << "<2> Ver Pedidos Procesados" << endl;
-        std::cout << "<3> Procesar Pedido" << endl;
-        std::cout << "<4> Eliminar Pedidos" << endl;
-        std::cout << "<5> Historial de Pedidos" << endl;
-        std::cout << "<6> Volver";
+        cout << CYAN_COLOR << "=== GESTIÓN DE PEDIDOS ==" << RESET_COLOR << DOUBLE_SPACE;
+        cout << "<1> Ver Pedidos Pendientes" << endl;
+        cout << "<2> Ver Pedidos Procesados" << endl;
+        cout << "<3> Procesar Pedido" << endl;
+        cout << "<4> Eliminar Pedidos" << endl;
+        cout << "<5> Historial de Pedidos" << endl;
+        cout << "<6> Volver";
         ShowConsoleCursor(true); // Muestra el cursor
-        std::cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione una opción: " << RESET_COLOR;
-        std::cin >> opcion;
+        cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione una opción: " << RESET_COLOR;
+        cin >> opcion;
 
         // Verifica si la entrada falló
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
-            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
-            std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
 
         switch (opcion) {
         case 1:
-            sistemaPedidos.verPedidosPendientes();
-            ShowConsoleCursor(false); // Oculta el cursor
-            std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
-            _getch();
+            sistemaPedidos.verTodosPedidosPendientes();
             system("cls");
             break;
         case 2:
-            sistemaPedidos.verPedidosProcesados();
+            sistemaPedidos.verTodosPedidosProcesados();
             break;
         case 3:
             system("cls");
-            sistemaPedidos.verPedidosPendientes();
-            ShowConsoleCursor(true); // Muestra el cursor
-            cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese el índice del pedido a procesar: " << RESET_COLOR;
-            int indicePedido;
-            std::cin >> indicePedido;
-            if (indicePedido >= 0 && indicePedido < sistemaPedidos.getNumPedidosPendientes()) {
-                PEDIDO pedido = sistemaPedidos.getPedidoPendientePorIndice(indicePedido);
-                if (inventario.verificarStock(pedido.getCodigoProducto(), pedido.getCantidad())) {
-                    // Procesar el pedido
-                    inventario.retirarStock(pedido.getCodigoProducto(), pedido.getCantidad());
-                    sistemaPedidos.procesarPedido(indicePedido);
-                    ShowConsoleCursor(false); // Oculta el cursor
-                    std::cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido procesado correctamente.";
-                    Sleep(1500);
-                }
-                else {
-                    ShowConsoleCursor(false); // Oculta el cursor
-                    std::cout << DOUBLE_SPACE << RED_COLOR << "No hay suficiente stock para procesar este pedido.";
-                    Sleep(1500);
-                }
-            }
-            else {
-                ShowConsoleCursor(false); // Oculta el cursor
-                std::cout << DOUBLE_SPACE << MAGENTA_COLOR << "Índice de pedido inválido.\n";
-                Sleep(1500);
-            }
+            sistemaPedidos.procesarPedidosMenu();
             break;
         case 4:
-            sistemaPedidos.eliminarPedidos();
+            sistemaPedidos.eliminarPedidoPorIndice(indicePedido);
             break;
         case 5:
             system("cls");
-            sistemaPedidos.mostrarHistorialPedidos();
+            sistemaPedidos.verHistorialPedidosVendedor();
             break;
         case 6:
             running = false;
@@ -1293,7 +1295,7 @@ void customerManagementMenu() {
         // Verifica si la entrada falló
         if (cin.fail()) { // Verifica si la entrada falló
             cin.clear(); // Limpia el estado de cin
-            cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
             ShowConsoleCursor(false); // Oculta el cursor
             cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
@@ -1377,7 +1379,7 @@ void sortProductsPrice() {
 		// Verifica si la entrada falló
 		if (cin.fail()) { // Verifica si la entrada falló
 			cin.clear(); // Limpia el estado de cin
-			cin.ignore((std::numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+			cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
 			ShowConsoleCursor(false); // Oculta el cursor
 			cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
 			Sleep(1500); // Espera 1.5 segundos

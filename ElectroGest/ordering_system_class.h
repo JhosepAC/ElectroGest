@@ -1,213 +1,270 @@
 #pragma once
 #include <vector>
 #include <fstream>
-#include <iomanip>
+#include <sstream>
+#include <iostream>
 #include "order_class.h"
-#include <conio.h>
-#include <stdexcept> // para manejar excepciones
 
 class SISTEMA_PEDIDOS {
 private:
-    std::vector<PEDIDO> pedidosPendientes;
-    std::vector<PEDIDO> pedidosProcesados;
+    vector<PEDIDO> pedidosPendientes;
+    vector<PEDIDO> pedidosProcesados;
 
-public:
-    // Método para obtener el número de pedidos pendientes
-    int getNumPedidosPendientes() const {
-        return pedidosPendientes.size();
+    string getFileNamePendientes() const { return "pending_orders.txt"; }
+    string getFileNameProcesados() const { return "orders_processed.txt"; }
+
+    // Método para cargar pedidos desde un archivo
+    void cargarPedidos(const string& filename, vector<PEDIDO>& pedidos) {
+        ifstream file(filename);
+        if (!file.is_open()) {
+            cerr << "No se pudo abrir el archivo " << filename << endl;
+            return;
+        }
+
+        string clienteID, codigoProducto;
+        int cantidad;
+        pedidos.clear();
+        while (file >> clienteID >> codigoProducto >> cantidad) {
+            pedidos.push_back(PEDIDO(clienteID, codigoProducto, cantidad));
+        }
+
+        file.close();
     }
 
-    // Método para obtener un pedido pendiente por índice
-    PEDIDO getPedidoPendientePorIndice(int indice) const {
+    // Método para guardar pedidos en un archivo
+    void guardarPedidos(const string& filename, const vector<PEDIDO>& pedidos) const {
+        ofstream file(filename);
+        if (!file.is_open()) {
+            cerr << "No se pudo abrir el archivo " << filename << endl;
+            return;
+        }
+
+        for (const auto& pedido : pedidos) {
+            file << pedido.getClienteID() << " " << pedido.getCodigoProducto() << " " << pedido.getCantidad() << endl;
+        }
+
+        file.close();
+    }
+
+public:
+    SISTEMA_PEDIDOS() {
+        cargarPedidosPendientes();
+        cargarPedidosProcesados();
+    }
+
+    int getNumPedidosPendientes() const {
+		return pedidosPendientes.size();
+	}
+
+    PEDIDO getPedidoPendientePorIndice(int indice) {
         if (indice >= 0 && indice < pedidosPendientes.size()) {
             return pedidosPendientes[indice];
         }
         else {
-            // Manejo de error: Índice fuera de rango
-            throw std::out_of_range("Índice de pedido pendiente fuera de rango.");
+            throw out_of_range("Índice fuera de rango.");
         }
+    }
+
+    void eliminarPedidoPorIndice(int indice) {
+        if (indice >= 0 && indice < pedidosPendientes.size()) {
+            pedidosPendientes.erase(pedidosPendientes.begin() + indice);
+        }
+        else {
+            throw out_of_range("Índice fuera de rango.");
+        }
+    }
+
+    // Método para cargar pedidos pendientes
+    void cargarPedidosPendientes() {
+        cargarPedidos(getFileNamePendientes(), pedidosPendientes);
+    }
+
+    // Método para cargar pedidos procesados
+    void cargarPedidosProcesados() {
+        cargarPedidos(getFileNameProcesados(), pedidosProcesados);
+    }
+
+    // Método para guardar pedidos pendientes
+    void guardarPedidosPendientes() const {
+        guardarPedidos(getFileNamePendientes(), pedidosPendientes);
+    }
+
+    // Método para guardar pedidos procesados
+    void guardarPedidosProcesados() const {
+        guardarPedidos(getFileNameProcesados(), pedidosProcesados);
     }
 
     // Método para agregar un pedido pendiente
     void agregarPedidoPendiente(const PEDIDO& pedido) {
         pedidosPendientes.push_back(pedido);
-        guardarPedidosPendientes(); // Actualizamos el archivo inmediatamente
-    }
-
-    // Método para guardar pedidos pendientes en un archivo
-    void guardarPedidosPendientes() const {
-        std::ofstream file("pending_orders.txt");
-        if (!file.is_open()) {
-            std::cerr << "No se pudo abrir el archivo pending_orders.txt para guardar los pedidos pendientes.\n";
-            return;
-        }
-
-        for (const auto& pedido : pedidosPendientes) {
-            file << pedido.getCodigoProducto() << " " << pedido.getCantidad() << std::endl;
-        }
-
-        file.close();
-    }
-
-    // Método para guardar pedidos procesados en un archivo
-    void guardarPedidosProcesados() const {
-        std::ofstream file("orders_processed.txt");
-        if (!file.is_open()) {
-            std::cerr << "No se pudo abrir el archivo orders_processed.txt para guardar los pedidos procesados.\n";
-            return;
-        }
-
-        for (const auto& pedido : pedidosProcesados) {
-            file << pedido.getCodigoProducto() << " " << pedido.getCantidad() << std::endl;
-        }
-
-        file.close();
-    }
-
-    // Método para cargar pedidos pendientes desde un archivo
-    void cargarPedidosPendientes() {
-        std::ifstream file("pending_orders.txt");
-        if (!file.is_open()) {
-            std::cerr << "No se pudo abrir el archivo pending_orders.txt" << std::endl;
-            return;
-        }
-
-        std::string codigoProducto;
-        int cantidad;
-
-        pedidosPendientes.clear();
-        while (file >> codigoProducto >> cantidad) {
-            pedidosPendientes.push_back(PEDIDO(codigoProducto, cantidad));
-        }
-
-        file.close();
-    }
-
-    // Método para cargar pedidos procesados desde un archivo
-    void cargarPedidosProcesados() {
-        std::ifstream file("orders_processed.txt");
-        if (!file.is_open()) {
-            std::cerr << "No se pudo abrir el archivo orders_processed.txt" << std::endl;
-            return;
-        }
-
-        std::string codigoProducto;
-        int cantidad;
-
-        pedidosProcesados.clear();
-        while (file >> codigoProducto >> cantidad) {
-            pedidosProcesados.push_back(PEDIDO(codigoProducto, cantidad));
-        }
-
-        file.close();
-    }
-
-    // Método para mostrar los pedidos pendientes
-    void verPedidosPendientes() const {
-        ShowConsoleCursor(false);
-        if (pedidosPendientes.empty()) {
-            std::cout << std::endl << MAGENTA_COLOR << "No hay pedidos pendientes.";
-            Sleep(1500);
-        }
-        else {
-            system("cls");
-            std::cout << CYAN_COLOR << "=== PEDIDOS PENDIENTES ===" << DOUBLE_SPACE;
-            std::cout << std::left << std::setw(10) << "Índice" << std::setw(20) << "Código Producto" << std::setw(10) << "Cantidad" << std::endl;
-            std::cout << std::string(42, '=') << std::endl;
-            for (size_t i = 0; i < pedidosPendientes.size(); ++i) {
-                std::cout << BLUE_COLOR << std::setw(10) << i << RESET_COLOR
-                    << std::setw(20) << pedidosPendientes[i].getCodigoProducto()
-                    << std::setw(10) << pedidosPendientes[i].getCantidad() << "\n";
-            }
-        }
-    }
-
-    // Método para mostrar los pedidos procesados
-    void verPedidosProcesados() const {
-        ShowConsoleCursor(false);
-        if (pedidosProcesados.empty()) {
-            std::cout << std::endl << MAGENTA_COLOR << "No hay pedidos procesados.";
-            Sleep(1500);
-        }
-        else {
-            system("cls");
-            std::cout << CYAN_COLOR << "=== PEDIDOS PROCESADOS ===" << DOUBLE_SPACE;
-            std::cout << std::left << std::setw(10) << "Índice" << std::setw(20) << "Código Producto" << std::setw(10) << "Cantidad" << std::endl;
-            std::cout << std::string(42, '=') << std::endl;
-            for (size_t i = 0; i < pedidosProcesados.size(); ++i) {
-                std::cout << BLUE_COLOR << std::setw(10) << i << RESET_COLOR
-                    << std::setw(20) << pedidosProcesados[i].getCodigoProducto()
-                    << std::setw(10) << pedidosProcesados[i].getCantidad() << "\n";
-            }
-            std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
-            _getch();
-        }
-    }
-
-    // Método para eliminar todos los pedidos
-    void eliminarPedidos() {
-        ShowConsoleCursor(false);
-        if (pedidosPendientes.empty()) {
-            std::cout << std::endl << MAGENTA_COLOR << "No hay pedidos pendientes que eliminar.";
-            Sleep(1500);
-            return;
-        }
-        pedidosPendientes.clear();
-        pedidosProcesados.clear();
-        std::ofstream filePendientes("pending_orders.txt");
-        std::ofstream fileProcesados("orders_processed.txt");
-        filePendientes.close();
-        fileProcesados.close();
-        std::cout << std::endl << GREEN_COLOR << "Todos los pedidos han sido eliminados.";
-        Sleep(1500);
-    }
-
-    // Método para mostrar el historial de pedidos
-    void mostrarHistorialPedidos() const {
-        std::cout << CYAN_COLOR << "=== HISTORIAL DE PEDIDOS ===" << DOUBLE_SPACE;
-
-        // Mostrar pedidos pendientes
-        std::cout << YELLOW_COLOR << "Pedidos Pendientes:" << RESET_COLOR << std::endl;
-        if (pedidosPendientes.empty()) {
-            std::cout << MAGENTA_COLOR << "No hay pedidos pendientes." << RESET_COLOR << std::endl;
-        }
-        else {
-            for (const auto& pedido : pedidosPendientes) {
-                std::cout << BLUE_COLOR << "Código: " << RESET_COLOR << pedido.getCodigoProducto() << BLUE_COLOR << ", Cantidad: " << RESET_COLOR << pedido.getCantidad() << std::endl;
-            }
-        }
-
-        // Mostrar pedidos procesados
-        std::cout << DOUBLE_SPACE << YELLOW_COLOR << "Pedidos Procesados:" << RESET_COLOR << std::endl;
-        if (pedidosProcesados.empty()) {
-            std::cout << MAGENTA_COLOR << "No hay pedidos procesados." << RESET_COLOR << std::endl;
-        }
-        else {
-            for (const auto& pedido : pedidosProcesados) {
-                std::cout << BLUE_COLOR << "Código: " << RESET_COLOR << pedido.getCodigoProducto() << BLUE_COLOR << ", Cantidad: " << RESET_COLOR << pedido.getCantidad() << std::endl;
-            }
-        }
-
-        ShowConsoleCursor(false);
-        std::cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
-        _getch();
+        guardarPedidosPendientes();
     }
 
     // Método para procesar un pedido
     void procesarPedido(int indice) {
         if (indice >= 0 && indice < pedidosPendientes.size()) {
             PEDIDO pedido = pedidosPendientes[indice];
-            // Mover el pedido a la lista de pedidos procesados
             pedidosProcesados.push_back(pedido);
-            // Eliminar el pedido de la lista de pedidos pendientes
             pedidosPendientes.erase(pedidosPendientes.begin() + indice);
-            // Actualizar los archivos de pedidos pendientes y procesados
             guardarPedidosPendientes();
             guardarPedidosProcesados();
         }
         else {
-            std::cout << MAGENTA_COLOR << "Índice de pedido inválido.";
-            Sleep(1500);
+            cout << "Índice de pedido inválido." << endl;
         }
     }
+
+    // Método para mostrar todos los pedidos pendientes (vendedor)
+    void verTodosPedidosPendientes() const {
+        ShowConsoleCursor(false);
+        system("cls");
+        cout << CYAN_COLOR << "=== TODOS LOS PEDIDOS PENDIENTES ===" << DOUBLE_SPACE;
+
+        if (pedidosPendientes.empty()) {
+            cout << MAGENTA_COLOR << "No hay pedidos pendientes." << endl;
+        }
+        else {
+            for (const auto& pedido : pedidosPendientes) {
+                cout << YELLOW_COLOR << "ID Cliente: " << RESET_COLOR << pedido.getClienteID() << GRAY_COLOR << "," << BLUE_COLOR << " Código: " << RESET_COLOR << pedido.getCodigoProducto() << GRAY_COLOR << "," << BLUE_COLOR << " Cantidad: " << RESET_COLOR << pedido.getCantidad() << endl;
+            }
+        }
+
+        cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar..." << endl;
+        _getch();
+        system("cls");
+    }
+
+    void verHistorialPedidosCliente(const string& clienteID) const {
+        system("cls");
+        ShowConsoleCursor(false);
+
+        cout << CYAN_COLOR << "=== PEDIDOS PROCESADOS ===" << DOUBLE_SPACE;
+
+        bool hayPedidosProcesados = false;
+        for (const auto& pedido : pedidosProcesados) {
+            if (pedido.getClienteID() == clienteID) {
+                hayPedidosProcesados = true;
+                cout << BLUE_COLOR << "Código: " << RESET_COLOR << pedido.getCodigoProducto() << GRAY_COLOR << "," << BLUE_COLOR << " Cantidad: " << RESET_COLOR << pedido.getCantidad();
+            }
+        }
+
+        if (!hayPedidosProcesados) {
+            cout << MAGENTA_COLOR << "No hay pedidos procesados para el cliente " << clienteID << DOUBLE_SPACE;
+        }
+
+        cout << DOUBLE_SPACE << CYAN_COLOR << "=== PEDIDOS PENDIENTES ===" << DOUBLE_SPACE;
+
+        bool hayPedidosPendientes = false;
+        for (const auto& pedido : pedidosPendientes) {
+            if (pedido.getClienteID() == clienteID) {
+                hayPedidosPendientes = true;
+                cout << BLUE_COLOR << "Código: " << RESET_COLOR << pedido.getCodigoProducto() << GRAY_COLOR << "," << BLUE_COLOR << " Cantidad: " << RESET_COLOR << pedido.getCantidad() << endl;
+            }
+        }
+
+        if (!hayPedidosPendientes) {
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "No hay pedidos pendientes para el cliente " << clienteID;
+        }
+
+        cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar..." << endl;
+        _getch();
+        system("cls");
+    }
+
+    // Método para mostrar todos los pedidos procesados (vendedor)
+    void verTodosPedidosProcesados() const {
+        ShowConsoleCursor(false);
+        system("cls");
+        cout << CYAN_COLOR << "=== TODOS LOS PEDIDOS PROCESADOS ===" << DOUBLE_SPACE;
+
+        if (pedidosProcesados.empty()) {
+            cout << MAGENTA_COLOR << "No hay pedidos procesados." << endl;
+        }
+        else {
+            for (const auto& pedido : pedidosProcesados) {
+                cout << YELLOW_COLOR << "ID Cliente: " << RESET_COLOR << pedido.getClienteID() << GRAY_COLOR << "," << BLUE_COLOR << " Código: " << RESET_COLOR << pedido.getCodigoProducto() << GRAY_COLOR << "," << BLUE_COLOR << " Cantidad: " << RESET_COLOR << pedido.getCantidad() << endl;
+            }
+        }
+
+        cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
+        _getch();
+        system("cls");
+    }
+
+    void verHistorialPedidosVendedor() const {
+        ShowConsoleCursor(false);
+		system("cls");
+		cout << CYAN_COLOR << "           === HISTORIAL DE PEDIDOS ===" << DOUBLE_SPACE;
+
+        cout << CYAN_COLOR << "     === TODOS LOS PEDIDOS PROCESADOS === " << DOUBLE_SPACE;
+
+        if (pedidosProcesados.empty()) {
+            cout << MAGENTA_COLOR << "No hay pedidos procesados." << endl;
+        }
+        else {
+            for (const auto& pedido : pedidosProcesados) {
+                cout << YELLOW_COLOR << "ID Cliente: " << RESET_COLOR << pedido.getClienteID() << GRAY_COLOR << "," << BLUE_COLOR << " Código: " << RESET_COLOR << pedido.getCodigoProducto() << GRAY_COLOR << "," << BLUE_COLOR << " Cantidad: " << RESET_COLOR << pedido.getCantidad() << endl;
+            }
+        }
+
+        cout << CYAN_COLOR << DOUBLE_SPACE << "     === TODOS LOS PEDIDOS PENDIENTES ===" << DOUBLE_SPACE;
+
+        if (pedidosPendientes.empty()) {
+            cout << MAGENTA_COLOR << "No hay pedidos pendientes." << endl;
+        }
+        else {
+            for (const auto& pedido : pedidosPendientes) {
+                cout << YELLOW_COLOR << "ID Cliente: " << RESET_COLOR << pedido.getClienteID() << GRAY_COLOR << "," << BLUE_COLOR << " Código: " << RESET_COLOR << pedido.getCodigoProducto() << GRAY_COLOR << "," << BLUE_COLOR << " Cantidad: " << RESET_COLOR << pedido.getCantidad() << endl;
+            }
+        }
+
+        cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar..." << endl;
+        _getch();
+
+    }
+
+    void procesarPedidosMenu() const {
+
+        SISTEMA_PEDIDOS sistemaPedidos;
+        GESTION_INVENTARIO inventario;
+
+        cout << CYAN_COLOR << "     === TODOS LOS PEDIDOS PENDIENTES ===" << DOUBLE_SPACE;
+
+        if (pedidosPendientes.empty()) {
+            cout << MAGENTA_COLOR << "No hay pedidos pendientes." << endl;
+        }
+        else {
+            for (const auto& pedido : pedidosPendientes) {
+                cout << YELLOW_COLOR << "ID Cliente: " << RESET_COLOR << pedido.getClienteID() << GRAY_COLOR << "," << BLUE_COLOR << " Código: " << RESET_COLOR << pedido.getCodigoProducto() << GRAY_COLOR << "," << BLUE_COLOR << " Cantidad: " << RESET_COLOR << pedido.getCantidad() << endl;
+            }
+        }
+
+        ShowConsoleCursor(true); // Muestra el cursor
+        cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese el índice del pedido a procesar: " << RESET_COLOR;
+        int indicePedido;
+        cin >> indicePedido;
+        if (indicePedido >= 0 && indicePedido < sistemaPedidos.getNumPedidosPendientes()) {
+            PEDIDO pedido = sistemaPedidos.getPedidoPendientePorIndice(indicePedido);
+            if (inventario.verificarStock(pedido.getCodigoProducto(), pedido.getCantidad())) {
+                // Procesar el pedido
+                inventario.retirarStock(pedido.getCodigoProducto(), pedido.getCantidad());
+                sistemaPedidos.procesarPedido(indicePedido);
+                ShowConsoleCursor(false); // Oculta el cursor
+                cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido procesado correctamente.";
+                Sleep(1500);
+            }
+            else {
+                ShowConsoleCursor(false); // Oculta el cursor
+                cout << DOUBLE_SPACE << RED_COLOR << "No hay suficiente stock para procesar este pedido.";
+                Sleep(1500);
+            }
+        }
+        else {
+            ShowConsoleCursor(false); // Oculta el cursor
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Índice de pedido inválido.\n";
+            Sleep(1500);
+        }
+
+    }
+
 };

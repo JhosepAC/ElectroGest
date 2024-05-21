@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-
-using namespace std;
+#include <random>
+#include <unordered_set>
 
 class CLIENTE {
 private:
@@ -14,10 +14,25 @@ private:
     string telefono;
     string fechaNacimiento;
     string genero;
+    string idCliente;
+    
+    // Función para generar un código de cliente aleatorio
+    string generateClientId(const unordered_set<string>& existingIds) {
+        string id;
+        random_device rd;
+        mt19937 gen(rd());
+        uniform_int_distribution<> dis(1000, 9999);
+
+        do {
+            id = "UEG_" + to_string(dis(gen));
+        } while (existingIds.find(id) != existingIds.end());
+
+        return id;
+    }
 
 public:
     // Constructor
-    CLIENTE() {};
+    CLIENTE(const unordered_set<string>& existingIds) : idCliente(generateClientId(existingIds)) {}
 
     // Setters
     void setNombre(string nombre) { this->nombre = nombre; }
@@ -29,6 +44,7 @@ public:
     void setTelefono(string telefono) { this->telefono = telefono; }
     void setFechaNacimiento(string fechaNacimiento) { this->fechaNacimiento = fechaNacimiento; }
     void setGenero(string genero) { this->genero = genero; }
+    void setIdCliente(string idCliente) { this->idCliente = idCliente; }
 
     // Getters
     string getNombre() const { return nombre; }
@@ -40,5 +56,67 @@ public:
     string getTelefono() const { return telefono; }
     string getFechaNacimiento() const { return fechaNacimiento; }
     string getGenero() const { return genero; }
+    string getIdCliente() const { return idCliente; }
 
 };
+
+// Clase para almacenar el ID del cliente actual
+// Se utiliza un patrón Singleton para asegurar que solo exista una instancia de la clase
+// y que se pueda acceder a ella desde cualquier parte del programa sin necesidad de pasarla como parámetro
+
+class CLIENTE_ACTUAL {
+private:
+    string clienteID;
+    static CLIENTE_ACTUAL* instancia;
+
+    // Constructor privado
+    CLIENTE_ACTUAL() {}
+
+public:
+    // Método para obtener la instancia única de la clase
+    static CLIENTE_ACTUAL* obtenerInstancia() {
+        if (instancia == nullptr) {
+            instancia = new CLIENTE_ACTUAL();
+        }
+        return instancia;
+    }
+
+    // Setters
+    void setClienteID(const string& id) { clienteID = id; }
+
+    // Getters
+    string getClienteID() const { return clienteID; }
+
+    // Función para cargar el ID del cliente actual desde un archivo usando el correo electrónico
+    bool cargarClienteIDDesdeArchivo(const string& filePath, const string& email) {
+        ifstream file(filePath);
+        if (!file.is_open()) {
+            cerr << "Error al abrir el archivo: " << filePath << endl;
+            return false;
+        }
+
+        string line;
+        while (getline(file, line)) {
+            stringstream ss(line);
+            string id, nombre, apellido, emailFromFile, username, direccion, telefono, fecha, genero;
+
+            if (getline(ss, id, ',') && getline(ss, nombre, ',') && getline(ss, apellido, ',') &&
+                getline(ss, emailFromFile, ',') && getline(ss, username, ',') && getline(ss, direccion, ',') &&
+                getline(ss, telefono, ',') && getline(ss, fecha, ',') && getline(ss, genero)) {
+
+                // Si el email coincide con el email del cliente actual, se guarda el id
+                if (email == emailFromFile) {
+                    clienteID = id;
+                    file.close();
+                    return true;
+                }
+            }
+        }
+
+        file.close();
+        return false;
+    }
+};
+
+// Inicializar la instancia estática
+CLIENTE_ACTUAL* CLIENTE_ACTUAL::instancia = nullptr;

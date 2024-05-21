@@ -1,22 +1,20 @@
 #pragma once
 #include <iostream>
 
-// Clase para representar un pedido
 class PEDIDO {
 private:
+    string clienteID;
     string codigoProducto;
     int cantidad;
 
 public:
-    PEDIDO(const string& codigo, int cantidad) : codigoProducto(codigo), cantidad(cantidad) {}
+    // Constructor
+    PEDIDO(const string& id,const string& codigo, int cantidad) 
+        : clienteID(id), codigoProducto(codigo), cantidad(cantidad) {}
 
-    // Método para obtener el código del producto
-    string getCodigoProducto() const {
-        return codigoProducto;
-    }
+    // Getters
+    string getClienteID() const { return clienteID; }
+    string getCodigoProducto() const { return codigoProducto; }
+    int getCantidad() const { return cantidad; }
 
-    // Método para obtener la cantidad del producto
-    int getCantidad() const {
-        return cantidad;
-    }
 };

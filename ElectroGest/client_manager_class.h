@@ -6,8 +6,6 @@
 #include <conio.h>
 #include "client_class.h"
 
-using namespace std;
-
 class GESTION_CLIENTE {
 public:
 
@@ -19,6 +17,7 @@ public:
 
             // Imprimir encabezados de la tabla
             cout << CYAN_COLOR
+                << left << setw(15) << "ID Cliente"
                 << left << setw(15) << "Nombre"
                 << setw(20) << "Apellido"
                 << setw(35) << "Correo"
@@ -31,6 +30,7 @@ public:
             // Imprimir separador de columnas
             cout << YELLOW_COLOR
                 << setw(15) << setfill('-') << ""
+                << setw(15) << ""
                 << setw(20) << ""
                 << setw(35) << ""
                 << setw(20) << ""
@@ -41,9 +41,10 @@ public:
 
             while (getline(file, line)) {
                 istringstream iss(line);
-                string nombre, apellido, correo, contrasenia, direccion, telefono, fechaNacimiento, genero;
+                string idCliente, nombre, apellido, correo, contrasenia, direccion, telefono, fechaNacimiento, genero;
 
                 // Leer los campos separados por coma
+                getline(iss, idCliente, ',');
                 getline(iss, nombre, ',');
                 getline(iss, apellido, ',');
                 getline(iss, correo, ',');
@@ -55,6 +56,7 @@ public:
 
                 // Mostrar la información del cliente en una sola línea
                 cout << left
+                    << setw(15) << idCliente
                     << setw(15) << nombre
                     << setw(20) << apellido
                     << setw(35) << correo

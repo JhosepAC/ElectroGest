@@ -6,6 +6,9 @@
 #include <map>
 #include <limits>
 #include <cctype>
+#include <fstream>
+#include <sstream>
+#include <unordered_set>
 
 using namespace std;
 
@@ -51,4 +54,20 @@ bool contieneSoloLetrasApellido(const string& str) {
         }
     }
     return true;
+}
+
+unordered_set<string> loadExistingIds() {
+    unordered_set<string> existingIds;
+    ifstream file("client_registration.txt");
+    if (file.is_open()) {
+        string line;
+        while (getline(file, line)) {
+            istringstream iss(line);
+            string idCliente;
+            getline(iss, idCliente, ',');
+            existingIds.insert(idCliente);
+        }
+        file.close();
+    }
+    return existingIds;
 }
