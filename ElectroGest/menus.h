@@ -8,6 +8,7 @@
 #include "client_manager_class.h"
 #include "ordering_system_class.h"
 #include "shopping_cart_class.h"
+#include "Graph.h"
 #include <iostream>
 #include <fstream>
 #include <conio.h>
@@ -208,7 +209,7 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
         cout << "<2> " << "Gestionar inventario" << endl; // Gestión de inventario
         cout << "<3> " << "Gestionar proveedores" << endl; // Gestión de proveedores
         cout << "<4> " << "Gestionar pedidos" << endl; // Gestión de pedidos
-        cout << "<5> " << "Gestionar clientes" << endl; // Gestión de clientes
+        cout << "<5> " << "Gestionar clientes" << endl; // Gestión de cliente
         cout << "<6> " << "Salir"; // Salir
         ShowConsoleCursor(true); // Muestra el cursor
         cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opcíón: " << RESET_COLOR; cin >> opcion; // Ingrese una opción
@@ -1225,6 +1226,202 @@ void orderManagementMenu() {
 
     int indicePedido;
 
+    vector<string> districts = {
+   "Miraflores", "La Victoria", "Rimac", "La Molina", "San Martin de Porres", "Chorrillos",
+   "Los Olivos", "Independencia", "San Juan de Lurigancho", "ATE", "Cieneguilla", "El Agustino",
+   "Santa Anita", "Pachacamac", "Lurin", "Villa Maria del Triunfo", "Villa el Salvador",
+   "San Juan de Miraflores", "Santiago de Surco", "San Borja", "Barranco", "Surquillo",
+   "San Isidro", "Lince", "Jesus Maria", "Brena", "Cercado", "Pueblo Libre", "Magdalena"
+    };
+
+    // Crear el grafo
+    Graph g(districts);
+
+    // Añadir aristas al grafo para San Martín de Porres
+    g.addEdge("San Martin de Porres", "Miraflores", 15);
+    g.addEdge("San Martin de Porres", "La Victoria", 10);
+    g.addEdge("San Martin de Porres", "Rimac", 5);
+    g.addEdge("San Martin de Porres", "La Molina", 20);
+    g.addEdge("San Martin de Porres", "Chorrillos", 25);
+    g.addEdge("San Martin de Porres", "Los Olivos", 6);
+    g.addEdge("San Martin de Porres", "Independencia", 5);
+    g.addEdge("San Martin de Porres", "San Juan de Lurigancho", 12);
+    g.addEdge("San Martin de Porres", "ATE", 18);
+    g.addEdge("San Martin de Porres", "Lurin", 40);
+    g.addEdge("San Martin de Porres", "El Agustino", 10);
+    g.addEdge("San Martin de Porres", "Santa Anita", 15);
+    g.addEdge("San Martin de Porres", "Pachacamac", 35);
+    g.addEdge("San Martin de Porres", "Villa Maria del Triunfo", 30);
+    g.addEdge("San Martin de Porres", "Villa el Salvador", 30);
+    g.addEdge("San Martin de Porres", "San Juan de Miraflores", 25);
+    g.addEdge("San Martin de Porres", "Santiago de Surco", 20);
+    g.addEdge("San Martin de Porres", "San Borja", 15);
+    g.addEdge("San Martin de Porres", "Barranco", 20);
+    g.addEdge("San Martin de Porres", "Surquillo", 15);
+    g.addEdge("San Martin de Porres", "San Isidro", 12);
+    g.addEdge("San Martin de Porres", "Lince", 10);
+    g.addEdge("San Martin de Porres", "Jesus Maria", 9);
+    g.addEdge("San Martin de Porres", "Brena", 7);
+    g.addEdge("San Martin de Porres", "Cercado", 7);
+    g.addEdge("San Martin de Porres", "Pueblo Libre", 10);
+    g.addEdge("San Martin de Porres", "Magdalena", 12);
+    g.addEdge("San Martin de Porres", "San Martin de Porres", 1);
+
+    // Añadir aristas al grafo para Rímac
+    g.addEdge("Rimac", "Miraflores", 10);
+    g.addEdge("Rimac", "La Victoria", 5);
+    g.addEdge("Rimac", "Rimac", 1);
+    g.addEdge("Rimac", "La Molina", 15);
+    g.addEdge("Rimac", "San Martin de Porres", 6);
+    g.addEdge("Rimac", "Chorrillos", 18);
+    g.addEdge("Rimac", "Los Olivos", 8);
+    g.addEdge("Rimac", "Independencia", 8);
+    g.addEdge("Rimac", "San Juan de Lurigancho", 10);
+    g.addEdge("Rimac", "ATE", 12);
+    g.addEdge("Rimac", "Cieneguilla", 30);
+    g.addEdge("Rimac", "El Agustino", 6);
+    g.addEdge("Rimac", "Santa Anita", 10);
+    g.addEdge("Rimac", "Pachacamac", 30);
+    g.addEdge("Rimac", "Lurin", 35);
+    g.addEdge("Rimac", "Villa Maria del Triunfo", 20);
+    g.addEdge("Rimac", "Villa el Salvador", 25);
+    g.addEdge("Rimac", "San Juan de Miraflores", 18);
+    g.addEdge("Rimac", "Santiago de Surco", 15);
+    g.addEdge("Rimac", "San Borja", 10);
+    g.addEdge("Rimac", "Barranco", 12);
+    g.addEdge("Rimac", "Surquillo", 10);
+    g.addEdge("Rimac", "San Isidro", 8);
+    g.addEdge("Rimac", "Lince", 7);
+    g.addEdge("Rimac", "Jesus Maria", 5);
+    g.addEdge("Rimac", "Brena", 4);
+    g.addEdge("Rimac", "Cercado", 3);
+    g.addEdge("Rimac", "Pueblo Libre", 7);
+    g.addEdge("Rimac", "Magdalena", 10);
+
+    // Añadir aristas al grafo para La Molina
+    g.addEdge("La Molina", "Miraflores", 13);
+    g.addEdge("La Molina", "La Victoria", 12);
+    g.addEdge("La Molina", "Rimac", 15);
+    g.addEdge("La Molina", "La Molina", 1);
+    g.addEdge("La Molina", "San Martin de Porres", 20);
+    g.addEdge("La Molina", "Chorrillos", 20);
+    g.addEdge("La Molina", "Los Olivos", 22);
+    g.addEdge("La Molina", "Independencia", 20);
+    g.addEdge("La Molina", "San Juan de Lurigancho", 12);
+    g.addEdge("La Molina", "ATE", 8);
+    g.addEdge("La Molina", "Cieneguilla", 30);
+    g.addEdge("La Molina", "El Agustino", 10);
+    g.addEdge("La Molina", "Santa Anita", 7);
+    g.addEdge("La Molina", "Pachacamac", 25);
+    g.addEdge("La Molina", "Lurin", 30);
+    g.addEdge("La Molina", "Villa Maria del Triunfo", 20);
+    g.addEdge("La Molina", "Villa el Salvador", 22);
+    g.addEdge("La Molina", "San Juan de Miraflores", 18);
+    g.addEdge("La Molina", "Santiago de Surco", 15);
+    g.addEdge("La Molina", "San Borja", 10);
+    g.addEdge("La Molina", "Barranco", 15);
+    g.addEdge("La Molina", "Surquillo", 12);
+    g.addEdge("La Molina", "San Isidro", 13);
+    g.addEdge("La Molina", "Lince", 14);
+    g.addEdge("La Molina", "Jesus Maria", 15);
+    g.addEdge("La Molina", "Brena", 15);
+    g.addEdge("La Molina", "Cercado", 17);
+    g.addEdge("La Molina", "Pueblo Libre", 17);
+    g.addEdge("La Molina", "Magdalena", 18);
+
+    // Añadir aristas al grafo para Chorrilos 
+    g.addEdge("Chorrillos", "Miraflores", 10);
+    g.addEdge("Chorrillos", "Rimac", 18);
+    g.addEdge("Chorrillos", "San Martin de Porres", 20);
+    g.addEdge("Chorrillos", "La Molina", 25);
+    g.addEdge("Chorrillos", "La Victoria", 15);
+    g.addEdge("Chorrillos", "Los Olivos", 22);
+    g.addEdge("Chorrillos", "Independencia", 22);
+    g.addEdge("Chorrillos", "San Juan de Lurigancho", 22);
+    g.addEdge("Chorrillos", "ATE", 25);
+    g.addEdge("Chorrillos", "Cieneguilla", 30);
+    g.addEdge("Chorrillos", "El Agustino", 20);
+    g.addEdge("Chorrillos", "Santa Anita", 22);
+    g.addEdge("Chorrillos", "Pachacamac", 15);
+    g.addEdge("Chorrillos", "Lurin", 20);
+    g.addEdge("Chorrillos", "Villa Maria del Triunfo", 7);
+    g.addEdge("Chorrillos", "Villa el Salvador", 10);
+    g.addEdge("Chorrillos", "San Juan de Miraflores", 8);
+    g.addEdge("Chorrillos", "Santiago de Surco", 10);
+    g.addEdge("Chorrillos", "San Borja", 15);
+    g.addEdge("Chorrillos", "Barranco", 6);
+    g.addEdge("Chorrillos", "Surquillo", 10);
+    g.addEdge("Chorrillos", "San Isidro", 12);
+    g.addEdge("Chorrillos", "Lince", 15);
+    g.addEdge("Chorrillos", "Jesus Maria", 16);
+    g.addEdge("Chorrillos", "Brena", 17);
+    g.addEdge("Chorrillos", "Cercado", 18);
+    g.addEdge("Chorrillos", "Pueblo Libre", 16);
+    g.addEdge("Chorrillos", "Magdalena", 14);
+    g.addEdge("Chorrillos", "Chorrillos", 1);
+
+    // Añadir aristas al grafo para La Victoria 
+    g.addEdge("La Victoria", "Miraflores", 9);
+    g.addEdge("La Victoria", "Rimac", 4);
+    g.addEdge("La Victoria", "San Martin de Porres", 8);
+    g.addEdge("La Victoria", "La Molina", 12);
+    g.addEdge("La Victoria", "Chorrillos", 17);
+    g.addEdge("La Victoria", "Los Olivos", 10);
+    g.addEdge("La Victoria", "Independencia", 11);
+    g.addEdge("La Victoria", "San Juan de Lurigancho", 9);
+    g.addEdge("La Victoria", "ATE", 10);
+    g.addEdge("La Victoria", "Cieneguilla", 27);
+    g.addEdge("La Victoria", "El Agustino", 4);
+    g.addEdge("La Victoria", "Santa Anita", 8);
+    g.addEdge("La Victoria", "Pachacamac", 30);
+    g.addEdge("La Victoria", "Lurin", 33);
+    g.addEdge("La Victoria", "Villa Maria del Triunfo", 17);
+    g.addEdge("La Victoria", "Villa el Salvador", 22);
+    g.addEdge("La Victoria", "San Juan de Miraflores", 14);
+    g.addEdge("La Victoria", "Santiago de Surco", 11);
+    g.addEdge("La Victoria", "San Borja", 7);
+    g.addEdge("La Victoria", "Barranco", 12);
+    g.addEdge("La Victoria", "Surquillo", 9);
+    g.addEdge("La Victoria", "San Isidro", 7);
+    g.addEdge("La Victoria", "Lince", 4);
+    g.addEdge("La Victoria", "Jesus Maria", 4);
+    g.addEdge("La Victoria", "Brena", 4);
+    g.addEdge("La Victoria", "Cercado", 4);
+    g.addEdge("La Victoria", "Pueblo Libre", 7);
+    g.addEdge("La Victoria", "Magdalena", 9);
+    g.addEdge("La Victoria", "La Victoria", 1);
+
+    // Añadir aristas al grafo para Miraflores
+    g.addEdge("Miraflores", "La Victoria", 7);
+    g.addEdge("Miraflores", "Miraflores", 1);
+    g.addEdge("Miraflores", "Rimac", 9);
+    g.addEdge("Miraflores", "San Martin de Porres", 12);
+    g.addEdge("Miraflores", "La Molina", 14);
+    g.addEdge("Miraflores", "Chorrillos", 10);
+    g.addEdge("Miraflores", "Los Olivos", 15);
+    g.addEdge("Miraflores", "Independencia", 15);
+    g.addEdge("Miraflores", "San Juan de Lurigancho", 16);
+    g.addEdge("Miraflores", "ATE", 14);
+    g.addEdge("Miraflores", "Cieneguilla", 27);
+    g.addEdge("Miraflores", "El Agustino", 10);
+    g.addEdge("Miraflores", "Santa Anita", 13);
+    g.addEdge("Miraflores", "Pachacamac", 22);
+    g.addEdge("Miraflores", "Lurin", 25);
+    g.addEdge("Miraflores", "Villa Maria del Triunfo", 14);
+    g.addEdge("Miraflores", "Villa el Salvador", 17);
+    g.addEdge("Miraflores", "San Juan de Miraflores", 10);
+    g.addEdge("Miraflores", "Santiago de Surco", 7);
+    g.addEdge("Miraflores", "San Borja", 7);
+    g.addEdge("Miraflores", "Barranco", 5);
+    g.addEdge("Miraflores", "Surquillo", 3);
+    g.addEdge("Miraflores", "San Isidro", 3);
+    g.addEdge("Miraflores", "Lince", 6);
+    g.addEdge("Miraflores", "Jesus Maria", 7);
+    g.addEdge("Miraflores", "Brena", 8);
+    g.addEdge("Miraflores", "Cercado", 8);
+    g.addEdge("Miraflores", "Pueblo Libre", 7);
+    g.addEdge("Miraflores", "Magdalena", 7);
+   
     while (running) {
         system("cls");  
         cout << CYAN_COLOR << "=== GESTIÓN DE PEDIDOS ==" << RESET_COLOR << DOUBLE_SPACE;
@@ -1233,7 +1430,8 @@ void orderManagementMenu() {
         cout << "<3> Procesar Pedido" << endl;
         cout << "<4> Eliminar Pedidos" << endl;
         cout << "<5> Historial de Pedidos" << endl;
-        cout << "<6> Volver";
+        cout << "<6> Sucursal mas cercana para realizar el pedido" << endl;
+        cout << "<7> Volver";
         ShowConsoleCursor(true); // Muestra el cursor
         cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione una opción: " << RESET_COLOR;
         cin >> opcion;
@@ -1268,6 +1466,10 @@ void orderManagementMenu() {
             sistemaPedidos.verHistorialPedidosVendedor();
             break;
         case 6:
+            g.showMenu();
+            
+            break;
+        case 7:
             running = false;
             break;
         }

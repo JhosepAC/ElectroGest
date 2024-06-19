@@ -127,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client_manager_class.h" />
+    <ClInclude Include="Graph.h" />
     <ClInclude Include="inventory_history_class.h" />
     <ClInclude Include="inventory_management_class.h" />
     <ClInclude Include="ordering_system_class.h" />
