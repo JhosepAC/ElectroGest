@@ -8,6 +8,7 @@
 #include "client_manager_class.h"
 #include "ordering_system_class.h"
 #include "shopping_cart_class.h"
+#include "promotion_management_class.h" 
 #include "Graph.h"
 #include <iostream>
 #include <fstream>
@@ -58,6 +59,9 @@ void orderManagementMenu(); // Menú de gestión de pedidos
 void customerManagementMenu(); // Menú de gestión de clientes
 
 void sortProductsPrice(); // Ordenar productos por precio
+
+// Promociones
+void promotionsManagementMenu();
 
 //#####################################################################//
 //################## IMPLEMENTACIÓN DE LOS MENÚS #####################//
@@ -210,7 +214,8 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
         cout << "<3> " << "Gestionar proveedores" << endl; // Gestión de proveedores
         cout << "<4> " << "Gestionar pedidos" << endl; // Gestión de pedidos
         cout << "<5> " << "Gestionar clientes" << endl; // Gestión de cliente
-        cout << "<6> " << "Salir"; // Salir
+        cout << "<6> " << "Gestionar promociones" << endl; // Gestión de cliente
+        cout << "<7> " << "Salir"; // Salir
         ShowConsoleCursor(true); // Muestra el cursor
         cout << DOUBLE_SPACE << YELLOW_COLOR << "Ingrese una opcíón: " << RESET_COLOR; cin >> opcion; // Ingrese una opción
 
@@ -242,9 +247,12 @@ void sellerMenu(string usuario, GestionarProveedores& supplierManager) {
             customerManagementMenu(); // Menú de gestión de clientes
             break;
         case 6:
+            promotionsManagementMenu(); // Menú de gestión de clientes
+            break;
+        case 7:
 			break;
         }
-    } while (opcion != 6); // El bucle continúa hasta que se elige la opción de salir
+    } while (opcion != 7); // El bucle continúa hasta que se elige la opción de salir
 }
 
 // Menús de clientes 
@@ -1097,6 +1105,7 @@ void orderingMenu() {
     GESTION_INVENTARIO inventario;
     CARRO_COMPRAS carrito;
     SISTEMA_PEDIDOS sistemaPedidos;
+    GESTION_PROMOCIONES gestionPromociones;
 
     inventario.cargarInventarioDesdeArchivo(); // Cargar el inventario desde el archivo al iniciar el programa
 
@@ -1140,6 +1149,13 @@ void orderingMenu() {
                 cout << DOUBLE_SPACE << MAGENTA_COLOR << "El producto no existe en el inventario." << RESET_COLOR;
                 Sleep(1500);
                 break;
+            }
+
+            if (gestionPromociones.tienePromocion(codigoProducto)) {
+                PROMOCION promo = gestionPromociones.obtenerPromocion(codigoProducto);
+                cout << endl << CYAN_COLOR << "Este producto tiene una promoción: " << endl;
+                cout << GRAY_COLOR << "Descuento: " << RESET_COLOR << promo.descuento << "%" << endl;
+                cout << GRAY_COLOR << "Descripción: " << RESET_COLOR << promo.descripcion << DOUBLE_SPACE;
             }
 
             cout << YELLOW_COLOR << "Ingrese la cantidad a agregar: " << RESET_COLOR;
@@ -1611,4 +1627,114 @@ void sortProductsPrice() {
 		}
 	} while (opcion != 3);
 
+}
+
+void promotionsManagementMenu() {
+
+    GESTION_PROMOCIONES gestionPromociones;
+    GESTION_PRODUCTOS gestionProductos;
+    int opcion;
+
+    do
+    {
+        system("cls");
+        ShowConsoleCursor(true);
+        cout << CYAN_COLOR << "=== GESTIÓN DE PROMOCIONES ===" << DOUBLE_SPACE << RESET_COLOR;
+        cout << "1. Agregar Promoción" << endl;
+        cout << "2. Eliminar Promoción" << endl;
+        cout << "3. Mostrar Promociones" << endl;
+        cout << "4. Salir";
+        cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione una opción: " << RESET_COLOR;
+        cin >> opcion;
+
+        // Verifica si la entrada falló
+        if (cin.fail()) { // Verifica si la entrada falló
+            cin.clear(); // Limpia el estado de cin
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+            ShowConsoleCursor(false); // Oculta el cursor
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
+            Sleep(1500); // Espera 1.5 segundos
+            continue; // Continúa al siguiente ciclo del bucle do-while
+        }
+
+        switch (opcion)
+        {
+        case 1: {
+            system("cls");
+            string codigoProducto, descripcion;
+            int descuento;
+
+            cout << YELLOW_COLOR << "Ingrese el código del producto para la promoción: " << RESET_COLOR;
+            cin >> codigoProducto;
+
+            while (true) {
+                if (!gestionProductos.existeProducto(codigoProducto))
+                {
+                    cout << RED_COLOR << endl << "El código " << codigoProducto << " no existe." << DOUBLE_SPACE;
+                    cout << YELLOW_COLOR << "Ingrese nuevamente el código: " << RESET_COLOR;
+                    cin >> codigoProducto;
+                }
+				else
+				{
+					break;
+				}
+            }
+
+            while (true) {
+                cout << endl << YELLOW_COLOR << "Ingrese el porcentaje de descuento (sin el %): " << RESET_COLOR;
+                cin >> descuento;
+
+                // Verificar si la entrada es un número entero
+                if (cin.fail()) { // cin.fail() devuelve true si la entrada no es del tipo esperado (en este caso, un entero)
+                    cin.clear(); // Limpiar el estado de error de cin
+                    cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+                    cout << endl << RED_COLOR << "Debe ingresar un número entero. Inténtelo de nuevo." << endl;
+                }
+                else {
+                    break; // Salir del bucle si se ingresó un número entero válido
+                }
+            }
+
+            cout << endl << YELLOW_COLOR <<"Ingrese la descripción de la promoción: " << RESET_COLOR;
+            cin.ignore();
+            getline(cin, descripcion);
+
+            gestionPromociones.agregarPromocion(PROMOCION(codigoProducto, descuento, descripcion));
+            ShowConsoleCursor(false);
+            cout << DOUBLE_SPACE << GREEN_COLOR << "Promoción agregada exitosamente." << endl;
+            _sleep(1500);
+            break;
+        }
+        case 2: {
+            system("cls");
+            string codigoProducto;
+            cout << YELLOW_COLOR << "Ingrese el código del producto para eliminar la promoción: " << RESET_COLOR;
+            cin >> codigoProducto;
+
+            while (true) {
+                if (!gestionProductos.existeProducto(codigoProducto))
+                {
+                    cout << RED_COLOR << endl << "El código " << codigoProducto << " no existe." << DOUBLE_SPACE;
+                    cout << YELLOW_COLOR << "Ingrese nuevamente el código: " << RESET_COLOR;
+                    cin >> codigoProducto;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            gestionPromociones.eliminarPromocion(codigoProducto);
+            ShowConsoleCursor(false);
+            cout << GREEN_COLOR << endl << "Promoción eliminada exitosamente." << endl;
+            _sleep(1500);
+            break;
+        }
+        case 3:
+            gestionPromociones.mostrarPromociones();
+            break;
+        case 4:
+            break;
+        }
+    } while (opcion != 4);
 }

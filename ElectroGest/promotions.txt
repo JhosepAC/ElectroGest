@@ -1,0 +1,4 @@
+CAF_01,15,Descuento del 15% en todos los productos hasta agotar los existentes.
+TV_01,5,Descuento del 5% en todos los productos hasta agotar los existentes.
+TOS_03,20,Descuento del 20% en todos los productos hasta agotar los existentes.
+EXP_01,50,Descuento del 50% en todos los productos. Oferta v lida solo este fin de semana.

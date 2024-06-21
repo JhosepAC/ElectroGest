@@ -20,6 +20,6 @@ UEG_8901,Andrea,Gutiérrez,andrea.gutierrez@email.com,usuario17,Breña,987654337,7
 UEG_4567,Daniel,Flores,daniel.flores@email.com,usuario18,Pucusana,987654338,8/8/1973,M
 UEG_3456,Verónica,Chávez,veronica.chavez@email.com,usuario19,Miraflores,987654339,9/9/1982,F
 UEG_1234,Sergio,Rojas,sergio.rojas@email.com,usuario20,San Borja,987654340,11/11/1990,M
-UEG_5678,Carlos,Perez,carlos.perez@gmail.com, usuario21,San Miguel,971405120,8/6/2006,M
-UEG_6235,Sebastian,Ramirez,sebastian.ramirez@gmail.cusuario22,Magdalena,915487632,12/12/2000,M
+UEG_5678,Carlos,Perez,carlos.perez@gmail.com,usuario21,San Miguel,971405120,8/6/2006,M
+UEG_6235,Sebastian,Ramirez,sebastian.ramirez@gmail.com,usuario22,Magdalena,915487632,12/12/2000,M
 UEG_1942,Luis,Diaz,luis.diaz@email.com,usuario23,San Isidro,963258741,12/5/2000,M

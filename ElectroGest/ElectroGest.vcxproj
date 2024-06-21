@@ -140,6 +140,8 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="product_management_functions.h" />
     <ClInclude Include="product_manager_class.h" />
+    <ClInclude Include="promotion_class.h" />
+    <ClInclude Include="promotion_management_class.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="product_simple_list_class.h" />
     <ClInclude Include="shopping_cart_class.h" />
@@ -174,6 +176,7 @@
     <Text Include="orders_processed.txt" />
     <Text Include="passwords.txt" />
     <Text Include="pending_orders.txt" />
+    <Text Include="promotions.txt" />
     <Text Include="seller_data.txt" />
     <Text Include="supplier_data.txt" />
     <Text Include="total_products.txt" />

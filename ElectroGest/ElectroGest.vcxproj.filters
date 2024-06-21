@@ -83,6 +83,12 @@
     <ClInclude Include="Graph.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="promotion_class.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="promotion_management_class.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ElectroGest.cpp">
@@ -129,6 +135,9 @@
       <Filter>Archivos de recursos</Filter>
     </Text>
     <Text Include="pending_orders.txt">
+      <Filter>Archivos de recursos</Filter>
+    </Text>
+    <Text Include="promotions.txt">
       <Filter>Archivos de recursos</Filter>
     </Text>
   </ItemGroup>
