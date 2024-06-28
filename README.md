@@ -10,5 +10,5 @@ ElectroGest es un software de gestión diseñado para negocios de venta de elect
 ## Autores
 
 - [Jhosep Argomedo](https://github.com/JosiFat)
-- Luis Díaz
+- [Luis Díaz](https://github.com/LuisDiazpe)
 - Franco Iparraguirre
