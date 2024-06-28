@@ -21,7 +21,6 @@ protected:
     string material;
     string color;
     int garantia;
-    unordered_map<string, string> atributos;
 
 public:
     PRODUCTO(const string& _codigo, const string& _nombre, const string& _marca, double _precio, const string& _modelo, double _ancho, double _alto, double _largo, double _peso, const string& _material, const string& _color, int _garantia)
@@ -50,16 +49,7 @@ public:
         cout << BLUE_COLOR << left << setw(columnWidth) << "Color:" << RESET_COLOR << setw(columnWidth) << color;
         cout << BLUE_COLOR << left << setw(columnWidth) << "Garantia (meses):" << RESET_COLOR << setw(columnWidth) << garantia << endl;
 
-        // Mostrar atributos adicionales
-        for (const auto& atributo : atributos) {
-            cout << BLUE_COLOR << left << setw(columnWidth) << atributo.first + ":" << RESET_COLOR << setw(columnWidth) << atributo.second << endl;
-        }
-
         cout << endl << YELLOW_COLOR << "--------------------------------------------------------------------------------------------" << RESET_COLOR;
-    }
-
-    void agregarAtributo(const string& nombre, const string& valor) {
-        atributos[nombre] = valor;
     }
 
     void mostrarInformacionArchivo(ofstream& file) const {
@@ -78,10 +68,6 @@ public:
         file << left << setw(columnWidth) << "Color:" << color << endl;
         file << left << setw(columnWidth) << "Garantia (meses):" << setw(columnWidth - 15) << garantia << endl;
 
-        // Mostrar atributos adicionales
-        for (const auto& atributo : atributos) {
-            file << left << setw(columnWidth) << atributo.first << atributo.second << endl;
-        }
         file << endl;
         // Agregar una línea de separación después de cada producto
         file << "----------------------------------------" << endl;
@@ -99,9 +85,6 @@ public:
     void setMaterial(const string& _material) { material = _material; }
     void setColor(const string& _color) { color = _color; }
     void setGarantia(int _garantia) { garantia = _garantia; }
-    void setAtributo(const string& clave, const string& valor) {
-        atributos[clave] = valor;
-    }
 
     const string& getCodigo() const { return codigo; }
     const string& getNombre() const { return nombre; } // Getter para el nombre
@@ -115,8 +98,5 @@ public:
     const string& getMaterial() const { return material; }
     const string& getColor() const { return color; }
     int getGarantia() const { return garantia; }
-    const unordered_map<string, string>& getAtributos() const {
-        return atributos;
-    }
 
 };
