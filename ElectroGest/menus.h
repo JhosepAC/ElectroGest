@@ -1190,14 +1190,124 @@ void orderingMenu() {
 
         case 3:
             if (!carrito.isEmpty()) {
-                const vector<PEDIDO>& pedidosCarrito = carrito.obtenerPedidos();
-                for (const auto& pedido : pedidosCarrito) {
+                system("cls");
+                cout << CYAN_COLOR << "Para la entrega de su pedido. ¿Desea ingresar una nueva dirección?" << endl << RESET_COLOR;
+                cout << "<1> Sí" << endl;
+                cout << "<2> No" << endl;
+                cout << YELLOW_COLOR << "Ingrese una opción: " << RESET_COLOR;
+                int opcion;
+                cin >> opcion;
+
+                if (cin.fail()) { // Verifica si la entrada falló
+                    cin.clear(); // Limpia el estado de cin
+                    cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+                    ShowConsoleCursor(false);
+                    cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número." << endl;
+                    Sleep(1000);
+                    ShowConsoleCursor(true);
+                    continue; // Continúa al siguiente ciclo del bucle do-while
+                }
+
+                string nuevaDireccion;
+
+                if (opcion == 1) {
+                    int distrito;
+                    string direccionCompleta;
+
+                    system("cls");
+
+                    cout << YELLOW_COLOR << "Confirme la dirección de entrega: " << RESET_COLOR << DOUBLE_SPACE;
+                    cout << "<1> ATE" << endl;
+                    cout << "<2> Barranco" << endl;
+                    cout << "<3> Brena" << endl;
+                    cout << "<4> Cercado" << endl;
+                    cout << "<5> Chorrillos" << endl;
+                    cout << "<6> Cieneguilla" << endl;
+                    cout << "<7> El Agustino" << endl;
+                    cout << "<8> Independencia" << endl;
+                    cout << "<9> Jesus Maria" << endl;
+                    cout << "<10> La Molina" << endl;
+                    cout << "<11> La Victoria" << endl;
+                    cout << "<12> Lince" << endl;
+                    cout << "<13> Los Olivos" << endl;
+                    cout << "<14> Lurin" << endl;
+                    cout << "<15> Magdalena" << endl;
+                    cout << "<16> Miraflores" << endl;
+                    cout << "<17> Pachacamac" << endl;
+                    cout << "<18> Pueblo Libre" << endl;
+                    cout << "<19> Rimac" << endl;
+                    cout << "<20> San Borja" << endl;
+                    cout << "<21> San Isidro" << endl;
+                    cout << "<22> San Juan de Lurigancho" << endl;
+                    cout << "<23> San Juan de Miraflores" << endl;
+                    cout << "<24> San Martin de Porres" << endl;
+                    cout << "<25> Santiago de Surco" << endl;
+                    cout << "<26> Santa Anita" << endl;
+                    cout << "<27> Surquillo" << endl;
+                    cout << "<28> Villa Maria del Triunfo" << endl;
+                    cout << "<29> Villa el Salvador" << DOUBLE_SPACE;
+
+                    cout << YELLOW_COLOR << "Ingrese el número del distrito: " << RESET_COLOR;
+                    cin >> distrito;
+
+                    if (cin.fail()) { // Verifica si la entrada falló
+                        cin.clear(); // Limpia el estado de cin
+                        cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
+                        ShowConsoleCursor(false);
+                        cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número." << endl;
+                        Sleep(1000);
+                        ShowConsoleCursor(true);
+                        continue; // Continúa al siguiente ciclo del bucle do-while
+                    }
+                    
+                    switch (distrito)
+                    {
+                    case 1: nuevaDireccion = "ATE"; break;
+                    case 2: nuevaDireccion = "Barranco"; break;
+                    case 3: nuevaDireccion = "Brena"; break;
+                    case 4: nuevaDireccion = "Cercado"; break;
+                    case 5: nuevaDireccion = "Chorrillos"; break;
+                    case 6: nuevaDireccion = "Cieneguilla"; break;
+                    case 7: nuevaDireccion = "El Agustino"; break;
+                    case 8: nuevaDireccion = "Independencia"; break;
+					case 9: nuevaDireccion = "Jesus Maria"; break;
+                    case 10: nuevaDireccion = "La Molina"; break;
+                    case 11: nuevaDireccion = "La Victoria"; break;
+                    case 12: nuevaDireccion = "Lince"; break;
+                    case 13: nuevaDireccion = "Los Olivos"; break;
+                    case 14: nuevaDireccion = "Lurin"; break;
+                    case 15: nuevaDireccion = "Magdalena"; break;
+                    case 16: nuevaDireccion = "Miraflores"; break;
+                    case 17: nuevaDireccion = "Pachacamac"; break;
+                    case 18: nuevaDireccion = "Pueblo Libre"; break;
+                    case 19: nuevaDireccion = "Rimac"; break;
+                    case 20: nuevaDireccion = "San Borja"; break;
+                    case 21: nuevaDireccion = "San Isidro"; break;
+                    case 22: nuevaDireccion = "San Juan de Lurigancho"; break;
+                    case 23: nuevaDireccion = "San Juan de Miraflores"; break;
+                    case 24: nuevaDireccion = "San Martin de Porres"; break;
+                    case 25: nuevaDireccion = "Santiago de Surco"; break;
+                    case 26: nuevaDireccion = "Santa Anita"; break;
+                    case 27: nuevaDireccion = "Surquillo"; break;
+                    case 28: nuevaDireccion = "Villa Maria del Triunfo"; break;
+                    case 29: nuevaDireccion = "Villa el Salvador"; break;
+                    }
+                }
+                else {
+                    // Si no se ingresa una nueva dirección, se usa la dirección predeterminada del cliente
+                    nuevaDireccion = CLIENTE_ACTUAL::obtenerInstancia()->obtenerDireccionClienteActual();
+                }
+
+                // Obtener una copia de los pedidos del carrito
+                vector<PEDIDO> pedidosCarrito = carrito.obtenerPedidos();
+                for (auto& pedido : pedidosCarrito) {
+                    pedido.setDireccionEntrega(nuevaDireccion);
                     sistemaPedidos.agregarPedidoPendiente(pedido);
                 }
                 sistemaPedidos.guardarPedidosPendientes();
                 carrito.limpiarCarrito();
                 ShowConsoleCursor(false);
-                cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido confirmado correctamente." << RESET_COLOR;
+                cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido(s) confirmado correctamente." << RESET_COLOR;
                 Sleep(1500);
             }
             else {
@@ -1243,11 +1353,11 @@ void orderManagementMenu() {
     int indicePedido;
 
     vector<string> districts = {
-   "Miraflores", "La Victoria", "Rimac", "La Molina", "San Martin de Porres", "Chorrillos",
-   "Los Olivos", "Independencia", "San Juan de Lurigancho", "ATE", "Cieneguilla", "El Agustino",
-   "Santa Anita", "Pachacamac", "Lurin", "Villa Maria del Triunfo", "Villa el Salvador",
-   "San Juan de Miraflores", "Santiago de Surco", "San Borja", "Barranco", "Surquillo",
-   "San Isidro", "Lince", "Jesus Maria", "Brena", "Cercado", "Pueblo Libre", "Magdalena"
+       "Miraflores", "La Victoria", "Rimac", "La Molina", "San Martin de Porres", "Chorrillos",
+       "Los Olivos", "Independencia", "San Juan de Lurigancho", "ATE", "Cieneguilla", "El Agustino",
+       "Santa Anita", "Pachacamac", "Lurin", "Villa Maria del Triunfo", "Villa el Salvador",
+       "San Juan de Miraflores", "Santiago de Surco", "San Borja", "Barranco", "Surquillo",
+       "San Isidro", "Lince", "Jesus Maria", "Brena", "Cercado", "Pueblo Libre", "Magdalena"
     };
 
     // Crear el grafo
@@ -1446,8 +1556,7 @@ void orderManagementMenu() {
         cout << "<3> Procesar Pedido" << endl;
         cout << "<4> Eliminar Pedidos" << endl;
         cout << "<5> Historial de Pedidos" << endl;
-        cout << "<6> Sucursal mas cercana para realizar el pedido" << endl;
-        cout << "<7> Volver";
+        cout << "<6> Volver";
         ShowConsoleCursor(true); // Muestra el cursor
         cout << DOUBLE_SPACE << YELLOW_COLOR << "Seleccione una opción: " << RESET_COLOR;
         cin >> opcion;
@@ -1472,7 +1581,7 @@ void orderManagementMenu() {
             break;
         case 3:
             system("cls");
-            sistemaPedidos.procesarPedidosMenu();
+            sistemaPedidos.procesarPedidosMenu(g);
             break;
         case 4:
             sistemaPedidos.eliminarPedidoPorIndice(indicePedido);
@@ -1482,10 +1591,6 @@ void orderManagementMenu() {
             sistemaPedidos.verHistorialPedidosVendedor();
             break;
         case 6:
-            g.showMenu();
-            
-            break;
-        case 7:
             running = false;
             break;
         }

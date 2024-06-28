@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iostream>
 #include "order_class.h"
+#include "Graph.h"
 
 class SISTEMA_PEDIDOS {
 private:
@@ -21,11 +22,11 @@ private:
             return;
         }
 
-        string clienteID, codigoProducto;
+        string clienteID, codigoProducto, direccionEntrega;
         int cantidad;
         pedidos.clear();
-        while (file >> clienteID >> codigoProducto >> cantidad) {
-            pedidos.push_back(PEDIDO(clienteID, codigoProducto, cantidad));
+        while (file >> clienteID >> codigoProducto >> cantidad >> ws && getline(file, direccionEntrega)) {
+            pedidos.push_back(PEDIDO(clienteID, codigoProducto, cantidad, direccionEntrega));
         }
 
         file.close();
@@ -40,7 +41,7 @@ private:
         }
 
         for (const auto& pedido : pedidos) {
-            file << pedido.getClienteID() << " " << pedido.getCodigoProducto() << " " << pedido.getCantidad() << endl;
+            file << pedido.getClienteID() << " " << pedido.getCodigoProducto() << " " << pedido.getCantidad() << " " << pedido.getDireccionEntrega() << endl;
         }
 
         file.close();
@@ -223,10 +224,12 @@ public:
 
     }
 
-    void procesarPedidosMenu() const {
+    void procesarPedidosMenu(Graph& g) const {
 
         SISTEMA_PEDIDOS sistemaPedidos;
         GESTION_INVENTARIO inventario;
+
+        inventario.cargarInventarioDesdeArchivo();
 
         cout << CYAN_COLOR << "     === TODOS LOS PEDIDOS PENDIENTES ===" << DOUBLE_SPACE;
 
@@ -246,12 +249,24 @@ public:
         if (indicePedido >= 0 && indicePedido < sistemaPedidos.getNumPedidosPendientes()) {
             PEDIDO pedido = sistemaPedidos.getPedidoPendientePorIndice(indicePedido);
             if (inventario.verificarStock(pedido.getCodigoProducto(), pedido.getCantidad())) {
+                system("cls");
+                // Mostrar información del pedido
+                cout << CYAN_COLOR << "=== INFORMACIÓN DEL PEDIDO ===" << DOUBLE_SPACE;
+                cout << YELLOW_COLOR << "Cliente ID: " << RESET_COLOR << pedido.getClienteID() << endl;
+                cout << YELLOW_COLOR << "Código del producto: " << RESET_COLOR << pedido.getCodigoProducto() << endl;
+                cout << YELLOW_COLOR << "Cantidad: " << RESET_COLOR << pedido.getCantidad() << endl;
+                cout << YELLOW_COLOR << "Dirección de entrega: " << RESET_COLOR << pedido.getDireccionEntrega() << DOUBLE_SPACE;
+
+                // Seleccionar sucursal más cercana
+                g.showMenu();
+
                 // Procesar el pedido
                 inventario.retirarStock(pedido.getCodigoProducto(), pedido.getCantidad());
                 sistemaPedidos.procesarPedido(indicePedido);
                 ShowConsoleCursor(false); // Oculta el cursor
                 cout << DOUBLE_SPACE << GREEN_COLOR << "Pedido procesado correctamente.";
-                Sleep(1500);
+                cout << DOUBLE_SPACE << GRAY_COLOR << "Presione cualquier tecla para continuar...";
+                _getch();
             }
             else {
                 ShowConsoleCursor(false); // Oculta el cursor

@@ -87,28 +87,24 @@ string Graph::getName(int index) {
 
 void Graph::showMenu() {
 
- 
-
     vector<string> branches = { "Miraflores", "La Victoria", "Rimac", "La Molina", "San Martin de Porres", "Chorrillos" };
 
+    bool runner = true;
+
     //Mostar los distritos
-    while (true) {
-        cout << "Seleccione el distrito al que desea enviar el producto:\n";
+    while (runner) {
+        cout << YELLOW_COLOR << "Seleccione el distrito al que desea enviar el producto: " << RESET_COLOR << DOUBLE_SPACE;
         for (size_t i = 0; i < index_to_name.size(); ++i) {
             cout << i + 1 << ". " << index_to_name[i] << "\n";
         }
-        cout << "0. Salir\n";
 
         int choice;
-        cout << "Ingrese el numero de su eleccion: ";
+        cout << endl << YELLOW_COLOR << "Ingrese el numero de su eleccion: " << RESET_COLOR;
         cin >> choice;
 
-        if (choice == 0) {
-            break;
-        }
-
         if (choice < 1 || choice > index_to_name.size()) {
-            cout << "Seleccion no valida. Por favor, intente de nuevo.\n";
+            cout << RED_COLOR << "Seleccion no valida. Por favor, intente de nuevo.";
+            Sleep(1500);
             continue;
         }
 
@@ -127,10 +123,11 @@ void Graph::showMenu() {
             }
         }
 
-        cout << "La sucursal mas cercana a " << domicilio << " esta en " << nearest_district << " con una distancia de " << min_dist << " unidades.\n";
+        cout << DOUBLE_SPACE << GRAY_COLOR << "La sucursal mas cercana a " << RESET_COLOR << domicilio << GRAY_COLOR << " esta en " << RESET_COLOR << nearest_district << GRAY_COLOR <<" con una distancia de " << RESET_COLOR << min_dist << GRAY_COLOR << " unidades.";
+
+        runner = false;
     }
     
 }
-
 
 #endif // GRAPH_H
