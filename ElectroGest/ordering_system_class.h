@@ -23,10 +23,11 @@ private:
         }
 
         string clienteID, codigoProducto, direccionEntrega;
-        int cantidad;
+        int cantidad; 
+        double precio;
         pedidos.clear();
-        while (file >> clienteID >> codigoProducto >> cantidad >> ws && getline(file, direccionEntrega)) {
-            pedidos.push_back(PEDIDO(clienteID, codigoProducto, cantidad, direccionEntrega));
+        while (file >> clienteID >> codigoProducto >> cantidad >> precio >> ws && getline(file, direccionEntrega)) {
+            pedidos.push_back(PEDIDO(clienteID, codigoProducto, cantidad, precio, direccionEntrega));
         }
 
         file.close();
@@ -41,7 +42,7 @@ private:
         }
 
         for (const auto& pedido : pedidos) {
-            file << pedido.getClienteID() << " " << pedido.getCodigoProducto() << " " << pedido.getCantidad() << " " << pedido.getDireccionEntrega() << endl;
+            file << pedido.getClienteID() << " " << pedido.getCodigoProducto() << " " << pedido.getPrecio() <<" " << pedido.getCantidad() << " " << pedido.getDireccionEntrega() << endl;
         }
 
         file.close();

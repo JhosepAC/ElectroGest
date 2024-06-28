@@ -2,6 +2,12 @@
 #include <string>
 #include <random>
 #include <unordered_set>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <conio.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -17,6 +23,7 @@ private:
     string fechaNacimiento;
     string genero;
     string idCliente;
+    double totalGastado;
 
     // Función para generar un código de cliente aleatorio
     string generateClientId(const unordered_set<string>& existingIds) {
@@ -33,10 +40,11 @@ private:
     }
 
 public:
-    // Constructor
-    CLIENTE() {} // Constructor por defecto
+    // Constructor 
+    CLIENTE() {}
     CLIENTE(const unordered_set<string>& existingIds) : idCliente(generateClientId(existingIds)) {}
-
+    CLIENTE(const string& idCliente, const string& nombre, const string& email)
+        : idCliente(idCliente), nombre(nombre), correoElectronico(email), totalGastado(0.0) {}
     // Setters
     void setNombre(string nombre) { this->nombre = nombre; }
     void setApellido(string apellido) { this->apellido = apellido; }
@@ -60,7 +68,10 @@ public:
     string getFechaNacimiento() const { return fechaNacimiento; }
     string getGenero() const { return genero; }
     string getIdCliente() const { return idCliente; }
-
+    double getTotalGastado() const { return totalGastado; }
+    void añadirGasto(double cantidad) {
+        totalGastado += cantidad;
+    }
 };
 
 // Clase para almacenar el ID del cliente actual
@@ -70,11 +81,10 @@ public:
 class CLIENTE_ACTUAL {
 private:
     string clienteID;
-    CLIENTE* cliente;
     static CLIENTE_ACTUAL* instancia;
-
+    CLIENTE* cliente;
     // Constructor privado
-    CLIENTE_ACTUAL() : cliente(nullptr) {}
+    CLIENTE_ACTUAL() {}
 
 public:
     // Método para obtener la instancia única de la clase
@@ -90,9 +100,6 @@ public:
 
     // Getters
     string getClienteID() const { return clienteID; }
-    string getDireccion() const {
-        return cliente->getDireccion();
-    }
 
     // Función para cargar el ID del cliente actual desde un archivo usando el correo electrónico
     bool cargarClienteIDDesdeArchivo(const string& filePath, const string& email) {
@@ -111,29 +118,19 @@ public:
                 getline(ss, emailFromFile, ',') && getline(ss, username, ',') && getline(ss, direccion, ',') &&
                 getline(ss, telefono, ',') && getline(ss, fecha, ',') && getline(ss, genero)) {
 
-                // Si el email coincide con el email del cliente actual, se guarda el id y se carga el cliente
+                // Si el email coincide con el email del cliente actual, se guarda el id
                 if (email == emailFromFile) {
                     clienteID = id;
-                    cliente = new CLIENTE();
-                    cliente->setIdCliente(id);
-                    cliente->setNombre(nombre);
-                    cliente->setApellido(apellido);
-                    cliente->setCorreoElectronico(emailFromFile);
-                    cliente->setDireccion(direccion);
-                    cliente->setTelefono(telefono);
-                    cliente->setFechaNacimiento(fecha);
-                    cliente->setGenero(genero);
                     file.close();
                     return true;
                 }
             }
         }
 
+
         file.close();
         return false;
     }
-
-    // Función para obtener la dirección del cliente actual
     string obtenerDireccionClienteActual() const {
         return cliente->getDireccion();
     }
@@ -141,3 +138,109 @@ public:
 
 // Inicializar la instancia estática
 CLIENTE_ACTUAL* CLIENTE_ACTUAL::instancia = nullptr;
+#define CYAN_COLOR "\033[36m"
+#define YELLOW_COLOR "\033[33m"
+#define GREEN_COLOR "\033[32m"
+#define MAGENTA_COLOR "\033[35m"
+#define BLUE_COLOR "\033[34m"
+#define GRAY_COLOR "\033[37m"
+#define RESET_COLOR "\033[0m"
+#define DOUBLE_SPACE "\n\n"
+
+void ShowConsoleCurse(bool showFlag) {
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    if (hOut == INVALID_HANDLE_VALUE) {
+        return;
+    }
+
+    CONSOLE_CURSOR_INFO cursorInfo;
+    GetConsoleCursorInfo(hOut, &cursorInfo);
+    cursorInfo.bVisible = showFlag; // Establece la visibilidad del cursor
+    SetConsoleCursorInfo(hOut, &cursorInfo);
+}
+
+// Nodo del árbol binario de búsqueda
+struct ClienteNode {
+    CLIENTE cliente;
+    ClienteNode* left;
+    ClienteNode* right;
+
+    ClienteNode(const CLIENTE& cliente) : cliente(cliente), left(nullptr), right(nullptr) {}
+};
+
+// Árbol binario de búsqueda para clientes
+class ClienteBST {
+private:
+    ClienteNode* root;
+
+    void insertNode(ClienteNode*& node, const CLIENTE& cliente) {
+        if (!node) {
+            node = new ClienteNode(cliente);
+        }
+        else if (cliente.getTotalGastado() < node->cliente.getTotalGastado()) {
+            insertNode(node->left, cliente);
+        }
+        else {
+            insertNode(node->right, cliente);
+        }
+    }
+
+
+    void searchNode(ClienteNode* node, const string& searchTerm, const string& criterion, vector<CLIENTE>& results) const {
+        if (node == nullptr) return;
+        bool match = false;
+        if (criterion == "nombre" && node->cliente.getNombre().find(searchTerm) != string::npos) {
+            match = true;
+        }
+        else if (criterion == "apellido" && node->cliente.getApellido().find(searchTerm) != string::npos) {
+            match = true;
+        }
+        else if (criterion == "codigo" && node->cliente.getIdCliente().find(searchTerm) != string::npos) {
+            match = true;
+        }
+        else if (criterion == "telefono" && node->cliente.getTelefono().find(searchTerm) != string::npos) {
+            match = true;
+        }
+        else if (criterion == "correo" && node->cliente.getCorreoElectronico().find(searchTerm) != string::npos) {
+            match = true;
+        }
+
+        if (match) {
+            results.push_back(node->cliente);
+        }
+        searchNode(node->left, searchTerm, criterion, results);
+        searchNode(node->right, searchTerm, criterion, results);
+    }
+
+    void inorderDisplay(ClienteNode* node) const {
+        if (node == nullptr) return;
+        inorderDisplay(node->left);
+        cout << left << setw(15) << node->cliente.getIdCliente()
+            << setw(15) << node->cliente.getNombre()
+            << setw(20) << node->cliente.getApellido()
+            << setw(35) << node->cliente.getCorreoElectronico()
+            << setw(20) << node->cliente.getDireccion()
+            << setw(15) << node->cliente.getTelefono()
+            << setw(25) << node->cliente.getFechaNacimiento()
+            << setw(10) << node->cliente.getGenero() << DOUBLE_SPACE;
+        inorderDisplay(node->right);
+    }
+
+public:
+    ClienteBST() : root(nullptr) {}
+
+    void insert(const CLIENTE& cliente) {
+        insertNode(root, cliente);
+    }
+
+    vector<CLIENTE> search(const string& searchTerm, const string& criterion) const {
+        vector<CLIENTE> results;
+        searchNode(root, searchTerm, criterion, results);
+        return results;
+    }
+
+    void display() const {
+        inorderDisplay(root);
+    }
+};

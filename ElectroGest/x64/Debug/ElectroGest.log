@@ -1,0 +1,94 @@
+﻿  master.cpp
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\product_manager_class.h(214,13): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\product_management_functions.h(135,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\product_management_functions.h(151,9): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\product_management_functions.h(213,5): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\product_management_functions.h(233,9): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\product_management_functions.h(238,9): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\supplier_manager_class.h(116,13): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\inventory_management_class.h(85,34): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\inventory_management_class.h(103,42): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\client_manager_class.h(130,13): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\client_manager_class.h(141,13): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\client_manager_class.h(254,13): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\Graph.h(30,23): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\ordering_system_class.h(30,75): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\ordering_system_class.h(58,32): warning C4267: 'return': conversión de 'size_t' a 'int'; posible pérdida de datos
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\promotion_class.h(11,48): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\promotion_management_class.h(75,30): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(855,21): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(1175,82): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(1651,17): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(1663,17): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(1675,17): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(1682,17): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(1721,21): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(1736,17): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(1748,17): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(1757,13): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(1889,13): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(1914,13): warning C4996: '_sleep': This function or variable has been superceded by newer library or operating system functionality. Consider using Sleep instead. See online help for details.
+  (compilando archivo de origen "/master.cpp")
+  
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(1587,1): warning C4700: se utilizó la variable local 'indicePedido' sin inicializar
+C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\ElectroGest\menus.h(1175,1): warning C4700: se utilizó la variable local 'precio' sin inicializar
+  .NETFramework,Version=v4.7.2.AssemblyAttributes.cpp
+  AssemblyInfo.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
+LINK : warning LNK4067: punto de entrada ambiguo; se seleccionó 'mainCRTStartup'
+  ElectroGest.vcxproj -> C:\Users\Usuario\Downloads\ElectroGest-master (1)\ElectroGest-master\x64\Debug\ElectroGest.exe

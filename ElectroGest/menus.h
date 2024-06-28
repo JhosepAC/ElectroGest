@@ -1113,7 +1113,7 @@ void orderingMenu() {
     bool running = true;
     string codigoProducto;
     int cantidad;
-
+    double precio;
     string clienteID = CLIENTE_ACTUAL::obtenerInstancia()->getClienteID();
 
     while (running) {
@@ -1172,7 +1172,7 @@ void orderingMenu() {
             }
 
             if (inventario.verificarStock(codigoProducto, cantidad)) {
-                carrito.agregarPedido(PEDIDO(clienteID, codigoProducto, cantidad));
+                carrito.agregarPedido(PEDIDO(clienteID, codigoProducto, cantidad,precio));
                 ShowConsoleCursor(false);
                 cout << DOUBLE_SPACE << GREEN_COLOR << "Producto agregado al carrito correctamente." << RESET_COLOR;
                 Sleep(1500);
@@ -1600,8 +1600,23 @@ void orderManagementMenu() {
 // Función para mostrar el menú de gestión de clientes
 void customerManagementMenu() {
     GESTION_CLIENTE gestionCliente;
-    
+    ClienteBST clienteBST;
+    SISTEMA_PEDIDOS sistemaPedidos;
+
     int opcion;
+
+    // Cargar los pedidos procesados y calcular el total gastado por cada cliente
+    vector<PEDIDO> pedidosProcesados;
+    sistemaPedidos.cargarPedidosProcesados();
+    map<string, CLIENTE> clientes;
+
+    for (const auto& pedido : pedidosProcesados) {
+        if (clientes.find(pedido.getClienteID()) == clientes.end()) {
+            CLIENTE nuevoCliente(pedido.getClienteID(), "Nombre", "Email"); // Necesitas modificar para usar los datos reales del cliente
+            clientes[pedido.getClienteID()] = nuevoCliente;
+        }
+        clientes[pedido.getClienteID()].añadirGasto(pedido.getPrecio() * pedido.getCantidad());
+    }
 
     do {
         system("cls");
@@ -1610,17 +1625,18 @@ void customerManagementMenu() {
         cout << "<1> Ver Lista de Clientes" << endl;
         cout << "<2> Eliminar Cliente" << endl;
         cout << "<3> Buscar Clientes" << endl;
-        cout << "<4> Volver";
-        ShowConsoleCursor(true); // Muestra el cursor
-        cout << YELLOW_COLOR << DOUBLE_SPACE << "Seleccione una opcion: " << RESET_COLOR;
+        cout << "<4> Modificar Cliente" << endl; // Nueva opción para modificar clientes
+        cout << "<5> Volver" << endl;
+        ShowConsoleCurse(true); // Muestra el cursor
+        cout << YELLOW_COLOR << DOUBLE_SPACE << "Seleccione una opción: " << RESET_COLOR;
         cin >> opcion;
 
         // Verifica si la entrada falló
-        if (cin.fail()) { // Verifica si la entrada falló
+        if (cin.fail()) {
             cin.clear(); // Limpia el estado de cin
             cin.ignore((numeric_limits<streamsize>::max)(), '\n'); // Ignora la entrada incorrecta
-            ShowConsoleCursor(false); // Oculta el cursor
-            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número."; // Entrada no válida
+            ShowConsoleCurse(false); // Oculta el cursor
+            cout << DOUBLE_SPACE << MAGENTA_COLOR << "Entrada no válida, por favor ingrese un número." << endl; // Entrada no válida
             Sleep(1500); // Espera 1.5 segundos
             continue; // Continúa al siguiente ciclo del bucle do-while
         }
@@ -1630,19 +1646,19 @@ void customerManagementMenu() {
         switch (opcion) {
         case 1:
             if (file.peek() == ifstream::traits_type::eof()) { // Verificar si el archivo está vacío
-                ShowConsoleCursor(false); // Oculta el cursor
+                ShowConsoleCurse(false); // Oculta el cursor
                 cout << MAGENTA_COLOR << DOUBLE_SPACE << "No hay ningún cliente registrado." << endl;
                 _sleep(1500); // Espera 1.5 segundos
                 file.close();
                 break;
             }
             system("cls");
-            cout << CYAN_COLOR << "Lista de clientes:" << DOUBLE_SPACE;   
+            cout << CYAN_COLOR << "Lista de clientes:" << DOUBLE_SPACE;
             gestionCliente.displayCustomerList();
             break;
         case 2:
             if (file.peek() == ifstream::traits_type::eof()) { // Verificar si el archivo está vacío
-                ShowConsoleCursor(false); // Oculta el cursor
+                ShowConsoleCurse(false); // Oculta el cursor
                 cout << MAGENTA_COLOR << DOUBLE_SPACE << "No hay ningún cliente registrado." << endl;
                 _sleep(1500); // Espera 1.5 segundos
                 file.close();
@@ -1655,13 +1671,13 @@ void customerManagementMenu() {
                 cout << YELLOW_COLOR << "Ingrese el correo electrónico del cliente a eliminar: " << RESET_COLOR;
                 cin >> email;
                 gestionCliente.deleteCustomer(email);
-                ShowConsoleCursor(false); // Oculta el cursor
+                ShowConsoleCurse(false); // Oculta el cursor
                 _sleep(1500); // Espera 1.5 segundos
             }
             break;
         case 3:
             if (file.peek() == ifstream::traits_type::eof()) { // Verificar si el archivo está vacío
-                ShowConsoleCursor(false); // Oculta el cursor
+                ShowConsoleCurse(false); // Oculta el cursor
                 cout << MAGENTA_COLOR << DOUBLE_SPACE << "No hay ningún cliente registrado." << endl;
                 _sleep(1500); // Espera 1.5 segundos
                 file.close();
@@ -1670,16 +1686,79 @@ void customerManagementMenu() {
             system("cls");
             cout << CYAN_COLOR << "Buscar clientes: " << DOUBLE_SPACE << RESET_COLOR;
             {
+                string criterion;
                 string searchTerm;
-                cout << YELLOW_COLOR << "Ingrese el término de búsqueda (nombre o apellido): " << RESET_COLOR;
+
+                cout << YELLOW_COLOR << "Seleccione el criterio de búsqueda: " << RESET_COLOR << endl;
+                cout << "<1> Nombre" << endl;
+                cout << "<2> Apellido" << endl;
+                cout << "<3> Código" << endl;
+                cout << "<4> Teléfono" << endl;
+                cout << "<5> Correo" << endl;
+                ShowConsoleCurse(true); // Muestra el cursor
+                int criterionOption;
+                cin >> criterionOption;
+
+                switch (criterionOption) {
+                case 1:
+                    criterion = "nombre";
+                    break;
+                case 2:
+                    criterion = "apellido";
+                    break;
+                case 3:
+                    criterion = "codigo";
+                    break;
+                case 4:
+                    criterion = "telefono";
+                    break;
+                case 5:
+                    criterion = "correo";
+                    break;
+                default:
+                    ShowConsoleCurse(false); // Oculta el cursor
+                    cout << DOUBLE_SPACE << MAGENTA_COLOR << "Opción no válida." << endl;
+                    _sleep(1500); // Espera 1.5 segundos
+                    continue; // Continúa al siguiente ciclo del bucle do-while
+                }
+
+                cout << YELLOW_COLOR << "Ingrese el término de búsqueda: " << RESET_COLOR;
+                ShowConsoleCurse(true); // Muestra el cursor
                 cin >> searchTerm;
-                gestionCliente.searchCustomers(searchTerm);
+
+                gestionCliente.searchCustomers(criterion, searchTerm);
             }
             break;
         case 4:
+            if (file.peek() == ifstream::traits_type::eof()) { // Verificar si el archivo está vacío
+                ShowConsoleCurse(false); // Oculta el cursor
+                cout << MAGENTA_COLOR << DOUBLE_SPACE << "No hay ningún cliente registrado." << endl;
+                _sleep(1500); // Espera 1.5 segundos
+                file.close();
+                break;
+            }
+            system("cls");
+            cout << CYAN_COLOR << "Modificar cliente:" << DOUBLE_SPACE << RESET_COLOR;
+            {
+                string email;
+                cout << YELLOW_COLOR << "Ingrese el correo electrónico del cliente: " << RESET_COLOR;
+                cin >> email;
+                gestionCliente.modificarCliente(email); // Llamar a la función para modificar clientes
+                ShowConsoleCurse(false); // Oculta el cursor
+                _sleep(3000); // Espera 3 segundos
+            }
+            break;
+        case 5:
+            system("cls");
+            break;
+        default:
+            ShowConsoleCurse(false); // Oculta el cursor
+            cout << MAGENTA_COLOR << DOUBLE_SPACE << "Opción no válida, por favor seleccione una opción del 1 al 5." << endl; // Opción no válida
+            _sleep(1500); // Espera 1.5 segundos
             break;
         }
-    } while (opcion != 4);
+        file.close();
+    } while (opcion != 5);
 }
 
 void sortProductsPrice() {
